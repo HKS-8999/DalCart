@@ -21,5 +21,14 @@ deploy-prod:
   script:
     - echo "This job deploys something from the $CI_COMMIT_BRANCH branch."
 
+staging:
+  type: deploy
+  stage: staging
+  image: ruby:latest
+  script:
+    - dpl --provider=heroku --app=$HEROKU_APP_STAGING --api-key=$HEROKU_API_KEY
+    - echo "This job deploys something from the $CI_COMMIT_BRANCH branch."
+  only:
+      - staging
 default:
   image: ruby:2.7.5
