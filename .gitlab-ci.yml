@@ -6,6 +6,7 @@ build-job:
     - echo "Running Jobs with Username:"
     - whoami
     - chmod +x ./deploy.sh
+    - git config --global --add safe.directory /mnt/c/CSCI5308/group-2
     - ./deploy.sh
 
 test-job1:
