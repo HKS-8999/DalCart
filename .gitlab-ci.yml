@@ -3,6 +3,9 @@ build-job:
   script:
     - echo "Hello, $GITLAB_USER_LOGIN!"
     - echo "Building and Deploying to Heroku"
+    - echo "Running Jobs with Username:"
+    - whoami
+    - chmod +x ./deploy.sh
     - ./deploy.sh
 
 test-job1:
