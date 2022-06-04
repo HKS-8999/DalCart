@@ -7,6 +7,7 @@ build-job:
     - whoami
     - chmod +x ./deploy.sh
     - git config --global --add safe.directory /mnt/c/CSCI5308/group-2
+    - git config --global --add safe.directory /mnt/c/CSCI5308/java-getting-started
     - ./deploy.sh
 
 test-job1:
