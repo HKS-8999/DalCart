@@ -9,4 +9,6 @@ git pull origin $SOURCE_BRANCH
 cd $DEPLOY_DIR/$DEPLOY_REPO
 cp -r $SOURCE_DIR/$SOURCE_REPO/* $DEPLOY_DIR/$DEPLOY_REPO
 
+git add .
+git commit -m "pushing new build"
 git push heroku main
