@@ -1,4 +1,10 @@
-build-job:
+
+stages:
+    - build
+    - test
+    - deploy
+
+build-project:
   stage: build
   script:
     - cp -r * $BUILDS_DIRECTORY
@@ -18,7 +24,16 @@ build-job:
     # - ./deploy.sh
   tags:
     - ugrad
+  only:
+    - staging
 
+test-build:
+  stage: test
+  script:
+    - echo "Triggerring Tests"
+    - echo "Tests Successful"
+  only:
+    - master
 # test-job1:
 #   stage: test
 #   script:
