@@ -42,13 +42,11 @@ test-build:
     - master
     - staging
 
-test-build:
-  stage: test
+deploy-build:
+  stage: deploy
   script:
-    - echo "Triggerring Tests"
-    - cd $BUILDS_DIRECTORY
-    - mvn clean test
-    - echo "Tests Successful"
+    - echo "Triggerring Deploy"
+    - echo "Deploy Complete"
   tags:
     - ugrad
   only:
