@@ -2,11 +2,16 @@ build-job:
   stage: build
   script:
     - BUILDS_DIRECTORY=$SOURCE_DIR/builds
+    - BUILD_ARTIFACT_FILE_NAME=build_artifact.tar.gz
     - cp -r * $BUILDS_DIRECTORY
     - cd $BUILDS_DIRECTORY
     - mvn clean install
     - cd $SOURCE_DIR
-    - tar -zcvf build_artifact.tar.gz $BUILDS_DIRECTORY/target
+    - tar -zcvf $BUILD_ARTIFACT_FILE_NAME $BUILDS_DIRECTORY/target
+  artifacts:
+    paths:
+      - $SOURCE_DIR/$BUILD_ARTIFACT_FILE_NAME
+    expire_in: 1 week
     # - echo "Running Jobs with Username:"
     # - whoami
     # - chmod +x ./deploy.sh
