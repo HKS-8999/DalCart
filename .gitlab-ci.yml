@@ -6,6 +6,7 @@ build-job:
     - cd $BUILDS_DIRECTORY
     - mvn clean install
     - cd $SOURCE_DIR
+    - tar -zcvf build_artifact.tar.gz $BUILDS_DIRECTORY/builds/target
     # - echo "Running Jobs with Username:"
     # - whoami
     # - chmod +x ./deploy.sh
