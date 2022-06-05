@@ -6,7 +6,7 @@ build-job:
     - mvn clean install
     - cd $SOURCE_DIR
     - tar -zcvf $BUILD_ARTIFACT_FILE_NAME $BUILDS_DIRECTORY/target
-    -echo $CI_PROJECT_DIR
+    - echo $CI_PROJECT_DIR
   artifacts:
     paths:
       - $SOURCE_DIR/$BUILD_ARTIFACT_FILE_NAME
