@@ -1,9 +1,13 @@
 build-job:
   stage: build
   script:
-    - BUILD_DIRECTORY=$SOURCE_DIR/builds
-    - mkdir -p $BUILD_DIRECTORY
-    - cp -r * $BUILD_DIRECTORY
+    - BUILDS_DIRECTORY=$SOURCE_DIR/builds
+    - chmod 777 $BUILDS_DIRECTORY
+    - mkdir -p $BUILDS_DIRECTORY
+    - CURRENT_BUILD_DIRECTORY=BUILDS_DIRECTORY/dalcart_build_$(date +%s)
+    - mkdir -p $CURRENT_BUILD_DIRECTORY
+    - chmod 777 $CURRENT_BUILD_DIRECTORY
+    - cp -r * $CURRENT_BUILD_DIRECTORY
     - cd $SOURCE_DIR
     - rm -rf deploy.sh LICENSE mvnw Procfile src/main/ system.properties README.md docs/ pom.xml app.json
     - echo "Building and Deploying to Heroku"
