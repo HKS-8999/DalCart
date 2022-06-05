@@ -2,10 +2,12 @@ build-job:
   stage: build
   script:
     - BUILDS_DIRECTORY=$SOURCE_DIR/builds
+    - rm -r * $BUILDS_DIRECTORY
     - cp -r * $BUILDS_DIRECTORY
+    - cd $BUILDS_DIRECTORY
+    - mvn clean install
     - cd $SOURCE_DIR
-    - rm -rf src mvnw.cmd
-    - echo "Building and Deploying to Heroku"
+    - tar 
     # - echo "Running Jobs with Username:"
     # - whoami
     # - chmod +x ./deploy.sh
