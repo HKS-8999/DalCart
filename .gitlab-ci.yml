@@ -46,9 +46,7 @@ deploy-build:
   stage: deploy
   script:
     - echo "Hello, $GITLAB_USER_LOGIN!"
-    - echo "Building and Deploying to Heroku"
-    - echo "Running Jobs with Username:"
-    - whoami
+    - echo "Deploying to Heroku"
     - chmod +x ./deploy.sh
     - git config --global --add safe.directory $SOURCE_DIR/$SOURCE_REPO
     - git config --global --add safe.directory $DEPLOY_DIR/$DEPLOY_REPO
