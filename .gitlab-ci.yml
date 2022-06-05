@@ -28,7 +28,7 @@ build-project:
     - master
     - staging
     - development
-
+    
 test-build:
   stage: test
   script:
@@ -45,9 +45,16 @@ test-build:
 deploy-build:
   stage: deploy
   script:
-    - echo "Triggerring Deploy"
-    - echo "Deploy Complete"
+    - echo "Hello, $GITLAB_USER_LOGIN!"
+    - echo "Building and Deploying to Heroku"
+    - echo "Running Jobs with Username:"
+    - whoami
+    - chmod +x ./deploy.sh
+    - git config --global --add safe.directory $SOURCE_DIR/$SOURCE_REPO
+    - git config --global --add safe.directory $DEPLOY_DIR/$DEPLOY_REPO
+    - ./deploy.sh
   tags:
-    - ugrad
+    - tawin
   only:
     - master
+    - staging
