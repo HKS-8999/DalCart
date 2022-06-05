@@ -1,7 +1,7 @@
 build-job:
   stage: build
   script:
-    - BUILD_DIRECTORY=$SOURCE_DIR/builds/dalcart_build_$(date +%s)
+    - BUILD_DIRECTORY=$SOURCE_DIR/builds
     - mkdir -p $BUILD_DIRECTORY
     - cp -r * $BUILD_DIRECTORY
     - cd $SOURCE_DIR
