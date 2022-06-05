@@ -6,11 +6,9 @@ build-job:
     - cp -r * $BUILDS_DIRECTORY
     - cd $BUILDS_DIRECTORY
     - mvn clean install
-    - cd $SOURCE_DIR
-    - tar -zcvf $BUILD_ARTIFACT_FILE_NAME $BUILDS_DIRECTORY/target
   artifacts:
     paths:
-      - $BUILD_ARTIFACT_FILE_NAME
+      - $BUILDS_DIRECTORY/target
     expire_in: 1 week
     # - echo "Running Jobs with Username:"
     # - whoami
