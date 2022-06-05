@@ -4,7 +4,7 @@ build-job:
     - BUILDS_DIRECTORY=$SOURCE_DIR/builds
     - cp -r * $BUILDS_DIRECTORY
     - cd $SOURCE_DIR
-    - rm -rf deploy.sh LICENSE mvnw Procfile src/main/ system.properties README.md docs/ pom.xml app.json
+    - rm -rf src mvnw.cmd
     - echo "Building and Deploying to Heroku"
     # - echo "Running Jobs with Username:"
     # - whoami
