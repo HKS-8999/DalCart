@@ -33,7 +33,7 @@ test-build:
     - echo "Triggerring Tests"
     - echo "Tests Successful"
   only:
-    - master
+    - staging
 # test-job1:
 #   stage: test
 #   script:
