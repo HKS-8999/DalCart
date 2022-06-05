@@ -1,8 +1,8 @@
-SOURCE_DIR="/mnt/c/CSCI5308"
-DEPLOY_DIR="/mnt/c/CSCI5308"
+SOURCE_DIR="/users/grad/tagarwal/CSCI5308builds"
+DEPLOY_DIR="/users/grad/tagarwal/CSCI5308builds"
 SOURCE_REPO="group-2"
 SOURCE_BRANCH="development"
-DEPLOY_REPO="java-getting-started"
+DEPLOY_REPO="dalcart-production"
 
 cd $SOURCE_DIR/$SOURCE_REPO
 git pull origin $SOURCE_BRANCH
