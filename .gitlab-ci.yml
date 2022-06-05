@@ -6,8 +6,8 @@ build-job:
     - echo "Running Jobs with Username:"
     - whoami
     - chmod +x ./deploy.sh
-    - git config --global --add safe.directory /mnt/c/CSCI5308/group-2
-    - git config --global --add safe.directory /mnt/c/CSCI5308/java-getting-started
+    - git config --global --add safe.directory $SOURCE_DIR/$SOURCE_REPO
+    - git config --global --add safe.directory $DEPLOY_DIR/$DEPLOY_REPO
     - ./deploy.sh
   tags:
     - ugrad
