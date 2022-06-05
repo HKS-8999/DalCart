@@ -10,7 +10,7 @@ build-job:
     - tar -zcvf $BUILD_ARTIFACT_FILE_NAME $BUILDS_DIRECTORY/target
   artifacts:
     paths:
-      - $SOURCE_DIR/$BUILD_ARTIFACT_FILE_NAME
+      - $BUILD_ARTIFACT_FILE_NAME
     expire_in: 1 week
     # - echo "Running Jobs with Username:"
     # - whoami
