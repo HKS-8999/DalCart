@@ -1,7 +1,6 @@
 build-job:
   stage: build
   script:
-    - BUILDS_DIRECTORY=$SOURCE_DIR/builds
     - BUILD_ARTIFACT_FILE_NAME=build_artifact.tar.gz
     - cp -r * $BUILDS_DIRECTORY
     - cd $BUILDS_DIRECTORY
