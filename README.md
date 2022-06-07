@@ -1,4 +1,4 @@
-# Group 2
+# Group2 Testing
 
 
 
@@ -15,14 +15,14 @@ Already a pro? Just edit this README.md and make it your own. Want to make it ea
 
 ```
 cd existing_repo
-git remote add origin https://git.cs.dal.ca/courses/2022-summer/csci-5308/group-2.git
+git remote add origin https://git.cs.dal.ca/priyalp/group2-testing.git
 git branch -M main
 git push -uf origin main
 ```
 
 ## Integrate with your tools
 
-- [ ] [Set up project integrations](https://git.cs.dal.ca/courses/2022-summer/csci-5308/group-2/-/settings/integrations)
+- [ ] [Set up project integrations](https://git.cs.dal.ca/priyalp/group2-testing/-/settings/integrations)
 
 ## Collaborate with your team
 
