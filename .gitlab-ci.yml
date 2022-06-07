@@ -1,31 +1,33 @@
-build-job:
+stages:
+  - build
+  - test
+  - deploy
+
+image: maven:latest
+
+variables:
+  GIT_STRATEGY: clone
+
+build-group2:
   stage: build
-  script:
-    - echo "Hello, $GITLAB_USER_LOGIN!"
   tags:
-    - ugrad
+    - dalfcs_docker_kvm
+  script: mvn clean compile
 
-test-job1:
+
+test-group2:
   stage: test
-  script:
-    - echo "This job tests something"
   tags:
-    - ugrad
+    - dalfcs_docker_kvm
+  script: mvn clean test
 
-test-job2:
-  stage: test
-  script:
-    - dpl --provider=heroku --app=$HEROKU_APP_STAGING --api-key=$HEROKU_API_KEY
-    - echo "This job tests something, but takes more time than test-job1."
-    - echo "After the echo commands complete, it runs the sleep command for 20 seconds"
-    - echo "which simulates a test that runs 20 seconds longer than test-job1"
-    - sleep 20
-  tags:
-    - ugrad
-
-deploy-prod:
+deploy-group2:
   stage: deploy
-  script:
-    - echo "This job deploys something from the $CI_COMMIT_BRANCH branch."
   tags:
-    - ugrad
+    - dalfcs_docker_kvm
+  image: ruby:2.6
+  script:
+    - apt-get update -qy
+    - apt-get install -y ruby-dev
+    - gem install dpl
+    - dpl --provider=heroku --app=$HEROKU_APPLICATION_NAME --api-key=$HEROKU_API_KEY
