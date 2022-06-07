@@ -39,5 +39,5 @@ deploy-group2:
     - gem install dpl
     - dpl --provider=heroku --app=$HEROKU_APPLICATION_NAME --api-key=$HEROKU_API_KEY
     only:
-    - master
-    - staging
+      - master
+      - staging
