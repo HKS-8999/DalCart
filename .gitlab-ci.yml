@@ -27,6 +27,7 @@ test-group2:
   only:
     - master
     - staging
+    - development
 
 deploy-group2:
   stage: deploy
