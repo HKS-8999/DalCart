@@ -3,16 +3,16 @@
 email = ENV['HEROKU_EMAIL'] || `heroku auth:whoami`
 
 Rundoc.configure do |config|
-  config.project_root = "java-getting-started"
+  config.project_root = "dalcart"
   config.filter_sensitive(email => "developer@example.com")
 end
 ```
 <!--
   rundoc src:
-  https://github.com/heroku/java-getting-started/blob/main/java-getting-started.md
+  https://github.com/heroku/dalcart/blob/main/dalcart.md
 
   Command:
-  $ rundoc build --path java-getting-started.md
+  $ rundoc build --path dalcart.md
 -->
 
 <h2 data-next-message="I'm ready to start">Introduction</h2>
@@ -109,8 +109,8 @@ To create a local copy of a sample app that you can deploy to Heroku, execute th
 
 
 ```term
-:::>- $ git clone https://github.com/heroku/java-getting-started
-:::>- $ cd java-getting-started
+:::>- $ git clone https://github.com/heroku/dalcart
+:::>- $ cd dalcart
 :::-- $ git fetch
 :::-- $ git merge origin/main
 ```
@@ -218,7 +218,7 @@ To prevent abuse, scaling a non-free application to more than one dyno requires 
 
 Heroku automatically identifies an app as a Java app if it contains a `pom.xml` file in the root directory. You can create a `pom.xml` file for your own apps with the `mvn archetype:create` command.
 
-The demo app you deployed already has a `pom.xml` ([see it here](https://github.com/heroku/java-getting-started/blob/main/pom.xml)). Here's an excerpt:
+The demo app you deployed already has a `pom.xml` ([see it here](https://github.com/heroku/dalcart/blob/main/pom.xml)). Here's an excerpt:
 
 ```xml
 :::-> $ sed -n '27,35p' pom.xml
@@ -328,7 +328,7 @@ Finally, create a `src/main/resources/templates/hello.html` file with these cont
 </html>
 ```
 
-[Here's the final source code](https://github.com/heroku/java-getting-started/blob/localchanges/src/main/java/com/example/Main.java) for `Main.java` - yours should look similar.  [Here's a diff](https://github.com/heroku/java-getting-started/compare/localchanges) of all the local changes you should have made.
+[Here's the final source code](https://github.com/heroku/dalcart/blob/localchanges/src/main/java/com/example/Main.java) for `Main.java` - yours should look similar.  [Here's a diff](https://github.com/heroku/dalcart/compare/localchanges) of all the local changes you should have made.
 
 Now test your changes locally:
 
