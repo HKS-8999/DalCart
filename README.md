@@ -40,5 +40,13 @@ For more information about using Java on Heroku, see these Dev Center articles:
 - [Java on Heroku](https://devcenter.heroku.com/categories/java)
 
 
+To build application:
+mvn clean install
+
+To run test cases:
+mvn clean test
+
 To run application on local:
 mvn spring-boot:run
+
+see application at: localhost:5000
