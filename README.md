@@ -1,4 +1,4 @@
-# java-getting-started
+# dalcart
 
 A barebones Java app, which can easily be deployed to Heroku.
 
@@ -11,8 +11,8 @@ This application supports the [Getting Started with Java on Heroku](https://devc
 Make sure you have Java and Maven installed.  Also, install the [Heroku CLI](https://cli.heroku.com/).
 
 ```sh
-$ git clone https://github.com/heroku/java-getting-started.git
-$ cd java-getting-started
+$ git clone https://github.com/heroku/dalcart.git
+$ cd dalcart
 $ mvn install
 $ heroku local:start
 ```
@@ -38,3 +38,15 @@ $ heroku open
 For more information about using Java on Heroku, see these Dev Center articles:
 
 - [Java on Heroku](https://devcenter.heroku.com/categories/java)
+
+
+To build application:
+mvn clean install
+
+To run test cases:
+mvn clean test
+
+To run application on local:
+mvn spring-boot:run
+
+see application at: localhost:5000
