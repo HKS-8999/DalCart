@@ -35,6 +35,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.*;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.lang.*;
 
 @Controller
 @SpringBootApplication
@@ -80,8 +83,20 @@ public class Main {
     //return "{\"product\":\"iphone\"}";
    // String json = new ObjectMapper().writeValueAsString(map);
     //return json;
-    return "{\"name\":\"product\"}";
-  }
+    String json = "";
+    ObjectMapper objectMapper = new ObjectMapper();
+    try {
+        json = objectMapper.writeValueAsString(map);
+        System.out.println(json);
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+
+    return json;
+
+
+    //return "{\"name\":\"product\"}";
+    }
 
   // @Bean
   // public DataSource dataSource() throws SQLException {
