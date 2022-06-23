@@ -2,9 +2,34 @@
 <html xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'index')}">
    <link rel="stylesheet" type="text/css" href="/stylesheets/admin.css" />
    <body>
-      <div class="admin-header">
-         Admin Page is under Development
-      </div>.
-
+      <div class="admin-header" id="admin-name">
+         <li th:text="${name}"></li>
+         <button id="test-button">Click Me!</button>
+      </div>
+      <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+      <script th:src="@{/webjars/jquery-ui/jquery-ui.min.js}"></script>
+      <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+      <script>
+         //alert("Hello World!");
+         $("#admin-name").css("background","#0000ff");
+         $("#test-button").click(function(){
+            alert("Hello World");
+            $.ajax({
+               url: "/get_product_name",
+               type: 'GET',
+               data: { 
+                   id: 4, 
+                   userid: "asas", 
+                   email: "trahahshash@jadsja"
+                 },
+               dataType: 'json', // added data type
+               success: function(res) {
+                  console.log(res);
+                  alert(res);
+            }
+    });
+});
+      </script>
    </body>
 </html>
+

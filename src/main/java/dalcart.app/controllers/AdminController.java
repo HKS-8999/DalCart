@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import dalcart.app.models.UserModel;
 
+import java.util.Map;
+
 @Controller
 @RequestMapping(value = {"/admin"})
 @Component
@@ -17,10 +19,10 @@ public class AdminController {
     UserModel userModel;
 
     @GetMapping(value = {""})
-    public ModelAndView index() {
+    public ModelAndView index(Map<String, Object> model) {
         System.out.println(userModel.getData() + "******************************************");
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("admin");
+        modelAndView.getModel().put("name", "Tarash");
         return modelAndView;
     }
 
