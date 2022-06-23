@@ -22,32 +22,19 @@ import java.util.Map;
 
 // @Controller
 // @RequestMapping(value = {"/admin"})
+
+
 @Component
 public class UserModel extends Model {
-
-  @Value("${spring.datasource.url}")
-  private String dbUrl;
-
-  @Value("${spring.datasource.username}")
-  private String username;
-
-  @Value("${spring.datasource.password}")
-  private String password;
-
-  @Autowired
-  private DataSource dataSource;
 
     // @GetMapping(value = {""})
     public String getData() {
         //String db(Map<String, Object> model) {
-            System.out.println("Reached Here 3"); 
-          try (Connection connection = dataSource.getConnection()) {
-            System.out.println("Reached Here 1");
+          try (Connection connection = super.dataSource.getConnection()) {
             Statement stmt = connection.createStatement();
             stmt.executeUpdate("CREATE TABLE IF NOT EXISTS ticks (tick timestamp)");
             stmt.executeUpdate("INSERT INTO ticks VALUES (now())");
             ResultSet rs = stmt.executeQuery("SELECT tick FROM ticks");
-            System.out.println("Reached Here 2");
 
             ArrayList<String> output = new ArrayList<String>();
             while (rs.next()) {
@@ -62,20 +49,6 @@ public class UserModel extends Model {
             return "error";
           }
       //}
-    }
-
-
-    @Bean
-    public DataSource dataSource() throws SQLException {
-      if (dbUrl == null || dbUrl.isEmpty()) {
-        return new HikariDataSource();
-      } else {
-        HikariConfig config = new HikariConfig();
-        config.setJdbcUrl(dbUrl);
-        config.setUsername(username);
-        config.setPassword(password);
-        return new HikariDataSource(config);
-      }
     }
 
 }
