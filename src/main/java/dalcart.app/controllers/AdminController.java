@@ -13,9 +13,11 @@ import dalcart.app.models.UserModel;
 @Component
 public class AdminController {
 
+    @Autowired
+    UserModel userModel;
+
     @GetMapping(value = {""})
     public ModelAndView index() {
-        UserModel userModel = new UserModel();
         System.out.println(userModel.getData() + "******************************************");
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("admin");

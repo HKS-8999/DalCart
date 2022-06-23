@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.beans.factory.annotation.Value;
 
-
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -41,11 +40,14 @@ public class UserModel extends Model {
     // @GetMapping(value = {""})
     public String getData() {
         //String db(Map<String, Object> model) {
+            System.out.println("Reached Here 3"); 
           try (Connection connection = dataSource.getConnection()) {
+            System.out.println("Reached Here 1");
             Statement stmt = connection.createStatement();
             stmt.executeUpdate("CREATE TABLE IF NOT EXISTS ticks (tick timestamp)");
             stmt.executeUpdate("INSERT INTO ticks VALUES (now())");
             ResultSet rs = stmt.executeQuery("SELECT tick FROM ticks");
+            System.out.println("Reached Here 2");
 
             ArrayList<String> output = new ArrayList<String>();
             while (rs.next()) {
