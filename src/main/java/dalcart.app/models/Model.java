@@ -41,14 +41,16 @@ public abstract class Model {
 
 	@Bean
     public DataSource dataSource() throws SQLException {
-      if (dbUrl == null || dbUrl.isEmpty()) {
-        return new HikariDataSource();
-      } else {
-        HikariConfig config = new HikariConfig();
-        config.setJdbcUrl(dbUrl);
-        config.setUsername(username);
-        config.setPassword(password);
-        return new HikariDataSource(config);
-      }
+        if (dbUrl == null || dbUrl.isEmpty()) {
+            return new HikariDataSource();
+        }
+        else
+        {
+            HikariConfig config = new HikariConfig();
+            config.setJdbcUrl(dbUrl);
+            config.setUsername(username);
+            config.setPassword(password);
+            return new HikariDataSource(config);
+        }
     }
 }

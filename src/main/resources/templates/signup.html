@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Dalcart</title>
+</head>
+<body>
+    <div class = "signupContainer">
+        <h1>DalCart</h1>
+        <hr>
+        <h2>Registeration</h2>
+
+        <form action="#" th:action="@{/signup}" th:object="${user}" method="POST">
+
+            <label>Email: </label>
+            <input type = "text" name="email" /><br/>
+
+            <label>First Name: </label>
+            <input type = "text" name="firstName" /><br/>
+
+            <label>Last Name: </label>
+            <input type = "text" name="lastName" /><br/>
+
+            <label>Password: </label>
+            <input type = "text" name="password" /><br/>
+
+            <label>Mobile No.: </label>
+            <input type = "text" name="mobileNo" /><br/>
+
+            <button type = "submit">Submit</button>
+        </form>
+    </div>
+</body>
+</html>
