@@ -1,6 +1,7 @@
 package dalcart.app.controllers;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -19,10 +20,12 @@ public class AdminController {
     UserModel userModel;
 
     @GetMapping(value = {""})
-    public ModelAndView index(Map<String, Object> model) {
-        System.out.println(userModel.getData() + "******************************************");
+    public ModelAndView index(@CookieValue(name = "userkey") String userKey) {
+        System.out.println("**********************" + userKey);
+        //System.out.println(userModel.getData() + "******************************************");
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.getModel().put("name", "Tarash");
+        modelAndView.getModel().put("username", "Tarash");
+        modelAndView.setViewName("admin");
         return modelAndView;
     }
 
