@@ -1,5 +1,10 @@
 package dalcart.app.controllers;
 
+import dalcart.app.models.User;
+import dalcart.app.service.AdminService;
+import dalcart.app.service.IAdminService;
+import dalcart.app.service.IUserService;
+import dalcart.app.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,11 +26,14 @@ public class AdminController {
 
     @GetMapping(value = {""})
     public ModelAndView index(@CookieValue(name = "userkey") String userKey) {
-        System.out.println("**********************" + userKey);
-        //System.out.println(userModel.getData() + "******************************************");
+        //check if user key is valid else rediret to login page
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.getModel().put("username", "Tarash");
-        modelAndView.setViewName("admin");
+        modelAndView.setViewName("login");
+        if(IAdminService.isUserAdmin(userKey)){
+            User user = IUserService.getUserByKey(userKey);
+            modelAndView.getModel().put("username", "Tarash");
+        }
+        //System.out.println(userModel.getData() + "******************************************"
         return modelAndView;
     }
 
