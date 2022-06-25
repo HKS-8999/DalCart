@@ -7,10 +7,7 @@ import org.springframework.stereotype.Service;
 
 
 @Service
-public class AdminService implements IAdminService{
-
-    @Autowired
-    private IUserPersistence iUserPersistence;
+public class AdminService{
 
     public static boolean isUserAdmin(String userKey){
         //return User.isUserAdmin();

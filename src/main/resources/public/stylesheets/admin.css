@@ -1,6 +1,34 @@
-.admin-header{
-	background: #ff0000;
-	/*background: #4267B2;*/
-	color: white;
-	padding-bottom: 80px;
+.admin-title{
+    font-size: large;
+    margin-bottom: 1%;
 }
+.admin-container{
+    border: 2px solid black;
+    margin: 25px;
+    position: relative;
+}
+
+.product-list-header{
+    border: 2px solid black;
+    position: relative;
+}
+.product-list-row{
+    border: 2px solid black;
+    position: relative;
+}
+
+.product-row{
+    padding:5px;
+}
+
+.product-list-header-item{
+    font-weight: bold;
+}
+
+.admin-button{
+}
+
+.admin-button-column{
+    margin:6px;
+}
+
