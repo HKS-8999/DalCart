@@ -23,7 +23,7 @@ import java.util.Map;
 public abstract class Model {
 	abstract public String getData();
 	//public String fetchData();
-    
+
     @Autowired
     UserModel userModel;
 

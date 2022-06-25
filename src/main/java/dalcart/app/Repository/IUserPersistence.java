@@ -1,9 +1,10 @@
-package dalcart.app.models;
+package dalcart.app.Repository;
 
+import dalcart.app.models.User;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
-@Repository
+
 public interface IUserPersistence {
     enum StorageResult {
         DOES_NOT_EXIST,
