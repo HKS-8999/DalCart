@@ -27,7 +27,7 @@ import java.util.Map;
 @Component
 public class UserModel extends Model {
 
-    // @GetMapping(value = {""})
+
     public String getData() {
         //String db(Map<String, Object> model) {
           try (Connection connection = super.dataSource.getConnection()) {
