@@ -48,10 +48,9 @@
     <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
     <script>
         //checking if user is logged in, if not redirecting to the login page
-        if(window.localStorage.getItem('userKey') == null && window.location.pathname != "/login"){
+        if(window.localStorage.getItem('userKey') == null && window.location.pathname != "/login" && window.location.pathname != "/signup"){
             window.stop()
             window.location = "/login"
-
         }
     </script>
 </body>
