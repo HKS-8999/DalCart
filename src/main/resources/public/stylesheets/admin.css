@@ -26,9 +26,14 @@
 }
 
 .admin-button{
+    width: 110px;
 }
 
 .admin-button-column{
     margin:6px;
+}
+
+.inventory-input{
+    width: 70px;
 }
 
