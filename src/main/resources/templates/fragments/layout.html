@@ -46,4 +46,12 @@
     <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
     <script th:src="@{/webjars/jquery-ui/jquery-ui.min.js}"></script>
     <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <script>
+        //checking if user is logged in, if not redirecting to the login page
+        if(window.localStorage.getItem('userKey') == null && window.location.pathname != "/login"){
+            window.stop()
+            window.location = "/login"
+
+        }
+    </script>
 </body>
