@@ -3,9 +3,7 @@ package dalcart.app.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import mocks.MockProduct;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -36,8 +34,8 @@ public class AdminController {
         //System.out.println(userModel.getData() + "******************************************"
         Map<Integer, String> listOfProducts = new HashMap<Integer,String>();
         List<MockProduct> mockProducts = new ArrayList<>();
-        mockProducts.add(new MockProduct("iphone",10,false));//id,productname,inventory,enabled
-        mockProducts.add(new MockProduct("micromax",20,true));
+        mockProducts.add(new MockProduct(1,"iphone",10,false));//id,productname,inventory,enabled
+        mockProducts.add(new MockProduct(2,"micromax",20,true));
         //listOfProducts.put(1,"iphone,10,true");
 //        String json = "";
 //        ObjectMapper objectMapper = new ObjectMapper();
@@ -50,5 +48,14 @@ public class AdminController {
         modelAndView.addObject("products",mockProducts);
         return modelAndView;
     }
+
+    @PostMapping(value = {"/submit_product_data"})
+    @ResponseBody
+    public String updateProductData(@RequestParam Map<String,String> allParams){
+        allParams.forEach((k,v) -> System.out.println("Key = "
+                + k + ", Value = " + v));
+        return "success";
+    }
+
 
 }

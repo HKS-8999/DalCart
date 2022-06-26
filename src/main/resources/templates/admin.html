@@ -10,66 +10,65 @@
       <script th:src="@{/webjars/jquery-ui/jquery-ui.min.js}"></script>
       <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
         <div class = container admin-container>
-            <div class="row">
-                <div class="container ">
-                     <div class="row">
-                        <div class="col-lg-12 center text-center admin-title">
-                           Dalcart Admin
-                        </div>
-                     </div>
+            <form action="" >
+                <div class="row">
+                    <div class="container ">
+                         <div class="row">
+                            <div class="col-lg-12 center text-center admin-title">
+                               Dalcart Admin
+                            </div>
+                         </div>
 
-                    <div class="row product-list-header">
-                        <div class="col-lg-3 text-center product-list-header-item">
-                           Product Name
+                        <div class="row product-list-header">
+                            <div class="col-lg-3 text-center product-list-header-item">
+                               Product Name
+                            </div>
+                            <div class="col-lg-3 text-center product-list-header-item">
+                               Current Inventory
+                            </div>
+                            <div class="col-lg-3 text-center product-list-header-item">
+                               Add to Inventory
+                            </div>
+                            <div class="col-lg-3 text-center product-list-header-item">
+                               Enabled?
+                            </div>
                         </div>
-                        <div class="col-lg-3 text-center product-list-header-item">
-                           Current Inventory
-                        </div>
-                        <div class="col-lg-3 text-center product-list-header-item">
-                           Add to Inventory
-                        </div>
-                        <div class="col-lg-3 text-center product-list-header-item">
-                           Enabled?
-                        </div>
-                    </div>
-                    <div class="row product-list-row text-center product-row" th:each="product: ${products}">
-                        <div class="col-lg-3 flex" th:text="${product.productName}"></div>
-                        <div class="col-lg-3 flex"  th:text="${product.quantity}" ></div>
-                        <div class="col-lg-3 flex">
-                            <input type="number" step="1" id="inventory" min="0" max="999" th:value="0"/>
-                        </div>
-                        <div class="col-lg-3 flex">
-                            <input class="form-check-input inventory-input" type="checkbox"  th:checked="${product.enabled}"/>
+                        <div class="row product-list-row text-center product-row" th:each="product: ${products}">
+                            <div class="col-lg-3 flex"  th:text="${product.productName}"></div>
+                            <div class="col-lg-3 flex"   th:text="${product.quantity}" ></div>
+                            <div class="col-lg-3 flex">
+                                <input class="product-detail" type="number" step="1" th:name = "'product-inventory-' + ${product.id}" min="0" max="999" th:value="0"/>
+                            </div>
+                            <div class="col-lg-3 flex">
+                                <input class="form-check-input inventory-input product-detail" th:name = "'product-enabled-' + ${product.id}" type="checkbox"  th:checked="${product.enabled}"/>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-12 text-center admin-button-column">
-                    <button type="button" class="btn btn-dark admin-button" id="submit_inventory">Submit</button>
+                <div class="row">
+                    <div class="col-lg-12 text-center admin-button-column">
+                        <input type="submit" class="btn btn-dark admin-button"/>
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
       <script>
-         //alert("Hello World!");
-            $("#admin-name").css("background","#002aff");
-               $("#test-button").click(function(){
-                  alert("Hello World");
-                  $.ajax({
-                     url: "/get_product_name",
-                     type: 'GET',
-                     data: {
-                         id: 4,
-                         userid: "asas",
-                         email: "trahahshash@jadsja"
-                       },
-                     dataType: 'json', // added data type
-                     success: function(res) {
-                        console.log(res);
-                        alert(res);
-                  }
-               });
+        $( "form" ).on( "submit", function(e) {
+            var dataString = $(this).serialize();
+            $.ajax({
+              type: "POST",
+              url: "/admin/submit_product_data",
+              data: dataString,
+              success: function () {
+                alert("Product Data Submitted Successfully!");
+              },
+              error: function (request, status, error) {
+                alert("Submit Failed, Please Try Again After Sometime");
+              }
             });
+            e.preventDefault();
+          });
+
       </script>
    </body>
 </html>
