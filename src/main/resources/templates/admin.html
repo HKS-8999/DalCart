@@ -35,12 +35,12 @@
                         </div>
                         <div class="row product-list-row text-center product-row" th:each="product: ${products}">
                             <div class="col-lg-3 flex"  th:text="${product.productName}"></div>
-                            <div class="col-lg-3 flex"   th:text="${product.quantity}" ></div>
+                            <div class="col-lg-3 flex"   th:text="${product.productQuantity}" ></div>
                             <div class="col-lg-3 flex">
-                                <input class="product-detail" type="number" step="1" th:name = "'product-inventory-' + ${product.id}" min="0" max="999" th:value="0"/>
+                                <input class="product-detail" type="number" step="1" th:name = "'product-inventory-' + ${product.productId}" min="0" max="999" th:value="0"/>
                             </div>
                             <div class="col-lg-3 flex">
-                                <input class="form-check-input inventory-input product-detail" th:name = "'product-enabled-' + ${product.id}" type="checkbox"  th:checked="${product.enabled}"/>
+                                <input class="form-check-input inventory-input product-detail" th:name = "'product-enabled-' + ${product.productId}" type="checkbox"  th:checked="${product.enabled}"/>
                             </div>
                         </div>
                     </div>
