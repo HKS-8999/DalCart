@@ -32,18 +32,14 @@
                            Enabled?
                         </div>
                     </div>
-                    <div class="row product-list-row text-center product-row">
+                    <div class="row product-list-row text-center product-row" th:each="product: ${products}">
+                        <div class="col-lg-3 flex" th:text="${product.productName}"></div>
+                        <div class="col-lg-3 flex"  th:text="${product.quantity}" ></div>
                         <div class="col-lg-3 flex">
-                            Iphone
+                            <input type="number" step="1" id="inventory" min="0" max="999" th:value="0"/>
                         </div>
                         <div class="col-lg-3 flex">
-                            100
-                        </div>
-                        <div class="col-lg-3 flex">
-                            <input type="number" step="1" id="inventory" min="0" max="999">
-                        </div>
-                        <div class="col-lg-3 flex">
-                            <input class="form-check-input inventory-input" type="checkbox" value="" id="enabled">
+                            <input class="form-check-input inventory-input" type="checkbox"  th:checked="${product.enabled}"/>
                         </div>
                     </div>
                 </div>
