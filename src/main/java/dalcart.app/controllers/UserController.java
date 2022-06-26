@@ -17,7 +17,8 @@ public class UserController{
     IUserService userservice;
 
     @GetMapping("/signup")
-    public String newUserRegistration(){
+    public String newUserRegistration()
+    {
         return "signup";
     }
 
