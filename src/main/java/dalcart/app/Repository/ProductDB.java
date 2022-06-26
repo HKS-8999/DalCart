@@ -22,10 +22,11 @@ public class ProductDB implements IProductService
     Statement statement;
     ResultSet resultSet;
 
-    ArrayList<Product> product_detail = new ArrayList<>();
+
 
     public ArrayList getProductDetails(Product product)
     {
+        ArrayList<Product> product_detail = new ArrayList<>();
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection(environment.getProperty("spring.datasource.url"),
