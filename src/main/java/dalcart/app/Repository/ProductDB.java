@@ -1,14 +1,18 @@
-package dalcart.app.models;
+package dalcart.app.Repository;
 
+import dalcart.app.models.Product;
+import dalcart.app.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 @Repository
-public class ProductDB implements IProductPersistence
+public class ProductDB implements IProductService
 {
     @Autowired
     private Environment environment;
@@ -18,10 +22,9 @@ public class ProductDB implements IProductPersistence
     Statement statement;
     ResultSet resultSet;
 
-    public HashMap<String,String> map;
+    ArrayList<Product> product_detail = new ArrayList<>();
 
-    @Override
-    public HashMap getProductDetails(Product product)
+    public ArrayList getProductDetails(Product product)
     {
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -34,18 +37,19 @@ public class ProductDB implements IProductPersistence
             resultSet = statement.executeQuery(query);
             while(resultSet.next())
             {
-                map.put("product_id",resultSet.getString(1));
-                map.put("product_name",resultSet.getString(2));
-                map.put("product_description",resultSet.getString(3));
-                map.put("product_price",resultSet.getString(4));
-                map.put("product_quantity",resultSet.getString(5));
-                map.put("product_picture_url",resultSet.getString(6));
-                map.put("is_product_active",resultSet.getString(7));
+                Product p = new Product();
+                p.setProductName(resultSet.getString(2));
+                p.setProductDescription(resultSet.getString(3));
+                p.setProductQuantity(resultSet.getInt(5));
+                p.setProductPrice(resultSet.getInt(4));
+                product_detail.add(p);
             }
-            return map;
+            return product_detail;
 
         }catch (SQLException | ClassNotFoundException e){
             e.printStackTrace();
         }
+        return product_detail;
     }
 }
+

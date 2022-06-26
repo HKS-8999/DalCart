@@ -1,6 +1,5 @@
 package dalcart.app.controllers;
 
-import dalcart.app.models.IUserPersistence;
 import dalcart.app.models.Product;
 import dalcart.app.models.User;
 import dalcart.app.service.IUserService;
@@ -12,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 @Controller
@@ -21,10 +21,9 @@ public class HomeController
     ProductService productService;
 
     @GetMapping("/home")
-    public String viewProducts(Model model)
+    public ArrayList viewProducts(Model model)
     {
-
-        return "home";
+        return productService.getProducts();
     }
 
 
