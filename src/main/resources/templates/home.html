@@ -6,26 +6,25 @@
 </head>
 <body>
     <div class = "home">
-
-
-        <table>
-<!--            <thead>-->
+        <table style="border: 1px solid black; border-collapse: collapse;" >
+            <thead>
                 <tr>
                     <th>Product name</th>
-                    <th>product price</th>
+                    <th>product Description</th>
+                    <th>Product Price</th>
                 </tr>
-<!--            </thead>-->
-<!--            <tbody>-->
+            </thead>
+            <tbody>
 <!--            <th:block th:each="person : ${personBind}">-->
 
                 <tr th:each="product : ${listproducts}">
                     <td th:text="${product.productName}"></td>
                     <td th:text="${product.productDescription}"></td>
-<!--                    <td th:text="${product.description}"></td>-->
+                    <td th:text="${product.productPrice}"></td>
                 </tr>
 
 <!--            </th:block>-->
-<!--            </tbody>-->
+            </tbody>
         </table>
     </div>
 </body>

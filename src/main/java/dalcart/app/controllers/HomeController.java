@@ -23,15 +23,13 @@ public class HomeController
     ProductService productService;
 
     @GetMapping("/home")
-    public ModelAndView listgetproducts (ModelAndView model) throws IOException {
+    public ModelAndView listgetproducts (ModelAndView model) throws IOException
+    {
 
         ArrayList<Product> lstprodcts=productService.getProducts();
         model.addObject("listproducts",lstprodcts);
         model.setViewName("home");
 
-
-    return model;
-}
-
-
+        return model;
+    }
 }
