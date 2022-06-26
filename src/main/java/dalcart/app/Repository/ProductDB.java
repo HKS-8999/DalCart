@@ -33,6 +33,7 @@ public class ProductDB implements IProductService
                     environment.getProperty("spring.datasource.password"));
 
             String query = "select * from CSCI5308_2_DEVINT.product_detail;";
+//            String query = "select * from product_details;";
             statement = conn.createStatement();
             resultSet = statement.executeQuery(query);
             while(resultSet.next())
@@ -52,4 +53,3 @@ public class ProductDB implements IProductService
         return product_detail;
     }
 }
-

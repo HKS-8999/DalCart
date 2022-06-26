@@ -21,7 +21,7 @@ public class ProductService
     {
         ArrayList<Product> productDetail = new ArrayList<>();
         productDetail = iProductService.getProductDetails(p);
-        return View(productDetail);
+        return productDetail;
     }
 
 }

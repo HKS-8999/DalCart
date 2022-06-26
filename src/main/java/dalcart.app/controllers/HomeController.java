@@ -8,9 +8,11 @@ import dalcart.app.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -21,10 +23,15 @@ public class HomeController
     ProductService productService;
 
     @GetMapping("/home")
-    public ArrayList viewProducts(Model model)
-    {
-        return productService.getProducts();
-    }
+    public ModelAndView listgetproducts (ModelAndView model) throws IOException {
+
+        ArrayList<Product> lstprodcts=productService.getProducts();
+        model.addObject("listproducts",lstprodcts);
+        model.setViewName("home");
+
+
+    return model;
+}
 
 
 }

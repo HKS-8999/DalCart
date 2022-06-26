@@ -5,12 +5,27 @@
     <title>Home Page</title>
 </head>
 <body>
-    <div class = "login">
+    <div class = "home">
+
+
         <table>
-            <tr>
-                <th>Product name</th>
-                <th>product price</th>
-            </tr>
+<!--            <thead>-->
+                <tr>
+                    <th>Product name</th>
+                    <th>product price</th>
+                </tr>
+<!--            </thead>-->
+<!--            <tbody>-->
+<!--            <th:block th:each="person : ${personBind}">-->
+
+                <tr th:each="product : ${listproducts}">
+                    <td th:text="${product.productName}"></td>
+                    <td th:text="${product.productDescription}"></td>
+<!--                    <td th:text="${product.description}"></td>-->
+                </tr>
+
+<!--            </th:block>-->
+<!--            </tbody>-->
         </table>
     </div>
 </body>

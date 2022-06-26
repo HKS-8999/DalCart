@@ -3,8 +3,10 @@ package dalcart.app.models;
 public class Product
 {
     private String productName;
+    private int productId;
     private String productDescription;
     private int productPrice;
+    private int productQuantity;
 
     public String getProductName() {
         return productName;
@@ -38,7 +40,13 @@ public class Product
         this.productQuantity = productQuantity;
     }
 
-    private int productQuantity;
+    public int getProductId() {
+        return productId;
+    }
+
+    public void setProductId(int productId) {
+        this.productId = productId;
+    }
 
 
 }
