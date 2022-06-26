@@ -9,6 +9,8 @@ public class Product implements IProduct
     private int productQuantity;
     private boolean enabled;
 
+    private String productPictureUrl;
+
     public String getProductName() {
         return productName;
     }
@@ -55,5 +57,14 @@ public class Product implements IProduct
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public void setProductPictureUrl(String productPictureUrl)
+    {
+        this.productPictureUrl = productPictureUrl;
+    }
+    public String getProductPictureUrl()
+    {
+        return productPictureUrl;
     }
 }
