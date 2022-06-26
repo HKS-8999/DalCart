@@ -1,12 +1,13 @@
 package dalcart.app.models;
 
-public class Product
+public class Product implements IProduct
 {
     private String productName;
     private int productId;
     private String productDescription;
     private int productPrice;
     private int productQuantity;
+    private boolean enabled;
 
     public String getProductName() {
         return productName;
@@ -48,5 +49,11 @@ public class Product
         this.productId = productId;
     }
 
+    public boolean getEnabled() {
+        return enabled;
+    }
 
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
 }

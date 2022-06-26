@@ -1,6 +1,7 @@
 package dalcart.app.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import dalcart.app.models.IProduct;
 import mocks.MockProduct;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -33,9 +34,13 @@ public class AdminController {
 //        }
         //System.out.println(userModel.getData() + "******************************************"
         Map<Integer, String> listOfProducts = new HashMap<Integer,String>();
-        List<MockProduct> mockProducts = new ArrayList<>();
-        mockProducts.add(new MockProduct(1,"iphone",10,false));//id,productname,inventory,enabled
-        mockProducts.add(new MockProduct(2,"micromax",20,true));
+        List<IProduct> mockProducts = new ArrayList<>();
+
+        IProduct p1 = new MockProduct(1,"Tshirts",25,true);
+        IProduct p2 = new MockProduct(2,"Notebooks",50,false);
+
+        mockProducts.add(p1);
+        mockProducts.add(p2);
         //listOfProducts.put(1,"iphone,10,true");
 //        String json = "";
 //        ObjectMapper objectMapper = new ObjectMapper();
