@@ -2,6 +2,8 @@ package dalcart.app.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dalcart.app.models.IProduct;
+import dalcart.app.models.Product;
+import dalcart.app.service.ProductService;
 import mocks.MockProduct;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +26,9 @@ public class AdminController {
     @Autowired
     UserModel userModel;
 
+    @Autowired
+    ProductService productService;
+
     @GetMapping(value = {""})
     public ModelAndView index(@CookieValue(name = "userkey", required = false) String userKey) {
 
@@ -44,11 +49,12 @@ public class AdminController {
         Map<Integer, String> listOfProducts = new HashMap<Integer,String>();
         List<IProduct> mockProducts = new ArrayList<>();
 
-        IProduct p1 = new MockProduct(1,"Tshirts",25,true);
-        IProduct p2 = new MockProduct(2,"Notebooks",50,false);
+        //IProduct p1 = new MockProduct(1,"Tshirts",25,true);
+        //IProduct p2 = new MockProduct(2,"Notebooks",50,false);
 
-        mockProducts.add(p1);
-        mockProducts.add(p2);
+        ArrayList<IProduct> products =productService.getProducts();
+        //mockProducts.add(p1);
+        //mockProducts.add(p2);
         //listOfProducts.put(1,"iphone,10,true");
 //        String json = "";
 //        ObjectMapper objectMapper = new ObjectMapper();
@@ -58,7 +64,9 @@ public class AdminController {
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //        }
-        modelAndView.addObject("products",mockProducts);
+        if(products != null) {
+            modelAndView.addObject("products", products);
+        }
         return modelAndView;
     }
 
