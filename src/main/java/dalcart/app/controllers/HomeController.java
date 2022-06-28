@@ -33,4 +33,19 @@ public class HomeController
 
         return model;
     }
+
+    @PostMapping("/home")
+    public String submitForm(@ModelAttribute Product product){
+        try
+        {
+            productService.addToCart(product);
+//            userservice.createNewUser(user);
+        }
+        catch (Exception e)
+        {
+            throw new RuntimeException(e);
+        }
+        return "Item added to cart...";
+    }
+
 }
