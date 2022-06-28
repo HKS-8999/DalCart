@@ -9,6 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import dalcart.app.models.UserModel;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,8 +25,15 @@ public class AdminController {
     UserModel userModel;
 
     @GetMapping(value = {""})
-    public ModelAndView index(@CookieValue(name = "userkey") String userKey) {
+    public ModelAndView index(@CookieValue(name = "userkey", required = false) String userKey) {
+
         //check if user key is valid else rediret to login page
+        if(userKey == null){
+            ModelAndView modelAndView =  new ModelAndView("redirect:/login");
+            modelAndView.addObject("modelAttribute" , modelAndView);
+            return modelAndView;
+        }
+
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("admin");
 //        if(IAdminService.isUserAdmin(userKey)){
@@ -53,6 +61,14 @@ public class AdminController {
         modelAndView.addObject("products",mockProducts);
         return modelAndView;
     }
+
+//    @GetMapping(value = {""})
+//    public ModelAndView index() {
+//
+//        ModelAndView modelAndView = new ModelAndView();
+//        modelAndView.setViewName("index");
+//        return modelAndView;
+//    }
 
     @PostMapping(value = {"/submit_product_data"})
     @ResponseBody
