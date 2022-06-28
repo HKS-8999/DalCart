@@ -18,12 +18,11 @@
 <!--            <th:block th:each="person : ${personBind}">-->
 
                 <tr th:each="product : ${listproducts}">
-                    <td th:text="${product.getProductName}"></td>
+                    <td th:text="${product.ProductName}"></td>
                     <td th:text="${product.productDescription}"></td>
                     <td th:text="${product.productPrice}"></td>
                 </tr>
 
-<!--            </th:block>-->
             </tbody>
         </table>
     </div>
