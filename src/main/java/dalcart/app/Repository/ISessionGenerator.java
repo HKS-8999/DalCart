@@ -5,5 +5,5 @@ import dalcart.app.models.User;
 import java.sql.SQLException;
 
 public interface ISessionGenerator {
-    public boolean generateSession(User user, IUserPersistence iUserPersistence) throws SQLException ;
+    public boolean saveSession(String email) throws SQLException ;
 }

@@ -1,10 +1,8 @@
 package dalcart.app.Repository;
 
-import dalcart.app.Repository.IUserPersistence;
 import dalcart.app.database.ConnectionManager;
 import dalcart.app.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
@@ -14,18 +12,15 @@ import java.sql.SQLException;
 public class UserDB implements IUserPersistence {
 
     @Autowired
-    private Environment environment;
-
-    @Autowired
     ConnectionManager connectionManager;
 
     PreparedStatement preparedStatement;
 
     @Override
-    public StorageResult save(User u) throws Exception {
+    public Result save(User u) throws Exception {
         try{
 
-            String query = "insert into CSCI5308_2_DEVINT.User (email, first_name, last_name,password, mobile_no) values ( ?, ?, ?, ?, ?);";
+            String query = "insert into user (email, first_name, last_name,password, mobile_no) values ( ?, ?, ?, ?, ?);";
             preparedStatement= connectionManager.connection.prepareStatement(query);
             preparedStatement.setString(1,u.getEmail());
             preparedStatement.setString(2,u.getFirstName());
@@ -34,16 +29,52 @@ public class UserDB implements IUserPersistence {
             preparedStatement.setString(5,u.getMobileNo());
             preparedStatement.executeUpdate();
 
-            return StorageResult.SUCCESS;
+            return Result.SUCCESS;
         }catch (SQLException e){
             e.printStackTrace();
-            return StorageResult.STORAGE_FAILURE;
+            return Result.STORAGE_FAILURE;
+        }
+        finally {
+            connectionManager.connection.close();
         }
     }
 
     @Override
-    public StorageResult load(String email, User u) {
-        return null;
+    public int loadUserID(String email) {
+        String query = "select id from user where email = ?;";
+        try {
+            preparedStatement = connectionManager.connection.prepareStatement(query);
+            preparedStatement.setString(1,email);
+            int rs1 = preparedStatement.executeUpdate();
+            return rs1;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
+    public String loadUserPasswordbyUsername(String email){
+        String query = "select password from user where email = ?";
+        try{
+            preparedStatement = connectionManager.connection.prepareStatement(query);
+            preparedStatement.setString(1,email);
+            String password = String.valueOf(preparedStatement.executeUpdate());
+            return password;
+        }
+        catch (SQLException e){
+            throw new RuntimeException();
+        }
+    }
+    public String loadUsername(String email){
+        String query = "select email from user where email = ?";
+        try{
+            preparedStatement = connectionManager.connection.prepareStatement(query);
+            preparedStatement.setString(1,email);
+            String result = String.valueOf(preparedStatement.executeUpdate());
+            return result;
+        }
+        catch (SQLException e){
+            throw new RuntimeException();
+        }
+    }
 }

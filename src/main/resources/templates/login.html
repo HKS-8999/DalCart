@@ -6,6 +6,20 @@
 </head>
 <body>
     <div class = "login">
+        <h1>DalCart</h1>
+        <hr>
+        <h2>Login</h2>
+
+        <form action="#" th:action="@{/login}" th:object="${user}" method="POST">
+
+            <label>Email: </label>
+            <input type = "text" name="email" /><br/>
+
+            <label>Password: </label>
+            <input type = "password" name="password" /><br/>
+
+            <button type = "submit">Submit</button>
+        </form>
         <a th:href = "@{/signup}">New here? Sign up</a>
     </div>
 </body>

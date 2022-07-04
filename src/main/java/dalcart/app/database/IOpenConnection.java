@@ -1,2 +1,7 @@
-package dalcart.app.database;public interface IOpenConnection {
+package dalcart.app.database;
+
+import java.sql.Connection;
+
+public interface IOpenConnection {
+
 }
