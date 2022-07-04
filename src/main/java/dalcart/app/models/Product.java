@@ -63,6 +63,7 @@ public class Product implements IProduct
     {
         this.productPictureUrl = productPictureUrl;
     }
+
     public String getProductPictureUrl()
     {
         return productPictureUrl;

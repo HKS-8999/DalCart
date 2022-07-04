@@ -25,8 +25,6 @@ public class HomeController
     @GetMapping("/home")
     public ModelAndView listgetproducts (ModelAndView model) throws IOException
     {
-//        ModelAndView model = new ModelAndView();
-//        lstprodcts = productService.getProducts();
         ArrayList<Product> lstprodcts = productService.getProducts();
         model.addObject("listproducts",lstprodcts);
         model.setViewName("home");
@@ -39,7 +37,6 @@ public class HomeController
         try
         {
             productService.addToCart(product);
-//            userservice.createNewUser(user);
         }
         catch (Exception e)
         {

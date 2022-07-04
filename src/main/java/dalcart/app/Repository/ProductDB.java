@@ -112,6 +112,8 @@ public class ProductDB implements IProductService
     {
         try{
 
+//            int i = 0;
+
             String query = "insert into CSCI5308_2_DEVINT.User (email, first_name, last_name,password, mobile_no) values ( ?, ?, ?, ?, ?);";
             preparedStatement= connectionManager.connection.prepareStatement(query);
 //            preparedStatement.setString(1,u.getEmail());
