@@ -27,7 +27,7 @@ public class HomeController
     {
 //        ModelAndView model = new ModelAndView();
 //        lstprodcts = productService.getProducts();
-        ArrayList<Product> lstprodcts=productService.getProducts();
+        ArrayList<Product> lstprodcts = productService.getProducts();
         model.addObject("listproducts",lstprodcts);
         model.setViewName("home");
 
