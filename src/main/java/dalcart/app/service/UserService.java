@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 
 @Service
-public class UserService implements IUserService{
+public class newUserService implements IUserService{
 
     @Autowired
     private IUserPersistence iUserPersistence;
