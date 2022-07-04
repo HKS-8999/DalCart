@@ -27,10 +27,25 @@ public class HomeController
     {
 //        ModelAndView model = new ModelAndView();
 //        lstprodcts = productService.getProducts();
-        ArrayList<Product> lstprodcts=productService.getProducts();
+        ArrayList<Product> lstprodcts = productService.getProducts();
         model.addObject("listproducts",lstprodcts);
         model.setViewName("home");
 
         return model;
     }
+
+    @PostMapping("/home")
+    public String submitForm(@ModelAttribute Product product){
+        try
+        {
+            productService.addToCart(product);
+//            userservice.createNewUser(user);
+        }
+        catch (Exception e)
+        {
+            throw new RuntimeException(e);
+        }
+        return "Item added to cart...";
+    }
+
 }

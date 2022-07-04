@@ -20,7 +20,12 @@ public interface IProduct
 
     public int getProductId();
 
-    public void setProductId(int productId);
     public void setEnabled(boolean enabled);
+
     public boolean getEnabled();
+
+    public void setProductPictureUrl(String productPictureUrl);
+
+    public String getProductPictureUrl();
+
 }

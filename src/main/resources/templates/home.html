@@ -5,26 +5,77 @@
     <title>Home Page</title>
 </head>
 <body>
-    <div class = "home">
-        <table style="border: 1px solid black; border-collapse: collapse;" >
-            <thead>
-                <tr>
-                    <th>Product name</th>
-                    <th>product Description</th>
-                    <th>Product Price</th>
-                </tr>
-            </thead>
-            <tbody>
-<!--            <th:block th:each="person : ${personBind}">-->
+    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script th:src="@{/webjars/jquery-ui/jquery-ui.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 
-                <tr th:each="product : ${listproducts}">
-                    <td th:text="${product.ProductName}"></td>
-                    <td th:text="${product.productDescription}"></td>
-                    <td th:text="${product.productPrice}"></td>
-                </tr>
-
-            </tbody>
-        </table>
+    <div style="background: cornflowerblue; font-family: 'Arial Rounded MT Bold'; font-size: xx-large; text-align: center;">
+        <h1><u>Dal-Cart</u></h1>
     </div>
+
+    <div class="row card-deck">
+        <div class="col-lg-4 col-md-6 mb-4" th:each="product : ${listproducts}">
+            <div class="card text-center" style="border:2px solid black; padding-left: 50px; padding-top: 50px; padding-bottom: 20px;">
+                <div class="card-header">
+                    <h4> <span th:text="${product.productName}"></span></h4>
+                </div>
+                <div class="card-body">
+                    <a href="#"><img class="card-img-top" src="https://www.jquery-az.com/html/images/banana.jpg"
+                                     alt="" width="100" height="100"></a>
+                    <h5 class="card-title">Price : <span th:text="${product.productPrice}"></span></h5>
+                    <div class="row">
+                        <div class="col-4 padding-0">
+                            <a class="button" th:href="@{/home(id=${product.productId})}">
+                            <button class="btn btn-primary">Add To Cart</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    $("button").click(function(e) {
+    e.preventDefault();
+    $.ajax({
+    type: "POST",
+    url: "/login",
+    data: {
+    id: $(this).val(), // < note use of 'this' here
+    access_token: $("#access_token").val()
+    },
+    success: function(result) {
+    alert('ok');
+    },
+    error: function(result) {
+    alert('error');
+    }
+    });
+    });
+    </script>
+
+
+<!--    <div class = "home">-->
+<!--        <table style="border: 2px solid black; border-collapse: collapse;" >-->
+<!--            <thead>-->
+<!--                <tr>-->
+<!--                    <th>Product name</th>-->
+<!--                    <th>product Description</th>-->
+<!--                    <th>Product Price</th>-->
+<!--                </tr>-->
+<!--            </thead>-->
+<!--            <tbody>-->
+<!--&lt;!&ndash;            <th:block th:each="person : ${personBind}">&ndash;&gt;-->
+
+<!--                <tr th:each="product : ${listproducts}">-->
+<!--                    <td th:text="${product.ProductName}"></td>-->
+<!--                    <td th:text="${product.productDescription}"></td>-->
+<!--                    <td th:text="${product.productPrice}"></td>-->
+<!--                </tr>-->
+
+<!--            </tbody>-->
+<!--        </table>-->
+<!--    </div>-->
 </body>
 </html>
