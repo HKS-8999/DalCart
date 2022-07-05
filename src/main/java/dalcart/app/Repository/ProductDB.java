@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Map;
 
 @Repository
 public class ProductDB implements IProductService
@@ -63,6 +64,8 @@ public class ProductDB implements IProductService
         {
             LocalDate date = java.time.LocalDate.now();
             String query = "insert into CSCI5308_2_DEVINT.products (product_name, product_description, product_price, product_quantity, product_picture_url, enabled, created_at, updated_at) values ( ?, ?, ?, ?, ?, ?, ?, ?);";
+            connectionManager.ConnectionManager();
+
             preparedStatement= connectionManager.connection.prepareStatement(query);
             preparedStatement.setString(1,product.getProductName());
             preparedStatement.setString(2,product.getProductDescription());
@@ -108,24 +111,34 @@ public class ProductDB implements IProductService
     }
 
     @Override
-    public IProductPersistence.StorageResult addProductToCart(Product product)
+    public String addProductToCart(Map<String,String> allParams)
     {
         try{
 
-            String query = "insert into CSCI5308_2_DEVINT.User (email, first_name, last_name,password, mobile_no) values ( ?, ?, ?, ?, ?);";
-            preparedStatement= connectionManager.connection.prepareStatement(query);
-//            preparedStatement.setString(1,u.getEmail());
-//            preparedStatement.setString(2,u.getFirstName());
-//            preparedStatement.setString(3,u.getLastName());
-//            preparedStatement.setString(4,u.getPassword());
-//            preparedStatement.setString(5,u.getMobileNo());
-//            preparedStatement.executeUpdate();
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            conn = DriverManager.getConnection(environment.getProperty("spring.datasource.url"),
+                    environment.getProperty("spring.datasource.username"),
+                    environment.getProperty("spring.datasource.password"));
 
-            return IProductPersistence.StorageResult.SUCCESS;
-        }catch (SQLException e)
+
+            String query = "insert into CSCI5308_2_DEVINT.cart (product_id, user_id, created_date, updated_date) values ( ?, ?, ?, ?);";
+            preparedStatement = conn.prepareStatement(query);
+//            connectionManager.ConnectionManager();
+//            preparedStatement = connectionManager.connection.prepareStatement(query);
+            preparedStatement.setInt(1, Integer.parseInt(allParams.get("id")));
+            preparedStatement.setInt(2,Integer.parseInt(allParams.get("userkey")));
+            preparedStatement.setString(3,"0000-00-00");
+            preparedStatement.setString(4,"0000-00-00");
+            preparedStatement.executeUpdate();
+            return "Success";
+        }
+        catch (SQLException e)
         {
             e.printStackTrace();
-            return IProductPersistence.StorageResult.STORAGE_FAILURE;
+            return "Failure";
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            return "Failure";
         }
     }
 }

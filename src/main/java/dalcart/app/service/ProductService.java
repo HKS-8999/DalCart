@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 @Service
 public class ProductService
@@ -14,19 +15,17 @@ public class ProductService
     @Autowired
     public IProductService iProductService;
 
-    @Autowired
-    public IProductPersistence iProductPersistence;
     public Product p;
     public ArrayList getProducts()
     {
-        ArrayList<Product> productDetail = new ArrayList<>();
+        ArrayList<Product> productDetail;
         productDetail = iProductService.getProductDetails(p);
         return productDetail;
     }
 
-    public IProductPersistence.StorageResult addToCart(Product product)
+    public String addToCart(Map<String,String> allParams)
     {
-        return iProductPersistence.addProductToCart(p);
+        return iProductService.addProductToCart(allParams);
     }
 
 }

@@ -9,8 +9,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 @Component
-public class ConnectionManager {
-    private Environment environment;
+public class ConnectionManager
+{
+    public Environment environment;
     public Connection connection;
 
     public void ConnectionManager(){
