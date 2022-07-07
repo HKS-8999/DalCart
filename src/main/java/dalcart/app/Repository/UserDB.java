@@ -2,26 +2,34 @@ package dalcart.app.Repository;
 
 import dalcart.app.database.ConnectionManager;
 import dalcart.app.models.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 @Repository
 public class UserDB implements IUserPersistence {
 
-    @Autowired
+
     ConnectionManager connectionManager;
+    Connection connection;
+
+    ResultSet resultset;
 
     PreparedStatement preparedStatement;
+
+    public UserDB(){
+
+    }
 
     @Override
     public Result save(User u) throws Exception {
         try{
 
             String query = "insert into user (email, first_name, last_name,password, mobile_no) values ( ?, ?, ?, ?, ?);";
-            preparedStatement= connectionManager.connection.prepareStatement(query);
+            preparedStatement= ConnectionManager.getInstance().getConnection().prepareStatement(query);
             preparedStatement.setString(1,u.getEmail());
             preparedStatement.setString(2,u.getFirstName());
             preparedStatement.setString(3,u.getLastName());
@@ -35,7 +43,7 @@ public class UserDB implements IUserPersistence {
             return Result.STORAGE_FAILURE;
         }
         finally {
-            connectionManager.connection.close();
+            connection.close();
         }
     }
 
@@ -43,10 +51,10 @@ public class UserDB implements IUserPersistence {
     public int loadUserID(String email) {
         String query = "select id from user where email = ?;";
         try {
-            preparedStatement = connectionManager.connection.prepareStatement(query);
+            preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(query);
             preparedStatement.setString(1,email);
-            int rs1 = preparedStatement.executeUpdate();
-            return rs1;
+            resultset = preparedStatement.executeQuery();
+            return resultset.getInt("id");
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -54,26 +62,41 @@ public class UserDB implements IUserPersistence {
     }
 
     public String loadUserPasswordbyUsername(String email){
-        String query = "select password from user where email = ?";
+        String query = "select email from user where email = ?;";
         try{
-            preparedStatement = connectionManager.connection.prepareStatement(query);
+            String result="";
+            preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(query);
             preparedStatement.setString(1,email);
-            String password = String.valueOf(preparedStatement.executeUpdate());
-            return password;
+            System.out.println(preparedStatement);
+            resultset = preparedStatement.executeQuery();
+
+            System.out.println(resultset+"xxx");
+            while(resultset.next()){
+                result = resultset.getString("email");
+            }
+            return result;
         }
         catch (SQLException e){
+            e.printStackTrace();
             throw new RuntimeException();
         }
     }
     public String loadUsername(String email){
-        String query = "select email from user where email = ?";
+        String query = "select email from user where email = ?;";
         try{
-            preparedStatement = connectionManager.connection.prepareStatement(query);
+            String result = null;
+            System.out.println(email);
+            preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(query);
             preparedStatement.setString(1,email);
-            String result = String.valueOf(preparedStatement.executeUpdate());
+            System.out.println(preparedStatement);
+            resultset = preparedStatement.executeQuery();
+            while(resultset.next()){
+                result = resultset.getString("email");
+            }
             return result;
         }
         catch (SQLException e){
+            e.printStackTrace();
             throw new RuntimeException();
         }
     }
