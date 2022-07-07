@@ -9,22 +9,18 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class UserController{
 
-    @Autowired
-    IUserService userservice;
-
     @GetMapping("/signup")
     public String newUserRegistration(){
         return "signup";
     }
 
     @PostMapping("/signup")
-    public String submitForm(@ModelAttribute User user){
+    public String submitForm(@ModelAttribute User user, IUserService userService){
         try {
-            userservice.createNewUser(user);
+            userService.createNewUser(user);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
         return "new user created";
     }
-
 }

@@ -17,9 +17,9 @@ public class ProductDB implements IProductService
 {
     @Autowired
     private Environment environment;
-
-    @Autowired
-    private ConnectionManager connectionManager;
+//
+//    @Autowired
+//    private ConnectionManager connectionManager;
 
     Connection conn;
 
@@ -64,9 +64,9 @@ public class ProductDB implements IProductService
         {
             LocalDate date = java.time.LocalDate.now();
             String query = "insert into CSCI5308_2_DEVINT.products (product_name, product_description, product_price, product_quantity, product_picture_url, enabled, created_at, updated_at) values ( ?, ?, ?, ?, ?, ?, ?, ?);";
-            connectionManager.ConnectionManager();
 
-            preparedStatement= connectionManager.connection.prepareStatement(query);
+
+            preparedStatement= ConnectionManager.getInstance().getConnection().prepareStatement(query);
             preparedStatement.setString(1,product.getProductName());
             preparedStatement.setString(2,product.getProductDescription());
             preparedStatement.setInt(3,product.getProductPrice());
@@ -87,7 +87,7 @@ public class ProductDB implements IProductService
         try
         {
             String query = "update CSCI5308_2_DEVINT.products set product_quantity = " + product.getProductQuantity() + " where id = " + product.getProductId() + ";";
-            statement = connectionManager.connection.createStatement();
+            statement = ConnectionManager.getInstance().getConnection().createStatement();
             statement.executeUpdate(query);
         }
         catch (SQLException e)
@@ -101,7 +101,7 @@ public class ProductDB implements IProductService
         try
         {
             String query = "update CSCI5308_2_DEVINT.products set enabled = " + product.getEnabled() + " where id = " + product.getProductId() + ";";
-            statement = connectionManager.connection.createStatement();
+            statement =  ConnectionManager.getInstance().getConnection().createStatement();
             statement.executeUpdate(query);
         }
         catch (SQLException e)
