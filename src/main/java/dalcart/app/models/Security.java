@@ -1,7 +1,4 @@
-package dalcart.app.service;
-
-import dalcart.app.Repository.IUserPersistence;
-import dalcart.app.models.User;
+package dalcart.app.models;
 
 public interface Security {
     public enum RESULT{

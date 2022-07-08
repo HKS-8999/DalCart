@@ -1,16 +1,13 @@
-package dalcart.app.service;
+package dalcart.app.models;
 
 import dalcart.app.Repository.IUserPersistence;
-import dalcart.app.Repository.UserDB;
-import dalcart.app.models.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SecurityService implements Security {
+public class SecurityModel implements Security {
     IUserPersistence userPersistence;
 
-    public SecurityService(IUserPersistence userPersistence){
+    public SecurityModel(IUserPersistence userPersistence){
         this.userPersistence = userPersistence;
     }
 

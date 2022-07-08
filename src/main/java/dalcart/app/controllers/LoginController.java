@@ -5,18 +5,10 @@ import dalcart.app.Repository.IUserPersistence;
 
 import dalcart.app.Repository.SessionDB;
 import dalcart.app.Repository.UserDB;
-import dalcart.app.models.Session;
-import dalcart.app.models.User;
-import dalcart.app.service.Security;
-import dalcart.app.service.SecurityService;
-import org.springframework.boot.autoconfigure.web.servlet.WebMvcProperties;
+import dalcart.app.models.Security;
+import dalcart.app.models.SecurityModel;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.View;
-
-import java.util.Map;
 
 @Controller
 public class LoginController {
@@ -30,7 +22,7 @@ public class LoginController {
         try{
             IUserPersistence iUserPersistence = new UserDB();
             System.out.println("000000");
-            Security security = new SecurityService(iUserPersistence);
+            Security security = new SecurityModel(iUserPersistence);
             System.out.println("1111111");
             ISessionGenerator sessionGenerator = new SessionDB();
             System.out.println("222222222");

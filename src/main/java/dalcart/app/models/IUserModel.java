@@ -1,10 +1,10 @@
-package dalcart.app.service;
+package dalcart.app.models;
 
 import dalcart.app.Repository.IUserPersistence;
-import dalcart.app.models.User;
+import dalcart.app.items.User;
 
 
-public interface IUserService {
+public interface IUserModel {
 
     IUserPersistence.Result createNewUser(User user) throws Exception;
 

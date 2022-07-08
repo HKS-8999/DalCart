@@ -1,7 +1,7 @@
 package dalcart.app.Repository;
 
 import dalcart.app.database.ConnectionManager;
-import dalcart.app.models.User;
+import dalcart.app.items.User;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;

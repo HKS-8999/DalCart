@@ -1,8 +1,7 @@
 package dalcart.app.controllers;
 
-import dalcart.app.models.User;
-import dalcart.app.service.IUserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import dalcart.app.items.User;
+import dalcart.app.models.IUserModel;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +14,7 @@ public class UserController{
     }
 
     @PostMapping("/signup")
-    public String submitForm(@ModelAttribute User user, IUserService userService){
+    public String submitForm(@ModelAttribute User user, IUserModel userService){
         try {
             userService.createNewUser(user);
         } catch (Exception e) {

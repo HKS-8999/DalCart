@@ -1,15 +1,18 @@
-package dalcart.app.models;
-
-import org.springframework.boot.actuate.endpoint.annotation.Selector;
-import org.springframework.stereotype.Component;
+package dalcart.app.items;
 
 
-public class User {
+public class User implements IUser{
+    private int userID;
     private String email;
     private String firstName;
     private String lastName;
     private String password;
     private String mobileNo;
+
+    @Override
+    public int getUserID() {
+        return this.userID;
+    }
 
     public String getPassword() {
         return password;

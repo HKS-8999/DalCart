@@ -1,6 +1,6 @@
 package mocks;
 
-import dalcart.app.models.IProduct;
+import dalcart.app.items.IProduct;
 
 public class MockProduct implements IProduct
 {

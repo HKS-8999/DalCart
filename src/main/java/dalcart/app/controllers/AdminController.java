@@ -1,17 +1,13 @@
 package dalcart.app.controllers;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import dalcart.app.models.IProduct;
-import dalcart.app.models.Product;
-import dalcart.app.service.ProductService;
-import mocks.MockProduct;
+import dalcart.app.items.IProduct;
+import dalcart.app.models.ProductModel;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import dalcart.app.models.UserModel;
-import org.springframework.web.servlet.view.RedirectView;
+import dalcart.app.items.UserModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,7 +23,7 @@ public class AdminController {
     UserModel userModel;
 
     @Autowired
-    ProductService productService;
+    ProductModel productService;
 
     @GetMapping(value = {""})
     public ModelAndView index(@CookieValue(name = "userkey", required = false) String userKey) {
@@ -41,42 +37,16 @@ public class AdminController {
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("admin");
-//        if(IAdminService.isUserAdmin(userKey)){
-//            User user = IUserService.getUserByKey(userKey);
-//            modelAndView.getModel().put("username", "Tarash");
-//        }
-        //System.out.println(userModel.getData() + "******************************************"
         Map<Integer, String> listOfProducts = new HashMap<Integer,String>();
         List<IProduct> mockProducts = new ArrayList<>();
 
-        //IProduct p1 = new MockProduct(1,"Tshirts",25,true);
-        //IProduct p2 = new MockProduct(2,"Notebooks",50,false);
-
         ArrayList<IProduct> products =productService.getProducts();
-        //mockProducts.add(p1);
-        //mockProducts.add(p2);
-        //listOfProducts.put(1,"iphone,10,true");
-//        String json = "";
-//        ObjectMapper objectMapper = new ObjectMapper();
-//        try {
-//            json = objectMapper.writeValueAsString(listOfProducts);
-//            System.out.println(json);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
         if(products != null) {
             modelAndView.addObject("products", products);
         }
         return modelAndView;
     }
 
-//    @GetMapping(value = {""})
-//    public ModelAndView index() {
-//
-//        ModelAndView modelAndView = new ModelAndView();
-//        modelAndView.setViewName("index");
-//        return modelAndView;
-//    }
 
     @PostMapping(value = {"/submit_product_data"})
     @ResponseBody

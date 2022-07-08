@@ -1,12 +1,11 @@
-package dalcart.app.service;
+package dalcart.app.models;
 
-import dalcart.app.Repository.IProductPersistence;
-import dalcart.app.models.Product;
+import dalcart.app.items.Product;
 
 import java.util.ArrayList;
 import java.util.Map;
 
-public interface IProductService
+public interface IProductModel
 {
     public ArrayList getProductDetails(Product product);
     public String addProductToCart(Map<String,String> allParams);

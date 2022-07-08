@@ -1,4 +1,4 @@
-package dalcart.app.models;
+package dalcart.app.items;
 
 public interface IProduct
 {
