@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import dalcart.app.items.UserModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,8 +18,6 @@ import java.util.Map;
 @Component
 public class AdminController {
 
-    @Autowired
-    UserModel userModel;
 
     @Autowired
     ProductModel productService;
