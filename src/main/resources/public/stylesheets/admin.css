@@ -39,3 +39,15 @@
     width: 70px;
 }
 
+.padding-0 {
+    padding-right: 0;
+    padding-left: 1%;
+}
+
+.header1{
+    padding: 60px;
+    text-align: center;
+    background: #289c86;
+    color: white;
+    font-size: 50px;
+}

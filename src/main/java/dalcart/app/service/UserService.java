@@ -12,7 +12,7 @@ public class UserService implements IUserService{
     @Autowired
     private IUserPersistence iUserPersistence;
 
-    public IUserPersistence.StorageResult createNewUser(User user) throws Exception {
+    public IUserPersistence.Result createNewUser(User user) throws Exception {
         return iUserPersistence.save(user);
     }
 }

@@ -1,6 +1,8 @@
 package dalcart.app.models;
 
 import org.springframework.boot.actuate.endpoint.annotation.Selector;
+import org.springframework.stereotype.Component;
+
 
 public class User {
     private String email;

@@ -1,18 +1,18 @@
 package dalcart.app.Repository;
 
 import dalcart.app.models.User;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
-
 
 public interface IUserPersistence {
-    enum StorageResult {
+    enum Result {
         DOES_NOT_EXIST,
         STORAGE_FAILURE,
         SUCCESS
     }
 
-    public StorageResult save(User u) throws Exception;
+    Result save(User u) throws Exception;
 
-    public StorageResult load(String email, User u);
+    int loadUserID(String email);
+    public String loadUserPasswordbyUsername(String email);
+
+    public String loadUsername(String email);
 }

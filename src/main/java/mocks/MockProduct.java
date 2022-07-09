@@ -9,8 +9,9 @@ public class MockProduct implements IProduct
     private String productDescription;
     private int productPrice;
     private int productQuantity;
-
     private boolean enabled;
+
+    private String productPictureUrl;
 
     public MockProduct(int id, String productName,int quantity, boolean enabled){
         this.productId = id;
@@ -65,6 +66,15 @@ public class MockProduct implements IProduct
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public void setProductPictureUrl(String productPictureUrl)
+    {
+        this.productPictureUrl = productPictureUrl;
+    }
+    public String getProductPictureUrl()
+    {
+        return productPictureUrl;
     }
 
 }

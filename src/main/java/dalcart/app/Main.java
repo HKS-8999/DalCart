@@ -18,6 +18,7 @@ package dalcart.app;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import dalcart.app.database.ConnectionManager;
 import dalcart.app.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -56,7 +57,8 @@ public class Main {
   // private DataSource dataSource;
 
   public static void main(String[] args) throws Exception {
-    SpringApplication.run(Main.class, args);
+      SpringApplication.run(Main.class, args);
+
   }
 
   @RequestMapping("/")
