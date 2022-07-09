@@ -8,28 +8,74 @@ image: maven:latest
 variables:
   GIT_STRATEGY: clone
 
-build-group2:
+build-production:
   stage: build
   tags:
     - dalfcs_docker_kvm
   script: mvn clean compile
+  environment:
+    name: production
+    url: https://dalcart.herokuapp.com/
   only:
     - master
+
+build-staging:
+  stage: build
+  tags:
+    - dalfcs_docker_kvm
+  script: mvn clean compile
+  environment:
+    name: staging
+    url: https://dalcart-testing.herokuapp.com/
+  only:
     - staging
+
+build-development:
+  stage: build
+  tags:
+    - dalfcs_docker_kvm
+  script: mvn clean compile
+  environment:
+    name: staging
+    url: https://dalcart-development.herokuapp.com/
+  only:
     - development
 
 
-test-group2:
+test-production:
   stage: test
   tags:
     - dalfcs_docker_kvm
   script: mvn clean test
+  environment:
+    name: production
+    url: https://dalcart.herokuapp.com/
   only:
     - master
+
+test-staging:
+  stage: test
+  tags:
+    - dalfcs_docker_kvm
+  script: mvn clean test
+  environment:
+    name: staging
+    url: https://dalcart-testing.herokuapp.com/
+  only:
     - staging
+
+test-developement:
+  stage: test
+  tags:
+    - dalfcs_docker_kvm
+  script: mvn clean test
+  environment:
+    name: development
+    url: https://dalcart-development.herokuapp.com/
+  only:
     - development
 
-deploy-group2:
+deploy-production:
   stage: deploy
   tags:
     - dalfcs_docker_kvm
@@ -39,6 +85,40 @@ deploy-group2:
     - apt-get install -y ruby-dev
     - gem install dpl
     - dpl --provider=heroku --app=$HEROKU_APPLICATION_NAME --api-key=$HEROKU_API_KEY
+  environment:
+    name: production
+    url: https://dalcart.herokuapp.com/
   only:
     - master
-    - staging
+
+deploy-staging:
+    stage: deploy
+    tags:
+      - dalfcs_docker_kvm
+    image: ruby:2.6
+    script:
+      - apt-get update -qy
+      - apt-get install -y ruby-dev
+      - gem install dpl
+      - dpl --provider=heroku --app=$HEROKU_APPLICATION_NAME --api-key=$HEROKU_API_KEY
+    environment:
+      name: staging
+      url: https://dalcart-staging.herokuapp.com/
+    only:
+      - staging
+
+deploy-development:
+    stage: deploy
+    tags:
+      - dalfcs_docker_kvm
+    image: ruby:2.6
+    script:
+      - apt-get update -qy
+      - apt-get install -y ruby-dev
+      - gem install dpl
+      - dpl --provider=heroku --app=$HEROKU_APPLICATION_NAME --api-key=$HEROKU_API_KEY
+    environment:
+      name: development
+      url: https://dalcart-development.herokuapp.com/
+    only:
+      - development
