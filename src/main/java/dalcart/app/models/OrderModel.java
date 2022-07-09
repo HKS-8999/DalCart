@@ -18,6 +18,11 @@ public class OrderModel implements IOrderModel {
 
 
     @Override
+    public void setOrderId(Integer orderId) {
+        this.orderId = orderId;
+    }
+
+    @Override
     public void setUserId(Integer userId) {
         this.userId = userId;
     }
@@ -49,12 +54,17 @@ public class OrderModel implements IOrderModel {
 
     @Override
     public void setState(IOrderModel.OrderStates state) {
+
         this.state = state;
     }
 
     @Override
     public OrderStates getState() {
         return this.state;
+    }
+
+    public static IOrderModel getOrderByUserId(Integer orderId) {
+        return null;
     }
 
     public IOrderModel findOrderByNumber(String orderNumber){
@@ -70,7 +80,7 @@ public class OrderModel implements IOrderModel {
     @Override
     public Integer save()  {
         try {
-            if (this.orderNumber != null) {
+            if (this.orderNumber == null) {
                 this.orderNumber = OrderUtils.generateOrderNumber(); //this will be for the user to see
             }
             if (this.createdAt == null) {
@@ -85,6 +95,22 @@ public class OrderModel implements IOrderModel {
             return null;
         }
         return this.orderId;
+    }
+
+    public IOrderModel last(){
+        try{
+            OrderDB.getLastOrder();
+        }catch(Exception e){
+
+        }
+        return null;
+    }
+
+    public boolean delete(){
+        return OrderDB.deleteOrder(this.getOrderId());
+    }
+    public static IOrderModel getOrderByUserId(){
+        return new OrderModel().last();
     }
 
     private boolean validateParameters(){

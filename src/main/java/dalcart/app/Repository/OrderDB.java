@@ -1,13 +1,14 @@
 package dalcart.app.Repository;
 
 import dalcart.app.database.ConnectionManager;
+import dalcart.app.items.Product;
 import dalcart.app.models.IOrderModel;
+import dalcart.app.models.OrderModel;
+import dalcart.app.utils.OrderUtils;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.UUID;
 
 @Repository
@@ -18,12 +19,13 @@ class OrderDB  {
     static PreparedStatement preparedStatement;
 
     public static Integer saveOrder(IOrderModel order) throws SQLException {
-            String query = "insert into orders (user_id, created_at, updated_at, order_number) values (?,?,?,?);";
-            preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(query);
+            String query = "insert into orders (user_id, created_at, updated_at, order_number, state) values (?,?,?,?,?);";
+            preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setInt(1,order.getUserId());
             preparedStatement.setString(2,order.getCreatedAt());
             preparedStatement.setString(3,order.getUpdatedAt());
             preparedStatement.setString(4,order.getOrderNumber());
+            preparedStatement.setString(5,OrderUtils.getStateString(order.getState()));
             preparedStatement.executeUpdate();
             ResultSet rs = preparedStatement.getGeneratedKeys();
             rs.next();
@@ -40,5 +42,27 @@ class OrderDB  {
             return false;
         }
         return true;
+    }
+
+    public static IOrderModel getLastOrder(){
+        ArrayList<Product> product_detail = new ArrayList<>();
+        try{
+
+            String query = "select * from orders order by id desc limit 1";
+            Statement statement = ConnectionManager.getInstance().getConnection().createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+            IOrderModel order = new OrderModel();
+            while(resultSet.next())
+            {
+                order.setOrderId(resultSet.getInt(1));
+                order.setUserId(resultSet.getInt(2));
+                order.setState(OrderUtils.getState(resultSet.getString(3)));
+            }
+            return order;
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return null;
     }
 }

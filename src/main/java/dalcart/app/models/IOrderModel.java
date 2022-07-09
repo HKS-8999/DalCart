@@ -10,6 +10,7 @@ public interface IOrderModel extends Model {
         PAYMENT,
         COMPLETE
     }
+    public void setOrderId(Integer orderId);
     public void setUserId(Integer userId);
     public Integer getOrderId();
     public String getOrderNumber();

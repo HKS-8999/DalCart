@@ -20,6 +20,10 @@ public class MockProduct implements IProduct
         this.enabled = enabled;
     }
 
+    public MockProduct() {
+
+    }
+
     public String getProductName() {
         return productName;
     }
