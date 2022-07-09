@@ -1,0 +1,1 @@
+web: java -jar target/dalcart-1.0.jar
