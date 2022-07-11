@@ -5,6 +5,7 @@ import dalcart.app.Repository.IUserPersistence;
 
 public interface IUser {
 
-    IUserPersistence.Result createNewUser(User user, IUserPersistence userPersistence) throws Exception;
+    IUserPersistence.Result createNewUser(User user,IUserPersistence userPersistence) throws Exception;
+    public Integer getUserID();
 
 }

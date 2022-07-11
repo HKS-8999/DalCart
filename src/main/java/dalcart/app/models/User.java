@@ -56,8 +56,7 @@ public class User implements IUser {
         this.userID = userPersistence.save(user);
         return IUserPersistence.Result.SUCCESS;
     }
-    public int getUserID(){
+    public Integer getUserID(){
         return this.userID;
     }
-
 }
