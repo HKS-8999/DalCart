@@ -4,10 +4,10 @@ import dalcart.app.Repository.IUserPersistence;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SecurityModel implements Security {
+public class SecurityService implements Security {
     IUserPersistence userPersistence;
 
-    public SecurityModel(IUserPersistence userPersistence){
+    public SecurityService(IUserPersistence userPersistence){
         this.userPersistence = userPersistence;
     }
 

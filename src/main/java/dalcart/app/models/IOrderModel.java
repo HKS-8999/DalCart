@@ -1,8 +1,5 @@
 package dalcart.app.models;
 
-import dalcart.app.items.IProduct;
-import dalcart.app.items.IUser;
-
 public interface IOrderModel extends Model {
     enum OrderStates{
         CART,

@@ -1,6 +1,6 @@
 package dalcart.app.Repository;
 
-import dalcart.app.items.User;
+import dalcart.app.models.User;
 
 public interface IUserPersistence {
     enum Result {

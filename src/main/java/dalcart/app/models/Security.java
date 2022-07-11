@@ -1,5 +1,9 @@
 package dalcart.app.models;
 
+import dalcart.app.Repository.IUserPersistence;
+import dalcart.app.models.User;
+
+
 public interface Security {
     public enum RESULT{
         USERNAME_INVALID,

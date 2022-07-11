@@ -1,13 +1,9 @@
 package dalcart.app;
 
 import dalcart.app.database.ConnectionManager;
-import dalcart.app.items.IProduct;
-import dalcart.app.items.Product;
 import dalcart.app.models.IOrderModel;
-import dalcart.app.models.IUserModel;
 import dalcart.app.models.OrderModel;
 import dalcart.app.utils.OrderUtils;
-import mocks.MockProduct;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 

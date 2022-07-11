@@ -2,10 +2,6 @@ package dalcart.app.database;
 
 
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
-import org.springframework.stereotype.Component;
-
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,14 +9,11 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
-public class ConnectionManager {
 
 
-    Environment environment;
-    private static ConnectionManager instance;
-
-    private static Connection connection;
-
+public class ConnectionManager  {
+    private static ConnectionManager instance = null;
+    private Connection connection = null;
     private ConnectionManager() {
         try (InputStream input = new FileInputStream("src/main/resources/application.properties")){
             Properties properties = new Properties();

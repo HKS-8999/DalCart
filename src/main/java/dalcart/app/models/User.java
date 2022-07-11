@@ -1,18 +1,14 @@
-package dalcart.app.items;
+package dalcart.app.models;
+
+import dalcart.app.Repository.IUserPersistence;
 
 
-public class User implements IUser{
-    private int userID;
+public class User implements IUser {
     private String email;
     private String firstName;
     private String lastName;
     private String password;
     private String mobileNo;
-
-    @Override
-    public int getUserID() {
-        return this.userID;
-    }
 
     public String getPassword() {
         return password;
@@ -51,6 +47,9 @@ public class User implements IUser{
 
     public String getEmail() {
         return email;
+    }
+    public IUserPersistence.Result createNewUser(User user, IUserPersistence userPersistence) throws Exception {
+        return userPersistence.save(user);
     }
 
 }

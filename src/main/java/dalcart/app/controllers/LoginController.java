@@ -2,42 +2,48 @@ package dalcart.app.controllers;
 
 import dalcart.app.Repository.ISessionGenerator;
 import dalcart.app.Repository.IUserPersistence;
-
 import dalcart.app.Repository.SessionDB;
 import dalcart.app.Repository.UserDB;
 import dalcart.app.models.Security;
-import dalcart.app.models.SecurityModel;
+import dalcart.app.models.SecurityService;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class LoginController {
     @GetMapping("/login")
-    public String loginPage(){
-        return "login";
+    public ModelAndView loginPage(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("login");
+        return modelAndView;
     }
 
     @PostMapping("/login")
-    public String submitForm(@RequestParam("email") String email, @RequestParam("password") String password){
+    public ModelAndView submitForm(@RequestParam("email") String email, @RequestParam("password") String password){
+        ModelAndView modelAndView = new ModelAndView();
         try{
             IUserPersistence iUserPersistence = new UserDB();
-            System.out.println("000000");
-            Security security = new SecurityModel(iUserPersistence);
-            System.out.println("1111111");
+            Security security = new SecurityService(iUserPersistence);
+
             ISessionGenerator sessionGenerator = new SessionDB();
-            System.out.println("222222222");
             if(security.authenticateUser(email,password) == Security.RESULT.AUTHORIZED){
-                sessionGenerator.saveSession(email);
-                System.out.println("333333");
-                return "home";
+                sessionGenerator.saveSession(email,iUserPersistence);
+                modelAndView.setViewName("home");
+                return modelAndView;
             }
             else{
-                return "invalidUsernameandPassword";
+                modelAndView.setViewName("invalidUsernameandPassword");
+                return modelAndView;
             }
-
-        }catch (Exception e){
+        }
+        catch (Exception e)
+        {
             e.printStackTrace();
         }
-        return "login";
+        modelAndView.setViewName("login");
+        return modelAndView;
     }
 }

@@ -3,12 +3,10 @@ package dalcart.app.controllers;
 import dalcart.app.Repository.OrderProducts;
 import dalcart.app.database.ConnectionManager;
 import dalcart.app.items.IProduct;
-import dalcart.app.items.IUser;
 import dalcart.app.models.IOrderModel;
-import dalcart.app.models.IProductModel;
+import dalcart.app.models.IUser;
 import dalcart.app.models.OrderModel;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 
 public class OrderController {

@@ -1,7 +1,11 @@
 package dalcart.app.controllers;
 
+
 import dalcart.app.items.IProduct;
+import dalcart.app.models.IProductModel;
 import dalcart.app.models.ProductModel;
+import mocks.MockProduct;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -18,9 +22,8 @@ import java.util.Map;
 @Component
 public class AdminController {
 
-
     @Autowired
-    ProductModel productService;
+    ProductModel productModel;
 
     @GetMapping(value = {""})
     public ModelAndView index(@CookieValue(name = "userkey", required = false) String userKey) {
@@ -37,7 +40,7 @@ public class AdminController {
         Map<Integer, String> listOfProducts = new HashMap<Integer,String>();
         List<IProduct> mockProducts = new ArrayList<>();
 
-        ArrayList<IProduct> products =productService.getProducts();
+        ArrayList<IProduct> products =productModel.getProducts();
         if(products != null) {
             modelAndView.addObject("products", products);
         }
