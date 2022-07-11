@@ -1,7 +1,7 @@
 package dalcart.app.controllers;
 
-import dalcart.app.models.Product;
-import dalcart.app.service.ProductService;
+import dalcart.app.items.Product;
+import dalcart.app.models.ProductModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +15,7 @@ import java.util.Map;
 public class HomeController
 {
     @Autowired
-    ProductService productService;
+    ProductModel productService;
 
     @GetMapping("/home")
     public ModelAndView listgetproducts (ModelAndView model, @CookieValue(name = "userkey", required = false) String userKey) throws IOException

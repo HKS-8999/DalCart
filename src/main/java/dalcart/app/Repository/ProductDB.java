@@ -1,8 +1,8 @@
 package dalcart.app.Repository;
 
 import dalcart.app.database.ConnectionManager;
-import dalcart.app.models.Product;
-import dalcart.app.service.IProductService;
+import dalcart.app.items.Product;
+import dalcart.app.models.IProductModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Repository;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 @Repository
-public class ProductDB implements IProductService
+public class ProductDB implements IProductModel
 {
     @Autowired
     private Environment environment;
@@ -141,4 +141,5 @@ public class ProductDB implements IProductService
             return "Failure";
         }
     }
+    
 }

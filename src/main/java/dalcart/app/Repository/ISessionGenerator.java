@@ -1,7 +1,5 @@
 package dalcart.app.Repository;
 
-import dalcart.app.models.User;
-
 import java.sql.SQLException;
 
 public interface ISessionGenerator {

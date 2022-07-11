@@ -1,6 +1,4 @@
-package dalcart.app.models;
-
-import org.springframework.stereotype.Component;
+package dalcart.app.items;
 
 
 public class Session {

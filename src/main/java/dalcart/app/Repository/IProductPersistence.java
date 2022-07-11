@@ -1,6 +1,6 @@
 package dalcart.app.Repository;
 
-import dalcart.app.models.Product;
+import dalcart.app.items.Product;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;

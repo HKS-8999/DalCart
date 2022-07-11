@@ -1,6 +1,6 @@
 package mocks;
 
-import dalcart.app.models.IProduct;
+import dalcart.app.items.IProduct;
 
 public class MockProduct implements IProduct
 {
@@ -18,6 +18,10 @@ public class MockProduct implements IProduct
         this.productName = productName;
         this.productQuantity = quantity;
         this.enabled = enabled;
+    }
+
+    public MockProduct() {
+
     }
 
     public String getProductName() {
