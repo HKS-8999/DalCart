@@ -5,10 +5,7 @@ import dalcart.app.database.ConnectionManager;
 import dalcart.app.models.User;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 @Repository
 public class UserDB implements IUserPersistence {
@@ -26,23 +23,26 @@ public class UserDB implements IUserPersistence {
     }
 
     @Override
-    public Result save(User u) throws Exception {
-        try{
+    public Integer save(User u) throws Exception {
+        try {
 
             String query = "insert into user (email, first_name, last_name,password, mobile_no) values ( ?, ?, ?, ?, ?);";
-            preparedStatement= ConnectionManager.getInstance().getConnection().prepareStatement(query);
-            preparedStatement.setString(1,u.getEmail());
-            preparedStatement.setString(2,u.getFirstName());
-            preparedStatement.setString(3,u.getLastName());
-            preparedStatement.setString(4,u.getPassword());
-            preparedStatement.setString(5,u.getMobileNo());
+            preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setString(1, u.getEmail());
+            preparedStatement.setString(2, u.getFirstName());
+            preparedStatement.setString(3, u.getLastName());
+            preparedStatement.setString(4, u.getPassword());
+            preparedStatement.setString(5, u.getMobileNo());
             preparedStatement.executeUpdate();
 
-            return Result.SUCCESS;
-        }catch (SQLException e){
+            ResultSet rs = preparedStatement.getGeneratedKeys();
+            rs.next();
+            return rs.getInt(1);
+
+        } catch (SQLException e) {
             e.printStackTrace();
-            return Result.STORAGE_FAILURE;
         }
+        return null;
     }
 
     @Override
