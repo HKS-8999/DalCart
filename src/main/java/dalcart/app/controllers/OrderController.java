@@ -12,7 +12,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public class OrderController {
-    public void addToOrderOrder(IUser user, IProduct[] products) throws SQLException {
+    public void addToOrder(IUser user, IProduct[] products) throws SQLException {
         //if order is not already there for the user it creates it
         IOrderModel order;
         IOrderModel existingOrder = OrderModel.getOrderByUserId(user.getUserID());
