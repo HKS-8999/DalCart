@@ -1,14 +1,9 @@
 package dalcart.app.controllers;
 
-import dalcart.app.models.Model;
 import dalcart.app.models.Product;
-import dalcart.app.models.User;
-import dalcart.app.service.IUserService;
 import dalcart.app.service.ProductService;
-import dalcart.app.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 

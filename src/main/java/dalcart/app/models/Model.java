@@ -25,7 +25,7 @@ public abstract class Model {
 	//public String fetchData();
 
     @Autowired
-    UserModel userModel;
+   // UserModel userModel;
 
     @Value("${spring.datasource.url}")
     private String dbUrl;

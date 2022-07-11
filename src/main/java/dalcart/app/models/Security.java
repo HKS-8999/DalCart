@@ -1,4 +1,4 @@
-package dalcart.app.service;
+package dalcart.app.models;
 
 import dalcart.app.Repository.IUserPersistence;
 import dalcart.app.models.User;

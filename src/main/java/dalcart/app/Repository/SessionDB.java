@@ -22,7 +22,7 @@ class SessionDB implements ISessionGenerator {
 
     @Override
     public boolean saveSession(String email, IUserPersistence iUserPersistence) throws SQLException {
-        String query = "insert into session (user_id, token, expiry) values (?,?,?);";
+            String query = "insert into session (user_id, token, expiry) values (?,?,?);";
         preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(query);
         preparedStatement.setInt(1,iUserPersistence.loadUserID(email));
         preparedStatement.setString(2, UUID.randomUUID().toString());

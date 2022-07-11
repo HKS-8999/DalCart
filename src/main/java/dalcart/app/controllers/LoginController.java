@@ -7,8 +7,8 @@ import dalcart.app.Repository.SessionDB;
 import dalcart.app.Repository.UserDB;
 
 
-import dalcart.app.service.Security;
-import dalcart.app.service.SecurityService;
+import dalcart.app.models.Security;
+import dalcart.app.models.SecurityService;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;

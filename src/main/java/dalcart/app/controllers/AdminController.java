@@ -1,6 +1,5 @@
 package dalcart.app.controllers;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import dalcart.app.models.IProduct;
 import mocks.MockProduct;
 import org.springframework.stereotype.Controller;
@@ -8,8 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import dalcart.app.models.UserModel;
-import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,8 +18,8 @@ import java.util.Map;
 @Component
 public class AdminController {
 
-    @Autowired
-    UserModel userModel;
+//    @Autowired
+//    UserModel userModel;
 
     @GetMapping(value = {""})
     public ModelAndView index(@CookieValue(name = "userkey", required = false) String userKey) {

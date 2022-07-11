@@ -1,10 +1,9 @@
 package dalcart.app.models;
 
-import org.springframework.boot.actuate.endpoint.annotation.Selector;
-import org.springframework.stereotype.Component;
+import dalcart.app.Repository.IUserPersistence;
 
 
-public class User {
+public class User implements IUser {
     private String email;
     private String firstName;
     private String lastName;
@@ -48,6 +47,9 @@ public class User {
 
     public String getEmail() {
         return email;
+    }
+    public IUserPersistence.Result createNewUser(User user, IUserPersistence userPersistence) throws Exception {
+        return userPersistence.save(user);
     }
 
 }
