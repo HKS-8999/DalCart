@@ -2,10 +2,6 @@ package dalcart.app.database;
 
 
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
-import org.springframework.stereotype.Component;
-
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,12 +12,8 @@ import java.util.Properties;
 
 
 
-public class ConnectionManager {
-
-
-    Environment environment;
-    private static ConnectionManager instance;
-
+public class ConnectionManager  {
+    private static ConnectionManager instance = null;
     private Connection connection = null;
 
     private ConnectionManager() {

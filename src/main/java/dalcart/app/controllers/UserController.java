@@ -1,8 +1,11 @@
 package dalcart.app.controllers;
 
+import dalcart.app.Repository.IUserPersistence;
+import dalcart.app.Repository.UserDB;
 import dalcart.app.models.User;
 import dalcart.app.service.IUserService;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import dalcart.app.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,9 +18,11 @@ public class UserController{
     }
 
     @PostMapping("/signup")
-    public String submitForm(@ModelAttribute User user, IUserService userService){
+    public String submitForm(@ModelAttribute User user){
         try {
-            userService.createNewUser(user);
+            IUserService userService = new UserService();
+            IUserPersistence iUserPersistence = new UserDB();
+            userService.createNewUser(user, iUserPersistence);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

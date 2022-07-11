@@ -6,6 +6,6 @@ import dalcart.app.models.User;
 
 public interface IUserService {
 
-    IUserPersistence.Result createNewUser(User user) throws Exception;
+    IUserPersistence.Result createNewUser(User user,IUserPersistence userPersistence) throws Exception;
 
 }

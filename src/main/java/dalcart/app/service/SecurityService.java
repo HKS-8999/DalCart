@@ -1,9 +1,6 @@
 package dalcart.app.service;
 
 import dalcart.app.Repository.IUserPersistence;
-import dalcart.app.Repository.UserDB;
-import dalcart.app.models.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -19,7 +16,6 @@ public class SecurityService implements Security {
         if(userPersistence.loadUsername(email) == null || userPersistence.loadUsername(email).isEmpty()){
             return RESULT.USERNAME_INVALID;
         }
-
         else if (userPersistence.loadUserPasswordbyUsername(email)==null) {
             return RESULT.PASSWORD_INVALID;
         }

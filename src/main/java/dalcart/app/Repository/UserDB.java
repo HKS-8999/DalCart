@@ -1,6 +1,7 @@
 package dalcart.app.Repository;
 
 import dalcart.app.database.ConnectionManager;
+import dalcart.app.database.IOpenConnection;
 import dalcart.app.models.User;
 import org.springframework.stereotype.Repository;
 
@@ -42,19 +43,20 @@ public class UserDB implements IUserPersistence {
             e.printStackTrace();
             return Result.STORAGE_FAILURE;
         }
-        finally {
-            connection.close();
-        }
     }
 
     @Override
     public int loadUserID(String email) {
         String query = "select id from user where email = ?;";
         try {
+            int result = 0;
             preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(query);
             preparedStatement.setString(1,email);
             resultset = preparedStatement.executeQuery();
-            return resultset.getInt("id");
+            while(resultset.next()){
+                result = resultset.getInt("id");
+            }
+            return result;
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
