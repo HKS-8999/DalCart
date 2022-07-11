@@ -10,6 +10,8 @@ public class User implements IUser {
     private String password;
     private String mobileNo;
 
+    private int userID;
+
     public String getPassword() {
         return password;
     }
@@ -48,8 +50,14 @@ public class User implements IUser {
     public String getEmail() {
         return email;
     }
+
     public IUserPersistence.Result createNewUser(User user, IUserPersistence userPersistence) throws Exception {
-        return userPersistence.save(user);
+
+        this.userID = userPersistence.save(user);
+        return IUserPersistence.Result.SUCCESS;
+    }
+    public int getUserID(){
+        return this.userID;
     }
 
 }

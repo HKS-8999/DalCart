@@ -9,7 +9,7 @@ public interface IUserPersistence {
         SUCCESS
     }
 
-    Result save(User u) throws Exception;
+    Integer save(User u) throws Exception;
 
     int loadUserID(String email);
     public String loadUserPasswordbyUsername(String email);
