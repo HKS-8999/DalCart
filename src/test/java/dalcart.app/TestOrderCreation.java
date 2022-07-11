@@ -30,8 +30,8 @@ class TestingApplicationTests {
         Integer orderId = order.save();
         order.delete();
         //System.out.println("**************" + orderId + "***************");
-        assertNotNull(orderId);
         connectionManager.commit();
+        assertNotNull(orderId);
     }
 
 }
