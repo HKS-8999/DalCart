@@ -20,14 +20,15 @@ class TestingApplicationTests {
 
     @Test
     void makeIdempotentOrderTransaction() throws SQLException {
+
         ConnectionManager connectionManager = ConnectionManager.getInstance();
         connectionManager.begin();
         IOrderModel order = new OrderModel();
         order.setUserId(1);
         order.setState(OrderUtils.getState("address"));
-        System.out.println("**************TESTING***************");
+        //System.out.println("**************TESTING***************");
         Integer orderId = order.save();
-        //order.delete();
+        order.delete();
         //System.out.println("**************" + orderId + "***************");
         assertNotNull(orderId);
         connectionManager.commit();
