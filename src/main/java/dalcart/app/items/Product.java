@@ -1,15 +1,17 @@
 package dalcart.app.items;
 
-public class Product implements IProduct
+import dalcart.app.models.IProductModel;
+
+public class Product
 {
     private String productName;
-    private int productId;
+    private Integer productId;
     private String productDescription;
-    private int productPrice;
-    private int productQuantity;
-    private boolean enabled;
+    private Integer productPrice;
+    private Integer productQuantity;
+    private Boolean productState;
+    private String productImage;
 
-    private String productPictureUrl;
 
     public String getProductName() {
         return productName;
@@ -51,20 +53,20 @@ public class Product implements IProduct
         this.productId = productId;
     }
 
-    public boolean getEnabled() {
-        return enabled;
+    public boolean getProductState() {
+        return productState;
     }
 
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
+    public void setProductState(boolean enabled) {
+        this.productState = enabled;
     }
 
-    public void setProductPictureUrl(String productPictureUrl)
+    public void setProductImage(String productPictureUrl)
     {
-        this.productPictureUrl = productPictureUrl;
+        this.productImage = productPictureUrl;
     }
-    public String getProductPictureUrl()
+    public String getProductImage()
     {
-        return productPictureUrl;
+        return productImage;
     }
 }
