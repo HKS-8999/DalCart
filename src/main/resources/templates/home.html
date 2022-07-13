@@ -15,7 +15,8 @@
     </div>
 
     <div class="topnav" style="padding-bottom: 50px;">
-        <input type="text" placeholder="Search">
+        <input type="text" placeholder="Search" id="search" name="searchword">
+        <button class="btn btn-primary" type = "submit" id = "btn1">Search</Button>
         <a class="active" href="#home">My Cart</a>
 <!--        <a href="#about">About</a>-->
         <a href="#contact">Profile</a>
@@ -54,26 +55,6 @@
         </div>
     </div>
 
-<!--    <script>-->
-<!--    $("button").click(function(e) {-->
-<!--    e.preventDefault();-->
-<!--    $.ajax({-->
-<!--    type: "POST",-->
-<!--    url: "/login",-->
-<!--    data: {-->
-<!--    id: $(this).val(), // < note use of 'this' here-->
-<!--    access_token: $("#access_token").val()-->
-<!--    },-->
-<!--    success: function(result) {-->
-<!--    alert('ok');-->
-<!--    },-->
-<!--    error: function(result) {-->
-<!--    alert('error');-->
-<!--    }-->
-<!--    });-->
-<!--    });-->
-<!--    </script>-->
-
     <script type="text/javascript">
     function addToCart(event) {
 //        e.preventDefault();
@@ -91,8 +72,27 @@
                 alert('error');
             }
         });
-        //console.log(event)
     }
+
+    $('#btn1').click(function() {
+        var keyword = $('#search').val();
+        if(keyword != "")
+        {
+            window.location = window.location.href + '/search=' + $('#search').val();
+            $.ajax({
+                type: "GET",
+                url: "/home",
+                data: {
+                    searchword: $("#search").val(),
+                    userkey: getCookie("userkey")
+                },
+                success: function (result) {
+                    alert('Ok');
+                }
+            });
+            // window.location = window.location.href + '/search=' + $('#search').val();
+        }
+    });
 </script>
 </body>
 </html>

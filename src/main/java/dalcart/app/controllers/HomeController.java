@@ -15,9 +15,8 @@ public class HomeController
 {
     ProductModel productModel = new ProductModel();
     @GetMapping("/home")
-    public ModelAndView listgetproducts (ModelAndView model, @CookieValue(name = "userkey", required = false) String userKey) throws IOException
+    public ModelAndView listgetproducts (ModelAndView model,@RequestParam Map<String,String> allParams, @CookieValue(name = "userkey", required = false) String userKey) throws IOException
     {
-
 //        if(userKey == null || userKey.equals(""))
 //        {
 //            ModelAndView modelAndView =  new ModelAndView("redirect:/login");
@@ -25,7 +24,7 @@ public class HomeController
 //            return modelAndView;
 //        }
 
-        ArrayList<Product> lstprodcts = productModel.getProducts();
+        ArrayList<Product> lstprodcts = productModel.getProducts(allParams.get("searchword"));
         model.addObject("listproducts",lstprodcts);
         model.setViewName("home");
 
@@ -33,7 +32,7 @@ public class HomeController
     }
 
     @PostMapping("/home")
-    public ModelAndView submitForm(@ModelAttribute Product product,@RequestParam Map<String,String> allParams, ModelAndView model, @CookieValue(name = "userkey", required = false) String userKey){
+    public ModelAndView displayProduct(@ModelAttribute Product product,@RequestParam Map<String,String> allParams, ModelAndView model, @CookieValue(name = "userkey", required = false) String userKey){
 
 //        if(userKey == null || userKey.equals(""))
 //        {
@@ -44,8 +43,6 @@ public class HomeController
 
         try
         {
-//            for()
-//            allParams.forEach((k,v) -> System.out.println("Key = " + k + ", Value = " + v));
             productModel.addProductToCart(allParams);
         }
         catch (Exception e)

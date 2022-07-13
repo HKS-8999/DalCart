@@ -4,7 +4,6 @@ import dalcart.app.controllers.OrderController;
 import dalcart.app.database.ConnectionManager;
 import dalcart.app.items.IProduct;
 import dalcart.app.items.Product;
-import dalcart.app.models.IUser;
 import dalcart.app.models.ProductModel;
 import dalcart.app.models.User;
 import org.springframework.stereotype.Repository;
@@ -17,42 +16,74 @@ import java.util.Map;
 @Repository
 public class ProductDB
 {
-//    Connection connection;
     ProductModel productModel;
     OrderController orderController = new OrderController();
     Statement statement;
     ResultSet resultSet;
     PreparedStatement preparedStatement;
     String tableName = "products";
-//    static String tableName = "CSCI5308_2_DEVINT.products";
 
-    public ArrayList getProductDetails(Product product)
+    public ArrayList getProductDetails(String keyword)
     {
-        ArrayList<Product> product_detail = new ArrayList<>();
-        try
+        if(keyword == null)
         {
-            String query = "select * from " + tableName + " ;";
-            preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(query);
-//            statement = connection.createStatement();
-            resultSet = preparedStatement.executeQuery(query);
-            while(resultSet.next())
+            ArrayList<Product> product_detail = new ArrayList<>();
+            try
             {
-                Product p = new Product();
-                p.setProductId(resultSet.getInt(1));
-                p.setProductName(resultSet.getString(2));
-                p.setProductDescription(resultSet.getString(3));
-                p.setProductQuantity(resultSet.getInt(5));
-                p.setProductPrice(resultSet.getInt(4));
-                p.setProductState(resultSet.getBoolean(7));
-                p.setProductImage(resultSet.getString(8));
-                product_detail.add(p);
-            }
-            return product_detail;
+                String query = "select * from " + tableName + " ;";
+                preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(query);
+//            statement = connection.createStatement();
+                resultSet = preparedStatement.executeQuery(query);
+                while(resultSet.next())
+                {
+                    Product p = new Product();
+                    p.setProductId(resultSet.getInt(1));
+                    p.setProductName(resultSet.getString(2));
+                    p.setProductDescription(resultSet.getString(3));
+                    p.setProductQuantity(resultSet.getInt(5));
+                    p.setProductPrice(resultSet.getInt(4));
+                    p.setProductState(resultSet.getBoolean(7));
+                    p.setProductImage(resultSet.getString(8));
+                    product_detail.add(p);
+                }
+                return product_detail;
 
-        }catch (SQLException e){
-            e.printStackTrace();
+            }catch (SQLException e)
+            {
+                e.printStackTrace();
+                return null;
+            }
         }
-        return product_detail;
+        else
+        {
+            ArrayList<Product> product_detail = new ArrayList<>();
+            try
+            {
+                String query = "select * from " + tableName + " where product_name = '" + keyword + " ' ;";
+                preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(query);
+//            statement = connection.createStatement();
+                resultSet = preparedStatement.executeQuery(query);
+                while(resultSet.next())
+                {
+                    Product p = new Product();
+                    p.setProductId(resultSet.getInt(1));
+                    p.setProductName(resultSet.getString(2));
+                    p.setProductDescription(resultSet.getString(3));
+                    p.setProductQuantity(resultSet.getInt(5));
+                    p.setProductPrice(resultSet.getInt(4));
+                    p.setProductState(resultSet.getBoolean(7));
+                    p.setProductImage(resultSet.getString(8));
+                    product_detail.add(p);
+                    System.out.println(p.getProductId());
+                }
+                return product_detail;
+
+            }catch (SQLException e)
+            {
+                e.printStackTrace();
+                return null;
+            }
+        }
     }
 
     public IProduct getProductById(Integer productId) throws SQLException

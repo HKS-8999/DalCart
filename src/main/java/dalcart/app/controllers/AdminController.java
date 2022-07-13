@@ -40,7 +40,8 @@ public class AdminController {
         Map<Integer, String> listOfProducts = new HashMap<Integer,String>();
         List<IProduct> mockProducts = new ArrayList<>();
 
-        ArrayList<IProduct> products =productModel.getProducts();
+        String searchWord = null;
+        ArrayList<IProduct> products =productModel.getProducts(searchWord);
         if(products != null) {
             modelAndView.addObject("products", products);
         }

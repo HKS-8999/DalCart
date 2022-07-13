@@ -19,7 +19,7 @@ public class ProductModel implements IProductModel
     private Boolean productState;
     private String productImage;
     public Product product;
-    ProductDB productDB;
+    ProductDB productDB = new ProductDB();
     IProductModel.productState state;
 
 
@@ -93,18 +93,19 @@ public class ProductModel implements IProductModel
         this.productImage = productImage;
     }
 
-    public ArrayList getProducts()
+    public ArrayList getProducts(String searchWord)
     {
-        productDB = new ProductDB();
+//        productDB = new ProductDB();
         ArrayList<Product> productDetail;
-        productDetail = productDB.getProductDetails(product);
+        productDetail = productDB.getProductDetails(searchWord);
         return productDetail;
     }
 
-//    public void updateProduct()
-//    {
-//        ProductDB.
-//    }
+    public void updateProduct(Integer productId, Integer productQuantity, Boolean productState)
+    {
+//        productDB = new ProductDB();
+        productDB.updateProduct(productId, productQuantity, productState);
+    }
 
     public void addProductToCart(Map<String,String> parameters) throws SQLException
     {
