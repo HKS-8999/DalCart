@@ -23,7 +23,7 @@ import java.util.Map;
 public class AdminController {
 
 //    @Autowired
-    ProductModel productModel;
+    ProductModel productModel = new ProductModel();
 
     @GetMapping(value = {""})
     public ModelAndView index(@CookieValue(name = "userkey", required = false) String userKey) {
@@ -40,8 +40,7 @@ public class AdminController {
         Map<Integer, String> listOfProducts = new HashMap<Integer,String>();
         List<IProduct> mockProducts = new ArrayList<>();
 
-        String searchWord = null;
-        ArrayList<IProduct> products =productModel.getProducts(searchWord);
+        ArrayList<IProduct> products = productModel.getProducts();
         if(products != null) {
             modelAndView.addObject("products", products);
         }

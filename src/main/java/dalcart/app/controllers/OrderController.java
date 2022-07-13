@@ -22,6 +22,7 @@ public class OrderController {
         {
             order = new OrderModel();
             order.setUserId(user.getUserID());
+            order.setState(IOrderModel.OrderStates.CART);
             orderId = order.save();
         }else{
             order = existingOrder;
