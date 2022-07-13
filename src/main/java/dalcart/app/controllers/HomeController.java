@@ -15,7 +15,7 @@ public class HomeController
 {
     ProductModel productModel = new ProductModel();
     @GetMapping("/home")
-    public ModelAndView listgetproducts (ModelAndView model,@RequestParam Map<String,String> allParams, @CookieValue(name = "userkey", required = false) String userKey) throws IOException
+    public ModelAndView listgetproducts (ModelAndView model,@RequestParam(name = "search", required = false) String keyword, @CookieValue(name = "userkey", required = false) String userKey) throws IOException
     {
 //        if(userKey == null || userKey.equals(""))
 //        {
@@ -24,7 +24,7 @@ public class HomeController
 //            return modelAndView;
 //        }
 
-        ArrayList<Product> lstprodcts = productModel.getProducts(allParams.get("searchword"));
+        ArrayList<Product> lstprodcts = productModel.getProducts(keyword);
         model.addObject("listproducts",lstprodcts);
         model.setViewName("home");
 

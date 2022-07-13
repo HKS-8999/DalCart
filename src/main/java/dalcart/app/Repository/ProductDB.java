@@ -25,7 +25,7 @@ public class ProductDB
 
     public ArrayList getProductDetails(String keyword)
     {
-        if(keyword == null)
+        if(keyword == null || keyword == "")
         {
             ArrayList<Product> product_detail = new ArrayList<>();
             try
@@ -59,7 +59,7 @@ public class ProductDB
             ArrayList<Product> product_detail = new ArrayList<>();
             try
             {
-                String query = "select * from " + tableName + " where product_name = '" + keyword + " ' ;";
+                String query = "select * from " + tableName + " where product_name like '%" + keyword + "%' ;";
                 preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(query);
 //            statement = connection.createStatement();
                 resultSet = preparedStatement.executeQuery(query);

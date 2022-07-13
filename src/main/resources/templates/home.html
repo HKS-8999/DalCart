@@ -16,7 +16,7 @@
 
     <div class="topnav" style="padding-bottom: 50px;">
         <input type="text" placeholder="Search" id="search" name="searchword">
-        <button class="btn btn-primary" type = "submit" id = "btn1">Search</Button>
+        <button class="btn btn-primary" type = "submit" id = "btn1" onclick="searchProduct()">Search</Button>
         <a class="active" href="#home">My Cart</a>
 <!--        <a href="#about">About</a>-->
         <a href="#contact">Profile</a>
@@ -56,7 +56,9 @@
     </div>
 
     <script type="text/javascript">
-    function addToCart(event) {
+
+    function addToCart(event)
+    {
 //        e.preventDefault();
         $.ajax({
             type: "POST",
@@ -74,25 +76,13 @@
         });
     }
 
-    $('#btn1').click(function() {
+    function searchProduct()
+    {
         var keyword = $('#search').val();
-        if(keyword != "")
-        {
-            window.location = window.location.href + '/search=' + $('#search').val();
-            $.ajax({
-                type: "GET",
-                url: "/home",
-                data: {
-                    searchword: $("#search").val(),
-                    userkey: getCookie("userkey")
-                },
-                success: function (result) {
-                    alert('Ok');
-                }
-            });
-            // window.location = window.location.href + '/search=' + $('#search').val();
-        }
-    });
+        var staticLocation = "http://localhost:8080/home";
+        window.location = staticLocation + '?search=' + keyword;
+    }
+
 </script>
 </body>
 </html>
