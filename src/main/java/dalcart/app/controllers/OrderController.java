@@ -6,18 +6,20 @@ import dalcart.app.items.IProduct;
 import dalcart.app.models.IOrderModel;
 import dalcart.app.models.IUser;
 import dalcart.app.models.OrderModel;
+import dalcart.app.models.User;
 
 import java.sql.SQLException;
 
 public class OrderController {
-    public void addToOrder(IUser user, IProduct[] products) throws SQLException {
+    public void addToOrder(User user, IProduct[] products) throws SQLException {
         //if order is not already there for the user it creates it
         IOrderModel order;
         IOrderModel existingOrder = OrderModel.getOrderByUserId(user.getUserID());
         Integer orderId;
         ConnectionManager connectionManager = ConnectionManager.getInstance();
         connectionManager.begin();
-        if(existingOrder == null) {
+        if(existingOrder == null)
+        {
             order = new OrderModel();
             order.setUserId(user.getUserID());
             orderId = order.save();

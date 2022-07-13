@@ -1,9 +1,12 @@
 package dalcart.app.Repository;
 
+import dalcart.app.controllers.OrderController;
 import dalcart.app.database.ConnectionManager;
+import dalcart.app.items.IProduct;
 import dalcart.app.items.Product;
-import dalcart.app.models.IProductModel;
+import dalcart.app.models.IUser;
 import dalcart.app.models.ProductModel;
+import dalcart.app.models.User;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
@@ -14,21 +17,22 @@ import java.util.Map;
 @Repository
 public class ProductDB
 {
-    Connection connection;
+//    Connection connection;
     ProductModel productModel;
-    static Statement statement;
-    static ResultSet resultSet;
-    static PreparedStatement preparedStatement;
-    static String tableName = "products";
+    OrderController orderController = new OrderController();
+    Statement statement;
+    ResultSet resultSet;
+    PreparedStatement preparedStatement;
+    String tableName = "products";
 //    static String tableName = "CSCI5308_2_DEVINT.products";
 
-    public static ArrayList getProductDetails(Product product)
+    public ArrayList getProductDetails(Product product)
     {
         ArrayList<Product> product_detail = new ArrayList<>();
         try
         {
             String query = "select * from " + tableName + " ;";
-            preparedStatement= ConnectionManager.getInstance().getConnection().prepareStatement(query);
+            preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(query);
 //            statement = connection.createStatement();
             resultSet = preparedStatement.executeQuery(query);
             while(resultSet.next())
@@ -49,6 +53,25 @@ public class ProductDB
             e.printStackTrace();
         }
         return product_detail;
+    }
+
+    public IProduct getProductById(Integer productId) throws SQLException
+    {
+        String query = "select * from " + tableName + " where id = " + productId + ";";
+        preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(query);
+        resultSet = preparedStatement.executeQuery(query);
+        IProduct p = new Product();
+        while(resultSet.next())
+        {
+            p.setProductId(resultSet.getInt(1));
+            p.setProductName(resultSet.getString(2));
+            p.setProductDescription(resultSet.getString(3));
+            p.setProductQuantity(resultSet.getInt(5));
+            p.setProductPrice(resultSet.getInt(4));
+            p.setProductState(resultSet.getBoolean(7));
+            p.setProductImage(resultSet.getString(8));
+        }
+        return p;
     }
 
     public void saveProduct(ProductModel product)
@@ -74,11 +97,11 @@ public class ProductDB
         }
     }
 
-    public void updateInventory(Product product)
+    public void updateProduct(Integer productId, Integer productQuantity, Boolean productState)
     {
         try
         {
-            String query = "update CSCI5308_2_DEVINT.products set product_quantity = " + product.getProductQuantity() + " where id = " + product.getProductId() + ";";
+            String query = "update " + tableName + " set product_quantity = " + productQuantity + ", set enabled = " + productState + " where id = " + productId + ";";
             statement = ConnectionManager.getInstance().getConnection().createStatement();
             statement.executeUpdate(query);
         }
@@ -88,19 +111,29 @@ public class ProductDB
         }
     }
 
-    public void updateStateOfProduct(Product product)
-    {
+    public void addProductToCart(Map<String, String> parameters) throws SQLException {
+        IProduct[] products = new IProduct[1];
+        User user = new User();
+        user.setUserId(1);
+        user.setEmail("zdssd");
+        user.setFirstName("dfdfv");
+        user.setLastName("ascc");
+        user.setPassword("12345");
+        user.setMobileNo("9875412368");
         try
         {
-            String query = "update CSCI5308_2_DEVINT.products set enabled = " + product.getProductState() + " where id = " + product.getProductId() + ";";
-            statement =  ConnectionManager.getInstance().getConnection().createStatement();
-            statement.executeUpdate(query);
+            products[0] = getProductById(Integer.valueOf(parameters.get("id")));
         }
         catch (SQLException e)
         {
             e.printStackTrace();
         }
+        System.out.println(user.getUserID());
+        System.out.println(products[0]);
+        System.out.println(products[0].getProductId());
+        orderController.addToOrder(user, products);
     }
+
 
 //    @Override
 //    public String addProductToCart(Map<String,String> allParams)

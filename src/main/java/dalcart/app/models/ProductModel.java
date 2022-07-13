@@ -1,8 +1,11 @@
 package dalcart.app.models;
 
 import dalcart.app.Repository.ProductDB;
+import dalcart.app.controllers.OrderController;
 import dalcart.app.items.*;
 import dalcart.app.utils.CommonUtils;
+
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -16,6 +19,7 @@ public class ProductModel implements IProductModel
     private Boolean productState;
     private String productImage;
     public Product product;
+    ProductDB productDB;
     IProductModel.productState state;
 
 
@@ -91,14 +95,21 @@ public class ProductModel implements IProductModel
 
     public ArrayList getProducts()
     {
+        productDB = new ProductDB();
         ArrayList<Product> productDetail;
-        productDetail = ProductDB.getProductDetails(product);
+        productDetail = productDB.getProductDetails(product);
         return productDetail;
     }
-//
-//    public String addToCart(Map<String,String> allParams)
+
+//    public void updateProduct()
 //    {
-//        return iProductModel.addProductToCart(allParams);
+//        ProductDB.
 //    }
+
+    public void addProductToCart(Map<String,String> parameters) throws SQLException
+    {
+//        OrderController.addToOrder(user, products);
+        productDB.addProductToCart(parameters);
+    }
 
 }

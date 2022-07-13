@@ -35,18 +35,18 @@ public class HomeController
     @PostMapping("/home")
     public ModelAndView submitForm(@ModelAttribute Product product,@RequestParam Map<String,String> allParams, ModelAndView model, @CookieValue(name = "userkey", required = false) String userKey){
 
-        if(userKey == null || userKey.equals(""))
-        {
-            ModelAndView modelAndView =  new ModelAndView("redirect:/login");
-            modelAndView.addObject("modelAttribute" , modelAndView);
-            return modelAndView;
-        }
+//        if(userKey == null || userKey.equals(""))
+//        {
+//            ModelAndView modelAndView =  new ModelAndView("redirect:/login");
+//            modelAndView.addObject("modelAttribute" , modelAndView);
+//            return modelAndView;
+//        }
 
         try
         {
 //            for()
 //            allParams.forEach((k,v) -> System.out.println("Key = " + k + ", Value = " + v));
-//            productModel.addToCart(allParams);
+            productModel.addProductToCart(allParams);
         }
         catch (Exception e)
         {

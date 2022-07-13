@@ -2,7 +2,7 @@ package dalcart.app.items;
 
 import dalcart.app.models.IProductModel;
 
-public class Product
+public class Product implements IProduct
 {
     private String productName;
     private Integer productId;

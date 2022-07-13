@@ -64,19 +64,19 @@ public class MockProduct implements IProduct
         this.productId = productId;
     }
 
-    public boolean getEnabled() {
+    public boolean getProductState() {
         return enabled;
     }
 
-    public void setEnabled(boolean enabled) {
+    public void setProductState(boolean enabled) {
         this.enabled = enabled;
     }
 
-    public void setProductPictureUrl(String productPictureUrl)
+    public void setProductImage(String productPictureUrl)
     {
         this.productPictureUrl = productPictureUrl;
     }
-    public String getProductPictureUrl()
+    public String getProductImage()
     {
         return productPictureUrl;
     }
