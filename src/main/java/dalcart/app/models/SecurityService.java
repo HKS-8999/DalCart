@@ -12,14 +12,18 @@ public class SecurityService implements Security {
     }
 
     @Override
-    public RESULT authenticateUser(String email, String password){
-        if(userPersistence.loadUsername(email) == null || userPersistence.loadUsername(email).isEmpty()){
+    public RESULT authenticateUser(IUser user){
+        String email = user.getEmail();
+        String password = user.getPassword();
+        user.loadUserAttributes(user,userPersistence);
+
+        if(email == null || email.isEmpty() || user.getEmail() == null){
             return RESULT.USERNAME_INVALID;
         }
-        else if (userPersistence.loadUserPasswordbyUsername(email)==null) {
+        else if (password == null || user.getPassword() == null) {
             return RESULT.PASSWORD_INVALID;
         }
-        else if (userPersistence.loadUsername(email).equals(email)  && userPersistence.loadUserPasswordbyUsername(password).equals(password)){
+        else if (user.getEmail().equals(email)  && user.getPassword().equals(password)){
             return RESULT.AUTHORIZED;
         }
         else{

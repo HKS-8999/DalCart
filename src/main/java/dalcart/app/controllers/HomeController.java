@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
@@ -18,8 +20,14 @@ public class HomeController
     ProductModel productService;
 
     @GetMapping("/home")
-    public ModelAndView listgetproducts (ModelAndView model, @CookieValue(name = "userkey", required = false) String userKey) throws IOException
+    public ModelAndView listgetproducts (ModelAndView model, @CookieValue(name = "userkey", required = false) String userKey, HttpServletRequest request) throws IOException
     {
+
+        HttpSession session = request.getSession();
+
+        if(session.getAttribute("user") == null){
+            //redirect to login
+        }
 
         if(userKey == null || userKey.equals(""))
         {

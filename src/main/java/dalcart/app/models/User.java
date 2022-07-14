@@ -12,6 +12,9 @@ public class User implements IUser {
 
     private int userID;
 
+
+
+
     public String getPassword() {
         return password;
     }
@@ -39,6 +42,17 @@ public class User implements IUser {
         return mobileNo;
     }
 
+    @Override
+    public void loadUserAttributes(IUser user ,IUserPersistence userPersistence) {
+        user = userPersistence.loadUserAttributesbyUsername(this.email);
+        this.setEmail(user.getEmail());
+        this.setPassword(user.getPassword());
+        this.setUserID(user.getUserID());
+        this.setFirstName(user.getFirstName());
+        this.setLastName(user.getLastName());
+        this.setMobileNo(user.getMobileNo());
+    }
+
     public void setMobileNo(String mobileNo) {
         this.mobileNo = mobileNo;
     }
@@ -51,12 +65,24 @@ public class User implements IUser {
         return email;
     }
 
-    public IUserPersistence.Result createNewUser(User user, IUserPersistence userPersistence) throws Exception {
+
+
+    public IUserPersistence.Result createNewUser(IUser user, IUserPersistence userPersistence) throws Exception {
 
         this.userID = userPersistence.save(user);
         return IUserPersistence.Result.SUCCESS;
     }
     public Integer getUserID(){
         return this.userID;
+    }
+
+    public void setUserID(int userID){
+        this.userID = userID;
+    }
+
+
+
+    public Security.RESULT hasAccess(Security security, User user){
+        return security.authenticateUser(user);
     }
 }

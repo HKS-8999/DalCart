@@ -12,5 +12,5 @@ public interface Security {
         AUTHORIZED;
     }
 
-    RESULT authenticateUser(String email, String password);
+    RESULT authenticateUser(IUser user);
 }
