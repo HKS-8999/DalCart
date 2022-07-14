@@ -197,7 +197,6 @@ public class ProductDB
 
     public void addProductToCart(Map<String, String> parameters) throws SQLException
     {
-
         IProduct[] products = new IProduct[1];
         User user = new User();
         user.setUserId(1);

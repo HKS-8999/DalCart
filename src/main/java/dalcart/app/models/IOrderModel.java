@@ -1,7 +1,8 @@
 package dalcart.app.models;
 
 public interface IOrderModel extends Model {
-    enum OrderStates{
+    enum OrderStates
+    {
         CART,
         ADDRESS,
         PAYMENT,
