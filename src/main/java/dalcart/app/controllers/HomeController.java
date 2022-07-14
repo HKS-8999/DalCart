@@ -1,5 +1,6 @@
 package dalcart.app.controllers;
 
+import dalcart.app.items.HeaderSetter;
 import dalcart.app.items.IProduct;
 import dalcart.app.items.Product;
 import dalcart.app.models.ProductModel;
@@ -27,6 +28,8 @@ public class HomeController
 
         ArrayList<IProduct> lstprodcts = productModel.getProductsToDisplay(keyword);
         model.addObject("listproducts",lstprodcts);
+        String message = HeaderSetter.messageToDisplay();
+        model.addObject("header", message);
         model.setViewName("home");
 
         return model;
