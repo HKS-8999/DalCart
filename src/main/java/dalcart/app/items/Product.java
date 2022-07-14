@@ -9,7 +9,7 @@ public class Product implements IProduct
     private String productDescription;
     private Integer productPrice;
     private Integer productQuantity;
-    private Boolean productState;
+    private Boolean enabled;
     private String productImage;
 
 
@@ -53,12 +53,12 @@ public class Product implements IProduct
         this.productId = productId;
     }
 
-    public boolean getProductState() {
-        return productState;
+    public boolean getEnabled() {
+        return enabled;
     }
 
-    public void setProductState(boolean enabled) {
-        this.productState = enabled;
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     public void setProductImage(String productPictureUrl)

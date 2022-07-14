@@ -1,5 +1,6 @@
 package dalcart.app.controllers;
 
+import dalcart.app.items.IProduct;
 import dalcart.app.items.Product;
 import dalcart.app.models.ProductModel;
 import org.springframework.stereotype.Controller;
@@ -24,7 +25,7 @@ public class HomeController
 //            return modelAndView;
 //        }
 
-        ArrayList<Product> lstprodcts = productModel.getProducts(keyword);
+        ArrayList<IProduct> lstprodcts = productModel.getProductsToDisplay(keyword);
         model.addObject("listproducts",lstprodcts);
         model.setViewName("home");
 

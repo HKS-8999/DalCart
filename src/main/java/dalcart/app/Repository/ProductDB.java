@@ -23,16 +23,13 @@ public class ProductDB
     PreparedStatement preparedStatement;
     String tableName = "products";
 
-    public ArrayList getProductDetails(String keyword)
+    public ArrayList getProductDetails()
     {
-        if(keyword == null || keyword == "")
-        {
-            ArrayList<Product> product_detail = new ArrayList<>();
+            ArrayList<IProduct> product_detail = new ArrayList<>();
             try
             {
                 String query = "select * from " + tableName + " ;";
                 preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(query);
-//            statement = connection.createStatement();
                 resultSet = preparedStatement.executeQuery(query);
                 while(resultSet.next())
                 {
@@ -42,7 +39,38 @@ public class ProductDB
                     p.setProductDescription(resultSet.getString(3));
                     p.setProductQuantity(resultSet.getInt(5));
                     p.setProductPrice(resultSet.getInt(4));
-                    p.setProductState(resultSet.getBoolean(7));
+                    p.setEnabled(resultSet.getBoolean(7));
+                    p.setProductImage(resultSet.getString(8));
+                    product_detail.add(p);
+                }
+                return product_detail;
+
+            }catch (SQLException e)
+            {
+                e.printStackTrace();
+                return null;
+            }
+    }
+
+    public ArrayList getProductDetailsForDisplay(String keyword)
+    {
+        if(keyword == null || keyword == "")
+        {
+            ArrayList<IProduct> product_detail = new ArrayList<>();
+            try
+            {
+                String query = "select * from " + tableName + " where enabled = 1 ;";
+                preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(query);
+                resultSet = preparedStatement.executeQuery(query);
+                while(resultSet.next())
+                {
+                    Product p = new Product();
+                    p.setProductId(resultSet.getInt(1));
+                    p.setProductName(resultSet.getString(2));
+                    p.setProductDescription(resultSet.getString(3));
+                    p.setProductQuantity(resultSet.getInt(5));
+                    p.setProductPrice(resultSet.getInt(4));
+                    p.setEnabled(resultSet.getBoolean(7));
                     p.setProductImage(resultSet.getString(8));
                     product_detail.add(p);
                 }
@@ -71,14 +99,14 @@ public class ProductDB
                     p.setProductDescription(resultSet.getString(3));
                     p.setProductQuantity(resultSet.getInt(5));
                     p.setProductPrice(resultSet.getInt(4));
-                    p.setProductState(resultSet.getBoolean(7));
+                    p.setEnabled(resultSet.getBoolean(7));
                     p.setProductImage(resultSet.getString(8));
                     product_detail.add(p);
                     System.out.println(p.getProductId());
                 }
                 return product_detail;
 
-            }catch (SQLException e)
+            }catch(SQLException e)
             {
                 e.printStackTrace();
                 return null;
@@ -86,27 +114,51 @@ public class ProductDB
         }
     }
 
-    public IProduct getProductById(Integer productId) throws SQLException
+    public IProduct getProductById(Integer productId)
     {
-        String query = "select * from " + tableName + " where id = " + productId + ";";
-        preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(query);
-        resultSet = preparedStatement.executeQuery(query);
-        IProduct p = new Product();
-        while(resultSet.next())
-        {
-            p.setProductId(resultSet.getInt(1));
-            p.setProductName(resultSet.getString(2));
-            p.setProductDescription(resultSet.getString(3));
-            p.setProductQuantity(resultSet.getInt(5));
-            p.setProductPrice(resultSet.getInt(4));
-            p.setProductState(resultSet.getBoolean(7));
-            p.setProductImage(resultSet.getString(8));
+        try {
+            String query = "select * from " + tableName + " where id = " + productId + ";";
+            preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(query);
+            resultSet = preparedStatement.executeQuery(query);
+            IProduct p = new Product();
+            while (resultSet.next()) {
+                p.setProductId(resultSet.getInt(1));
+                p.setProductName(resultSet.getString(2));
+                p.setProductDescription(resultSet.getString(3));
+                p.setProductQuantity(resultSet.getInt(5));
+                p.setProductPrice(resultSet.getInt(4));
+                p.setEnabled(resultSet.getBoolean(7));
+                p.setProductImage(resultSet.getString(8));
+            }
+            return p;
         }
-        return p;
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    public Integer getLastProductId()
+    {
+        try
+        {
+            String query = "select id from " + tableName + " ;";
+            preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(query);
+            resultSet = preparedStatement.executeQuery(query);
+            resultSet.last();
+            Integer productId = resultSet.getInt(1);
+            return productId;
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public void saveProduct(ProductModel product)
     {
+        Integer id = getLastProductId();
         try
         {
             LocalDate date = java.time.LocalDate.now();
@@ -118,12 +170,13 @@ public class ProductDB
             preparedStatement.setInt(3,product.getProductPrice());
             preparedStatement.setInt(4,product.getProductQuantity());
             preparedStatement.setString(5,product.getProductImage());
-            preparedStatement.setBoolean(6,product.getProductState());
+            preparedStatement.setBoolean(6,product.getEnabled());
             preparedStatement.setString(7, String.valueOf(date));
             preparedStatement.setString(8, "0000-00-00");
             preparedStatement.executeUpdate();
         }
-        catch (SQLException e){
+        catch (SQLException e)
+        {
             e.printStackTrace();
         }
     }
@@ -142,7 +195,9 @@ public class ProductDB
         }
     }
 
-    public void addProductToCart(Map<String, String> parameters) throws SQLException {
+    public void addProductToCart(Map<String, String> parameters) throws SQLException
+    {
+
         IProduct[] products = new IProduct[1];
         User user = new User();
         user.setUserId(1);
@@ -151,51 +206,10 @@ public class ProductDB
         user.setLastName("ascc");
         user.setPassword("12345");
         user.setMobileNo("9875412368");
-        try
-        {
-            products[0] = getProductById(Integer.valueOf(parameters.get("id")));
-        }
-        catch (SQLException e)
-        {
-            e.printStackTrace();
-        }
-        System.out.println(user.getUserID());
-        System.out.println(products[0]);
-        System.out.println(products[0].getProductId());
+        products[0] = getProductById(Integer.valueOf(parameters.get("id")));
+        //        System.out.println(user.getUserID());
+//        System.out.println(products[0]);
+//        System.out.println(products[0].getProductId());
         orderController.addToOrder(user, products);
     }
-
-
-//    @Override
-//    public String addProductToCart(Map<String,String> allParams)
-//    {
-//        try{
-//
-//            Class.forName("com.mysql.cj.jdbc.Driver");
-//            conn = DriverManager.getConnection(environment.getProperty("spring.datasource.url"),
-//                    environment.getProperty("spring.datasource.username"),
-//                    environment.getProperty("spring.datasource.password"));
-//
-//
-//            String query = "insert into CSCI5308_2_DEVINT.cart (product_id, user_id, created_date, updated_date) values ( ?, ?, ?, ?);";
-//            preparedStatement = conn.prepareStatement(query);
-////            connectionManager.ConnectionManager();
-////            preparedStatement = connectionManager.connection.prepareStatement(query);
-//            preparedStatement.setInt(1, Integer.parseInt(allParams.get("id")));
-//            preparedStatement.setInt(2,Integer.parseInt(allParams.get("userkey")));
-//            preparedStatement.setString(3,"0000-00-00");
-//            preparedStatement.setString(4,"0000-00-00");
-//            preparedStatement.executeUpdate();
-//            return "Success";
-//        }
-//        catch (SQLException e)
-//        {
-//            e.printStackTrace();
-//            return "Failure";
-//        } catch (ClassNotFoundException e) {
-//            e.printStackTrace();
-//            return "Failure";
-//        }
-//    }
-    
 }

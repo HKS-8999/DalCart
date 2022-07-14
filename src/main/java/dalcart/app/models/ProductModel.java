@@ -16,12 +16,10 @@ public class ProductModel implements IProductModel
     private String productDescription;
     private Integer productPrice;
     private Integer productQuantity;
-    private Boolean productState;
+    private Boolean enabled;
     private String productImage;
     public Product product;
     ProductDB productDB = new ProductDB();
-    IProductModel.productState state;
-
 
     @Override
     public String getProductName() {
@@ -74,13 +72,13 @@ public class ProductModel implements IProductModel
     }
 
     @Override
-    public Boolean getProductState() {
-        return productState;
+    public Boolean getEnabled() {
+        return enabled;
     }
 
     @Override
-    public void setProductState(Boolean productState) {
-        this.productState = productState;
+    public void setEnabled(Boolean productState) {
+        this.enabled = productState;
     }
 
     @Override
@@ -93,11 +91,18 @@ public class ProductModel implements IProductModel
         this.productImage = productImage;
     }
 
-    public ArrayList getProducts(String searchWord)
+    public ArrayList getProducts()
     {
 //        productDB = new ProductDB();
-        ArrayList<Product> productDetail;
-        productDetail = productDB.getProductDetails(searchWord);
+        ArrayList<IProduct> productDetail;
+        productDetail = productDB.getProductDetails();
+        return productDetail;
+    }
+
+    public ArrayList getProductsToDisplay(String searchWord)
+    {
+        ArrayList<IProduct> productDetail;
+        productDetail = productDB.getProductDetailsForDisplay(searchWord);
         return productDetail;
     }
 

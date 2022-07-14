@@ -64,11 +64,11 @@ public class MockProduct implements IProduct
         this.productId = productId;
     }
 
-    public boolean getProductState() {
+    public boolean getEnabled() {
         return enabled;
     }
 
-    public void setProductState(boolean enabled) {
+    public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
 

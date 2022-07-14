@@ -21,9 +21,9 @@ public interface IProduct
     public void setProductId(int productId);
     public int getProductId();
 
-    public void setProductState(boolean enabled);
+    public void setEnabled(boolean enabled);
 
-    public boolean getProductState();
+    public boolean getEnabled();
 
     public void setProductImage(String productPictureUrl);
 
