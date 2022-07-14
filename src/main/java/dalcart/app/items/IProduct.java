@@ -18,14 +18,15 @@ public interface IProduct
 
     public void setProductQuantity(int productQuantity);
 
+    public void setProductId(int productId);
     public int getProductId();
 
     public void setEnabled(boolean enabled);
 
     public boolean getEnabled();
 
-    public void setProductPictureUrl(String productPictureUrl);
+    public void setProductImage(String productPictureUrl);
 
-    public String getProductPictureUrl();
+    public String getProductImage();
 
 }

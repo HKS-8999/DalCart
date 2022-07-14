@@ -1,8 +1,11 @@
 package dalcart.app.models;
 
 import dalcart.app.Repository.ProductDB;
+import dalcart.app.controllers.OrderController;
 import dalcart.app.items.*;
 import dalcart.app.utils.CommonUtils;
+
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -13,11 +16,10 @@ public class ProductModel implements IProductModel
     private String productDescription;
     private Integer productPrice;
     private Integer productQuantity;
-    private Boolean productState;
+    private Boolean enabled;
     private String productImage;
     public Product product;
-    IProductModel.productState state;
-
+    ProductDB productDB = new ProductDB();
 
     @Override
     public String getProductName() {
@@ -70,13 +72,13 @@ public class ProductModel implements IProductModel
     }
 
     @Override
-    public Boolean getProductState() {
-        return productState;
+    public Boolean getEnabled() {
+        return enabled;
     }
 
     @Override
-    public void setProductState(Boolean productState) {
-        this.productState = productState;
+    public void setEnabled(Boolean productState) {
+        this.enabled = productState;
     }
 
     @Override
@@ -91,14 +93,29 @@ public class ProductModel implements IProductModel
 
     public ArrayList getProducts()
     {
-        ArrayList<Product> productDetail;
-        productDetail = ProductDB.getProductDetails(product);
+//        productDB = new ProductDB();
+        ArrayList<IProduct> productDetail;
+        productDetail = productDB.getProductDetails();
         return productDetail;
     }
-//
-//    public String addToCart(Map<String,String> allParams)
-//    {
-//        return iProductModel.addProductToCart(allParams);
-//    }
+
+    public ArrayList getProductsToDisplay(String searchWord)
+    {
+        ArrayList<IProduct> productDetail;
+        productDetail = productDB.getProductDetailsForDisplay(searchWord);
+        return productDetail;
+    }
+
+    public void updateProduct(Integer productId, Integer productQuantity, Boolean productState)
+    {
+//        productDB = new ProductDB();
+        productDB.updateProduct(productId, productQuantity, productState);
+    }
+
+    public void addProductToCart(Map<String,String> parameters) throws SQLException
+    {
+//        OrderController.addToOrder(user, products);
+        productDB.addProductToCart(parameters);
+    }
 
 }

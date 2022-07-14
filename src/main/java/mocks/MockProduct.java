@@ -72,11 +72,11 @@ public class MockProduct implements IProduct
         this.enabled = enabled;
     }
 
-    public void setProductPictureUrl(String productPictureUrl)
+    public void setProductImage(String productPictureUrl)
     {
         this.productPictureUrl = productPictureUrl;
     }
-    public String getProductPictureUrl()
+    public String getProductImage()
     {
         return productPictureUrl;
     }

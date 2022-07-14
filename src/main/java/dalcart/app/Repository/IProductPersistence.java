@@ -10,10 +10,13 @@ public interface IProductPersistence
 {
     enum StorageResult
     {
-        ALREADY_IN_CART,
         STORAGE_FAILURE,
-        SUCCESS
+        STORAGE_SUCCESS
     }
+
+    public StorageResult saveProduct();
+    public StorageResult deleteProduct();
+    public StorageResult updateProduct();
 
     public StorageResult addProductToCart(Product product);
     public HashMap getProductDetails(Product product);
