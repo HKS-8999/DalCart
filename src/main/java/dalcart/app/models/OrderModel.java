@@ -14,7 +14,7 @@ public class OrderModel implements IOrderModel {
     private Integer userId;
 
     public Product p;
-    IOrderModel.OrderStates state;
+    OrderState state;
 
 
     @Override
@@ -53,13 +53,13 @@ public class OrderModel implements IOrderModel {
     }
 
     @Override
-    public void setState(IOrderModel.OrderStates state) {
+    public void setState(OrderState state) {
 
         this.state = state;
     }
 
     @Override
-    public OrderStates getState() {
+    public OrderState getState() {
         return this.state;
     }
 
