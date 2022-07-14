@@ -3,6 +3,7 @@ package dalcart.app.controllers;
 import dalcart.app.Repository.OrderProducts;
 import dalcart.app.database.ConnectionManager;
 import dalcart.app.items.IProduct;
+import dalcart.app.items.OrderAtCart;
 import dalcart.app.models.IOrderModel;
 import dalcart.app.models.IUser;
 import dalcart.app.models.OrderModel;
@@ -22,7 +23,7 @@ public class OrderController {
         {
             order = new OrderModel();
             order.setUserId(user.getUserID());
-            order.setState(IOrderModel.OrderStates.CART);
+            order.setState(new OrderAtCart());
             orderId = order.save();
         }else{
             order = existingOrder;
