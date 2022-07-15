@@ -82,8 +82,13 @@
     function searchProduct()
     {
         var keyword = $('#search').val();
-        var staticLocation = "http://localhost:8080/home";
-        window.location = staticLocation + '?search=' + keyword;
+        var staticLocation = window.location;
+        if(staticLocation.contains('?'))
+        {
+            windows.location = windows.location.replace(RegExp("([?&]"+search+"(?=[=&#]|$)[^#&]*|(?=#|$)"+keyword+")"), "");
+        }
+        window.location = window.location + '?search=' + keyword;
+
     }
 
 </script>

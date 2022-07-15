@@ -72,7 +72,7 @@ public class ProductDB
                     p.setProductPrice(resultSet.getInt(4));
                     p.setProductQuantity(resultSet.getInt(5));
                     p.setProductImage(resultSet.getString(6));
-                    p.setEnabled(resultSet.getBoolean(7));
+//                    p.setEnabled(resultSet.getBoolean(7));
                     product_detail.add(p);
                 }
                 return product_detail;
@@ -101,7 +101,7 @@ public class ProductDB
                     p.setProductPrice(resultSet.getInt(4));
                     p.setProductQuantity(resultSet.getInt(5));
                     p.setProductImage(resultSet.getString(6));
-                    p.setEnabled(resultSet.getBoolean(7));
+//                    p.setEnabled(resultSet.getBoolean(7));
 
                     product_detail.add(p);
 //                    System.out.println(p.getProductId());
