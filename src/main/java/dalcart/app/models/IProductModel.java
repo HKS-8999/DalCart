@@ -26,4 +26,6 @@ public interface IProductModel
     public void addProductToCart(Map<String,String> parameters);
     public void saveProduct(IProductModel product);
     public void updateProduct(Integer productId, Integer productQuantity, Boolean productState);
+    public Integer getLastProductId();
+    public IProductModel getProductById(Integer productId);
 }

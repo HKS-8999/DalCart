@@ -1,5 +1,6 @@
 package dalcart.app.Repository;
 
+import com.fasterxml.jackson.core.JsonToken;
 import dalcart.app.controllers.OrderController;
 import dalcart.app.database.ConnectionManager;
 import dalcart.app.models.IProductModel;
@@ -8,6 +9,7 @@ import dalcart.app.models.User;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Map;
@@ -130,6 +132,11 @@ public class ProductDB
                 p.setProductImage(resultSet.getString(6));
                 p.setEnabled(resultSet.getBoolean(7));
             }
+            System.out.println(p.getProductId());
+            System.out.println(p.getProductName());
+            System.out.println(p.getProductDescription());
+            System.out.println(p.getProductPrice());
+            System.out.println(p.getProductQuantity());
             return p;
         }
         catch(SQLException e)
@@ -143,10 +150,11 @@ public class ProductDB
         try
         {
             String query = "select id from " + tableName + " ;";
-            preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(query);
+            preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(query,ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_READ_ONLY);
             resultSet = preparedStatement.executeQuery(query);
             resultSet.last();
             Integer productId = resultSet.getInt(1);
+            System.out.println(productId);
             return productId;
         }
         catch(SQLException e)
@@ -158,7 +166,15 @@ public class ProductDB
 
     public void saveProduct(IProductModel product)
     {
-        Integer id = getLastProductId();
+        product.setProductId(4);
+        product.setProductName("Hoodies");
+        product.setProductDescription("Woolen Winter hoodies");
+        product.setProductPrice(60);
+        product.setProductQuantity(25);
+        product.setProductImage("abc.jpg");
+        product.setEnabled(true);
+
+//        Integer id = getLastProductId();
         try
         {
             LocalDate date = java.time.LocalDate.now();
@@ -170,7 +186,14 @@ public class ProductDB
             preparedStatement.setInt(3,product.getProductPrice());
             preparedStatement.setInt(4,product.getProductQuantity());
             preparedStatement.setString(5,product.getProductImage());
-            preparedStatement.setBoolean(6,product.getEnabled());
+            if(product.getEnabled())
+            {
+                preparedStatement.setInt(6,1);
+            }
+            else
+            {
+                preparedStatement.setInt(6,0);
+            }
             preparedStatement.setString(7, String.valueOf(date));
             preparedStatement.setString(8, "0000-00-00");
             preparedStatement.executeUpdate();
@@ -183,9 +206,19 @@ public class ProductDB
 
     public void updateProduct(Integer productId, Integer productQuantity, Boolean productState)
     {
+        int state;
         try
         {
-            String query = "update " + tableName + " set product_quantity = " + productQuantity + ", set enabled = " + productState + " where id = " + productId + ";";
+            LocalDate date = java.time.LocalDate.now();
+            if(productState)
+            {
+                state = 1;
+            }
+            else
+            {
+                state = 0;
+            }
+            String query = "update " + tableName + " set product_quantity = " + productQuantity + ", enabled = " + state + ", updated_at = '" + date + "' where id = " + productId + ";";
             statement = ConnectionManager.getInstance().getConnection().createStatement();
             statement.executeUpdate(query);
         }

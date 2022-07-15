@@ -1,7 +1,6 @@
 package dalcart.app.models;
 
 import dalcart.app.Repository.ProductDB;
-import dalcart.app.items.*;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -125,5 +124,11 @@ public class ProductModel implements IProductModel
         productDB.updateProduct(productId, productQuantity, productState);
     }
 
+    public Integer getLastProductId()
+    {
+        Integer id;
+        id = productDB.getLastProductId();
+        return id;
+    }
 
 }
