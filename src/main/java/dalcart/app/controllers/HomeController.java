@@ -17,7 +17,7 @@ public class HomeController
 {
     IProductModel productModel = new ProductModel();
     @GetMapping("/home")
-    public ModelAndView listgetproducts (HttpServletResponse response, ModelAndView model, @RequestParam(name = "search", required = false) String keyword, @CookieValue(name = "userkey", required = false) String userKey) throws IOException
+    public ModelAndView listgetproducts (ModelAndView model, @RequestParam(name = "search", required = false) String keyword, @CookieValue(name = "userkey", required = false) String userKey) throws IOException
     {
 //        if(userKey == null || userKey.equals(""))
 //        {
@@ -43,7 +43,7 @@ public class HomeController
     }
 
     @PostMapping("/home")
-    public ModelAndView displayProduct(@ModelAttribute IProductModel product,@RequestParam Map<String,String> allParams, ModelAndView model, @CookieValue(name = "userkey", required = false) String userKey){
+    public ModelAndView displayProduct(@RequestParam Map<String,String> allParams, ModelAndView model, @CookieValue(name = "userkey", required = false) String userKey){
 
 //        if(userKey == null || userKey.equals(""))
 //        {
