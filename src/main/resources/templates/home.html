@@ -12,10 +12,12 @@
 
     <div style="background: cornflowerblue; font-family: 'Arial Rounded MT Bold'; font-size: xx-large; text-align: center;">
         <h1><u>Dal-Cart</u></h1>
+        <h1><span th:text="${header}"></span></h1>
     </div>
 
     <div class="topnav" style="padding-bottom: 50px;">
-        <input type="text" placeholder="Search">
+        <input type="text" placeholder="Search" id="search" name="searchword">
+        <button class="btn btn-primary" type = "submit" id = "btn1" onclick="searchProduct()">Search</Button>
         <a class="active" href="#home">My Cart</a>
 <!--        <a href="#about">About</a>-->
         <a href="#contact">Profile</a>
@@ -58,28 +60,10 @@
         </div>
     </div>
 
-<!--    <script>-->
-<!--    $("button").click(function(e) {-->
-<!--    e.preventDefault();-->
-<!--    $.ajax({-->
-<!--    type: "POST",-->
-<!--    url: "/login",-->
-<!--    data: {-->
-<!--    id: $(this).val(), // < note use of 'this' here-->
-<!--    access_token: $("#access_token").val()-->
-<!--    },-->
-<!--    success: function(result) {-->
-<!--    alert('ok');-->
-<!--    },-->
-<!--    error: function(result) {-->
-<!--    alert('error');-->
-<!--    }-->
-<!--    });-->
-<!--    });-->
-<!--    </script>-->
-
     <script type="text/javascript">
-    function addToCart(event) {
+
+    function addToCart(event)
+    {
 //        e.preventDefault();
         $.ajax({
             type: "POST",
@@ -95,8 +79,15 @@
                 alert('error');
             }
         });
-        //console.log(event)
     }
+
+    function searchProduct()
+    {
+        var keyword = $('#search').val();
+        var staticLocation = "http://localhost:8080/home";
+        window.location = staticLocation + '?search=' + keyword;
+    }
+
 </script>
 </body>
 </html>

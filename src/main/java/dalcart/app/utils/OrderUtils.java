@@ -17,33 +17,4 @@ public class OrderUtils {
         String generatedString = UUID.randomUUID().toString().toUpperCase().substring(0,DEFAULT_LENGTH);
         return ORDER_SUBSCRIPT + generatedString;
     }
-
-    public static IOrderModel.OrderStates getState(String orderState){
-        String state = orderState.toLowerCase();
-        if(state.equals("cart")){
-            return IOrderModel.OrderStates.CART;
-        }else if(state.equals("address")){
-            return IOrderModel.OrderStates.ADDRESS;
-        }else if(state.equals("payment")){
-            return IOrderModel.OrderStates.PAYMENT;
-        }else if(state.equals("complete")){
-            return IOrderModel.OrderStates.COMPLETE;
-        }
-        //if there is no state we should consider that it is in cart state
-        return IOrderModel.OrderStates.CART;
-    }
-
-    public static String getStateString(IOrderModel.OrderStates state){
-        if(state.equals(IOrderModel.OrderStates.CART)){
-            return "cart";
-        }else if(state.equals(IOrderModel.OrderStates.ADDRESS)){
-            return "address";
-        }else if(state.equals(IOrderModel.OrderStates.PAYMENT)){
-            return "payment";
-        }else if(state.equals(IOrderModel.OrderStates.COMPLETE)){
-            return "ccomplete";
-        }
-        return null;
-    }
-
 }

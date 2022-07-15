@@ -1,5 +1,6 @@
 package dalcart.app;
 
+import dalcart.app.Repository.OrderDB;
 import dalcart.app.database.ConnectionManager;
 import dalcart.app.models.IOrderModel;
 import dalcart.app.models.OrderModel;
@@ -21,7 +22,7 @@ class TestingApplicationTests {
         connectionManager.begin();
         IOrderModel order = new OrderModel();
         order.setUserId(1);
-        order.setState(OrderUtils.getState("address"));
+        order.setState(OrderDB.getStateByName("address"));
         //System.out.println("**************TESTING***************");
         Integer orderId = order.save();
         order.delete();

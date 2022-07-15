@@ -1,18 +1,7 @@
 package dalcart.app.models;
 
-import dalcart.app.items.Product;
-
-import java.util.ArrayList;
-import java.util.Map;
-
 public interface IProductModel
 {
-    enum productState
-    {
-        ENABLED,
-        DISABLED
-    }
-
     public void setProductId(Integer productId);
     public Integer getProductId();
     public void setProductName(String productName);
@@ -23,8 +12,8 @@ public interface IProductModel
     public Integer getProductPrice();
     public void setProductQuantity();
     public Integer getProductQuantity();
-    public void setProductState(Boolean productState);
-    public Boolean getProductState();
+    public void setEnabled(Boolean productState);
+    public Boolean getEnabled();
     public void setProductImage(String productImage);
     public String getProductImage();
 //    public ArrayList getProductDetails(Product product);
