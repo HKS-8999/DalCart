@@ -1,0 +1,7 @@
+2022-07-15 20:06:33,674 INFO o.s.w.c.ContextLoader [restartedMain] Root WebApplicationContext: initialization completed in 1793 ms
+2022-07-15 20:06:34,243 INFO o.s.s.c.ThreadPoolTaskExecutor [restartedMain] Initializing ExecutorService 'applicationTaskExecutor'
+2022-07-15 20:06:35,161 INFO o.s.s.a.ScheduledAnnotationBeanPostProcessor [restartedMain] No TaskScheduler/ScheduledExecutorService bean found for scheduled processing
+2022-07-15 20:06:35,588 INFO o.s.w.s.DispatcherServlet [RMI TCP Connection(3)-134.190.129.62] Initializing Servlet 'dispatcherServlet'
+2022-07-15 20:06:35,594 INFO o.s.w.s.DispatcherServlet [RMI TCP Connection(3)-134.190.129.62] Completed initialization in 5 ms
+2022-07-15 20:06:48,333 ERROR d.a.c.LoginController [http-nio-8080-exec-1] sadas
+2022-07-15 20:07:29,304 INFO o.s.s.c.ThreadPoolTaskExecutor [SpringContextShutdownHook] Shutting down ExecutorService 'applicationTaskExecutor'
