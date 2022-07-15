@@ -1,5 +1,9 @@
 package dalcart.app.controllers;
 
+import dalcart.app.Factories.ISecurityFactory;
+import dalcart.app.Factories.IUserPersistanceFactory;
+import dalcart.app.Factories.SecurityFactory;
+import dalcart.app.Factories.UserPersistanceFactory;
 import dalcart.app.Repository.IUserPersistence;
 import dalcart.app.Repository.UserDB;
 import dalcart.app.models.Security;
@@ -19,6 +23,8 @@ import javax.servlet.http.HttpSession;
 
 @Controller
 public class LoginController {
+    IUserPersistanceFactory userPersistanceFactory;
+    ISecurityFactory securityFactory;
     @GetMapping("/login")
     public ModelAndView loginPage(HttpServletRequest request)
     {
@@ -41,8 +47,10 @@ public class LoginController {
         ModelAndView modelAndView = new ModelAndView();
         try
         {
-            IUserPersistence iUserPersistence = new UserDB();
-            Security security = new SecurityService(iUserPersistence);
+            userPersistanceFactory = new UserPersistanceFactory();
+            securityFactory = new SecurityFactory();
+            IUserPersistence iUserPersistence = userPersistanceFactory.createIUserPersistance();
+            Security security = securityFactory.createSecurity(iUserPersistence);
 
             if(security.authenticateUser(user).equals(Security.RESULT.AUTHORIZED)) {
                 user.loadUserAttributes(iUserPersistence);
@@ -55,15 +63,12 @@ public class LoginController {
                 else
                 {
                     session.setAttribute("user",user.getUserID());
-//                    modelAndView.setViewName("redirect:/home");
                     return new ModelAndView("redirect:/home");
                 }
             }
             else
                 {
-//                    modelAndView.setViewName("redirect:/invalidUsernameandPassword");
                     return new ModelAndView("invalidUsernameandPassword");
-
                 }
         }
         catch (Exception e)
