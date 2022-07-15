@@ -49,7 +49,6 @@ public class LoginController {
                 System.out.println(user.isAdmin(user.getDesignation()));
                 if (user.isAdmin(user.getDesignation())) {
                     session.setAttribute("admin", user.getUserID());
-//                    modelAndView.setViewName("redirect:/admin");
                     return new ModelAndView("redirect:/admin");
 
                 }
