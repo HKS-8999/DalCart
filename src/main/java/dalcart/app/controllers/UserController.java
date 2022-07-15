@@ -7,6 +7,7 @@ import dalcart.app.models.IUser;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class UserController{
@@ -17,7 +18,8 @@ public class UserController{
     }
 
     @PostMapping("/signup")
-    public String submitForm(@ModelAttribute User user){
+    public ModelAndView submitForm(@ModelAttribute IUser user){
+        ModelAndView modelAndView = new ModelAndView();
         try {
             IUser userService = new User();
             IUserPersistence iUserPersistence = new UserDB();
@@ -25,6 +27,7 @@ public class UserController{
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        return "new user created";
+        modelAndView.setViewName("login");
+        return modelAndView;
     }
 }
