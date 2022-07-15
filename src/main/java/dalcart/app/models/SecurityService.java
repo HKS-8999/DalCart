@@ -3,6 +3,9 @@ package dalcart.app.models;
 import dalcart.app.Repository.IUserPersistence;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
+import java.util.Enumeration;
+
 @Service
 public class SecurityService implements Security {
     IUserPersistence userPersistence;
@@ -15,7 +18,7 @@ public class SecurityService implements Security {
     public RESULT authenticateUser(IUser user){
         String email = user.getEmail();
         String password = user.getPassword();
-        user.loadUserAttributes(user,userPersistence);
+        user.loadUserAttributes(userPersistence);
 
         if(email == null || email.isEmpty() || user.getEmail() == null){
             return RESULT.USERNAME_INVALID;
@@ -29,5 +32,23 @@ public class SecurityService implements Security {
         else{
             return RESULT.IS_NOT_AUTHORIZED;
         }
+    }
+
+    public static boolean isSessionValid(HttpSession session){
+//        String userID = session.getAttribute("user").toString();
+//        String admin = session.getAttribute("admin").toString();
+//
+//
+//        if(userID == null || admin == null){
+//            return false;
+//        }
+//        return true;
+
+            Enumeration<String> names = session.getAttributeNames();
+
+            if(names.hasMoreElements()){
+                return true;
+            }
+            return false;
     }
 }

@@ -3,8 +3,7 @@ package dalcart.app.Repository;
 import dalcart.app.database.ConnectionManager;
 import dalcart.app.items.Product;
 import dalcart.app.models.IProductModel;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
+import dalcart.app.models.ProductModel;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
@@ -13,32 +12,25 @@ import java.util.ArrayList;
 import java.util.Map;
 
 @Repository
-public class ProductDB implements IProductModel
+public class ProductDB
 {
-    @Autowired
-    private Environment environment;
-//
-//    @Autowired
-//    private ConnectionManager connectionManager;
+    Connection connection;
+    ProductModel productModel;
+    static Statement statement;
+    static ResultSet resultSet;
+    static PreparedStatement preparedStatement;
+    static String tableName = "products";
+//    static String tableName = "CSCI5308_2_DEVINT.products";
 
-    Connection conn;
-
-    Statement statement;
-    ResultSet resultSet;
-    PreparedStatement preparedStatement;
-
-    public ArrayList getProductDetails(Product product)
+    public static ArrayList getProductDetails(Product product)
     {
         ArrayList<Product> product_detail = new ArrayList<>();
-        try{
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            conn = DriverManager.getConnection(environment.getProperty("spring.datasource.url"),
-                    environment.getProperty("spring.datasource.username"),
-                    environment.getProperty("spring.datasource.password"));
-
-            String query = "select * from CSCI5308_2_DEVINT.products;";
-            statement = conn.createStatement();
-            resultSet = statement.executeQuery(query);
+        try
+        {
+            String query = "select * from " + tableName + " ;";
+            preparedStatement= ConnectionManager.getInstance().getConnection().prepareStatement(query);
+//            statement = connection.createStatement();
+            resultSet = preparedStatement.executeQuery(query);
             while(resultSet.next())
             {
                 Product p = new Product();
@@ -47,32 +39,32 @@ public class ProductDB implements IProductModel
                 p.setProductDescription(resultSet.getString(3));
                 p.setProductQuantity(resultSet.getInt(5));
                 p.setProductPrice(resultSet.getInt(4));
-                p.setEnabled(resultSet.getBoolean(7));
+                p.setProductState(resultSet.getBoolean(7));
+                p.setProductImage(resultSet.getString(8));
                 product_detail.add(p);
             }
             return product_detail;
 
-        }catch (SQLException | ClassNotFoundException e){
+        }catch (SQLException e){
             e.printStackTrace();
         }
         return product_detail;
     }
 
-    public void addProductDetails(Product product)
+    public void saveProduct(ProductModel product)
     {
         try
         {
             LocalDate date = java.time.LocalDate.now();
-            String query = "insert into CSCI5308_2_DEVINT.products (product_name, product_description, product_price, product_quantity, product_picture_url, enabled, created_at, updated_at) values ( ?, ?, ?, ?, ?, ?, ?, ?);";
-
+            String query = "insert into " + tableName + " (product_name, product_description, product_price, product_quantity, product_picture_url, enabled, created_at, updated_at) values ( ?, ?, ?, ?, ?, ?, ?, ?);";
 
             preparedStatement= ConnectionManager.getInstance().getConnection().prepareStatement(query);
             preparedStatement.setString(1,product.getProductName());
             preparedStatement.setString(2,product.getProductDescription());
             preparedStatement.setInt(3,product.getProductPrice());
             preparedStatement.setInt(4,product.getProductQuantity());
-            preparedStatement.setString(5,product.getProductPictureUrl());
-            preparedStatement.setBoolean(6,product.getEnabled());
+            preparedStatement.setString(5,product.getProductImage());
+            preparedStatement.setBoolean(6,product.getProductState());
             preparedStatement.setString(7, String.valueOf(date));
             preparedStatement.setString(8, "0000-00-00");
             preparedStatement.executeUpdate();
@@ -100,7 +92,7 @@ public class ProductDB implements IProductModel
     {
         try
         {
-            String query = "update CSCI5308_2_DEVINT.products set enabled = " + product.getEnabled() + " where id = " + product.getProductId() + ";";
+            String query = "update CSCI5308_2_DEVINT.products set enabled = " + product.getProductState() + " where id = " + product.getProductId() + ";";
             statement =  ConnectionManager.getInstance().getConnection().createStatement();
             statement.executeUpdate(query);
         }
@@ -110,36 +102,36 @@ public class ProductDB implements IProductModel
         }
     }
 
-    @Override
-    public String addProductToCart(Map<String,String> allParams)
-    {
-        try{
-
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            conn = DriverManager.getConnection(environment.getProperty("spring.datasource.url"),
-                    environment.getProperty("spring.datasource.username"),
-                    environment.getProperty("spring.datasource.password"));
-
-
-            String query = "insert into CSCI5308_2_DEVINT.cart (product_id, user_id, created_date, updated_date) values ( ?, ?, ?, ?);";
-            preparedStatement = conn.prepareStatement(query);
-//            connectionManager.ConnectionManager();
-//            preparedStatement = connectionManager.connection.prepareStatement(query);
-            preparedStatement.setInt(1, Integer.parseInt(allParams.get("id")));
-            preparedStatement.setInt(2,Integer.parseInt(allParams.get("userkey")));
-            preparedStatement.setString(3,"0000-00-00");
-            preparedStatement.setString(4,"0000-00-00");
-            preparedStatement.executeUpdate();
-            return "Success";
-        }
-        catch (SQLException e)
-        {
-            e.printStackTrace();
-            return "Failure";
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            return "Failure";
-        }
-    }
+//    @Override
+//    public String addProductToCart(Map<String,String> allParams)
+//    {
+//        try{
+//
+//            Class.forName("com.mysql.cj.jdbc.Driver");
+//            conn = DriverManager.getConnection(environment.getProperty("spring.datasource.url"),
+//                    environment.getProperty("spring.datasource.username"),
+//                    environment.getProperty("spring.datasource.password"));
+//
+//
+//            String query = "insert into CSCI5308_2_DEVINT.cart (product_id, user_id, created_date, updated_date) values ( ?, ?, ?, ?);";
+//            preparedStatement = conn.prepareStatement(query);
+////            connectionManager.ConnectionManager();
+////            preparedStatement = connectionManager.connection.prepareStatement(query);
+//            preparedStatement.setInt(1, Integer.parseInt(allParams.get("id")));
+//            preparedStatement.setInt(2,Integer.parseInt(allParams.get("userkey")));
+//            preparedStatement.setString(3,"0000-00-00");
+//            preparedStatement.setString(4,"0000-00-00");
+//            preparedStatement.executeUpdate();
+//            return "Success";
+//        }
+//        catch (SQLException e)
+//        {
+//            e.printStackTrace();
+//            return "Failure";
+//        } catch (ClassNotFoundException e) {
+//            e.printStackTrace();
+//            return "Failure";
+//        }
+//    }
     
 }

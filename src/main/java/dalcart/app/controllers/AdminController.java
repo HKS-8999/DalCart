@@ -22,7 +22,7 @@ import java.util.Map;
 @Component
 public class AdminController {
 
-    @Autowired
+//    @Autowired
     ProductModel productModel;
 
     @GetMapping(value = {""})

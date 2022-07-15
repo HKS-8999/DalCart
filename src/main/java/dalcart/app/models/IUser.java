@@ -3,32 +3,44 @@ package dalcart.app.models;
 import dalcart.app.Repository.IUserPersistence;
 
 
-public interface IUser {
+public abstract class IUser {
+    protected String email;
+    protected String firstName;
+    protected String lastName;
+    protected String password;
+    protected String mobileNo;
 
-    IUserPersistence.Result createNewUser(IUser user,IUserPersistence userPersistence) throws Exception;
+    protected String designation;
 
-    public Integer getUserID();
+    protected int userID;
 
-    public String getEmail();
+    public abstract IUserPersistence.Result createNewUser(IUser user, IUserPersistence userPersistence) throws Exception;
 
-    public void setFirstName(String firstName);
+    public abstract Integer getUserID();
 
-    public void setLastName(String lastName);
+    public abstract String getEmail();
 
-    public void setMobileNo(String mobileNo);
+    public abstract void setFirstName(String firstName);
 
-    public void setUserID(int userID);
+    public abstract void setLastName(String lastName);
 
-    public void setPassword(String password);
+    public abstract void setMobileNo(String mobileNo);
 
-    public void setEmail(String emailID);
+    public abstract void setUserID(int userID);
 
-    public String getPassword();
+    public abstract void setPassword(String password);
 
-    public String getFirstName();
+    public abstract void setEmail(String emailID);
 
-    public String getLastName();
-    public String getMobileNo();
+    public abstract String getPassword();
 
-    public void loadUserAttributes(IUser user, IUserPersistence iUserPersistence);
+    public abstract String getFirstName();
+
+    public abstract String getLastName();
+    public abstract String getMobileNo();
+    public abstract void loadUserAttributes(IUserPersistence iUserPersistence);
+
+    public abstract void setDesignation(String designation);
+
+    public abstract String getDesignation();
 }

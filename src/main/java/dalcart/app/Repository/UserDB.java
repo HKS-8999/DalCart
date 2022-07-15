@@ -122,12 +122,14 @@ public class UserDB implements IUserPersistence {
                 String lastName = resultset.getString("last_name");
                 String password = resultset.getString("password");
                 String mobileNo = resultset.getString("mobile_no");
+                String designation = resultset.getString("designation");
                 user.setFirstName(firstName);
                 user.setLastName(lastName);
                 user.setMobileNo(mobileNo);
                 user.setUserID(userID);
                 user.setPassword(password);
                 user.setEmail(emailID);
+                user.setDesignation(designation);
             }
 
             return user;

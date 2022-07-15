@@ -15,18 +15,28 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+
+
 @Controller
 public class LoginController {
     @GetMapping("/login")
-    public ModelAndView loginPage()
+    public ModelAndView loginPage(HttpServletRequest request)
     {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("login");
-        return modelAndView;
+        HttpSession session = request.getSession();
+
+        if(SecurityService.isSessionValid(session) == false){
+            ModelAndView modelAndView = new ModelAndView();
+            modelAndView.setViewName("login");
+            return modelAndView;
+        }
+        else{
+            return new ModelAndView("redirect:/home");
+        }
+
     }
 
     @PostMapping("/login")
-    public ModelAndView submitForm(@ModelAttribute User user, HttpServletRequest request){
+    public ModelAndView submitForm(@ModelAttribute User user, HttpServletRequest request ){
         HttpSession session = request.getSession();
         ModelAndView modelAndView = new ModelAndView();
         try
@@ -34,24 +44,28 @@ public class LoginController {
             IUserPersistence iUserPersistence = new UserDB();
             Security security = new SecurityService(iUserPersistence);
 
-            if(security.authenticateUser(user).equals(Security.RESULT.AUTHORIZED))
-            {
-//                List<String> notes = (List<String>) request.getSession().getAttribute("NOTES_SESSION");
-//                //check if notes is present in session or not
-//                if (notes == null) {
-//                    notes = new ArrayList<>();
-//                    // if notes object is not present in session, set notes in the request session
-//                    request.getSession().setAttribute("NOTES_SESSION", notes);
-//                }
-                //session.setAttribute("user", user);
-                modelAndView.setViewName("home");
-                return modelAndView;
+            if(security.authenticateUser(user).equals(Security.RESULT.AUTHORIZED)) {
+                user.loadUserAttributes(iUserPersistence);
+                System.out.println(user.isAdmin(user.getDesignation()));
+                if (user.isAdmin(user.getDesignation())) {
+                    session.setAttribute("admin", user.getUserID());
+//                    modelAndView.setViewName("redirect:/admin");
+                    return new ModelAndView("redirect:/admin");
+
+                }
+                else
+                {
+                    session.setAttribute("user",user.getUserID());
+//                    modelAndView.setViewName("redirect:/home");
+                    return new ModelAndView("redirect:/home");
+                }
             }
             else
-            {
-                modelAndView.setViewName("invalidUsernameandPassword");
-                return modelAndView;
-            }
+                {
+//                    modelAndView.setViewName("redirect:/invalidUsernameandPassword");
+                    return new ModelAndView("invalidUsernameandPassword");
+
+                }
         }
         catch (Exception e)
         {
@@ -60,4 +74,10 @@ public class LoginController {
         modelAndView.setViewName("login");
         return modelAndView;
     }
+    @GetMapping("/logout")
+    public String destroySession(HttpServletRequest request) {
+        request.getSession().invalidate();
+        return "redirect:/home";
+    }
+
 }
