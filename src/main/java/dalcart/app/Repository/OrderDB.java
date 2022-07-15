@@ -1,8 +1,8 @@
 package dalcart.app.Repository;
 
 import dalcart.app.database.ConnectionManager;
-import dalcart.app.items.Product;
 import dalcart.app.models.IOrderModel;
+import dalcart.app.models.IProductModel;
 import dalcart.app.models.OrderModel;
 import dalcart.app.utils.OrderUtils;
 import org.springframework.stereotype.Repository;
@@ -45,7 +45,7 @@ class OrderDB  {
     }
 
     public static IOrderModel getLastOrder(){
-        ArrayList<Product> product_detail = new ArrayList<>();
+        ArrayList<IProductModel> product_detail = new ArrayList<>();
         try{
 
             String query = "select * from orders order by id desc limit 1";

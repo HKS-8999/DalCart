@@ -1,13 +1,13 @@
 package dalcart.app.controllers;
 
 import dalcart.app.items.HeaderSetter;
-import dalcart.app.items.IProduct;
-import dalcart.app.items.Product;
+import dalcart.app.models.IProductModel;
 import dalcart.app.models.ProductModel;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
@@ -15,9 +15,9 @@ import java.util.Map;
 @Controller
 public class HomeController
 {
-    ProductModel productModel = new ProductModel();
+    IProductModel productModel = new ProductModel();
     @GetMapping("/home")
-    public ModelAndView listgetproducts (ModelAndView model,@RequestParam(name = "search", required = false) String keyword, @CookieValue(name = "userkey", required = false) String userKey) throws IOException
+    public ModelAndView listgetproducts (HttpServletResponse response, ModelAndView model, @RequestParam(name = "search", required = false) String keyword, @CookieValue(name = "userkey", required = false) String userKey) throws IOException
     {
 //        if(userKey == null || userKey.equals(""))
 //        {
@@ -26,17 +26,24 @@ public class HomeController
 //            return modelAndView;
 //        }
 
-        ArrayList<IProduct> lstprodcts = productModel.getProductsToDisplay(keyword);
+        ArrayList<IProductModel> lstprodcts = productModel.getProductsToDisplay(keyword);
         model.addObject("listproducts",lstprodcts);
         String message = HeaderSetter.messageToDisplay();
         model.addObject("header", message);
-        model.setViewName("home");
 
+
+//        ClassPathResource imgFile = new ClassPathResource("/WEB-INF/images/1.jpg");
+//        response.setContentType(MediaType.IMAGE_JPEG_VALUE);
+//        StreamUtils.copy(imgFile.getInputStream(), response.getOutputStream());
+//        model.addObject("imageFolder", StreamUtils.copy(imgFile.getInputStream(), response.getOutputStream()));
+
+
+        model.setViewName("home");
         return model;
     }
 
     @PostMapping("/home")
-    public ModelAndView displayProduct(@ModelAttribute Product product,@RequestParam Map<String,String> allParams, ModelAndView model, @CookieValue(name = "userkey", required = false) String userKey){
+    public ModelAndView displayProduct(@ModelAttribute IProductModel product,@RequestParam Map<String,String> allParams, ModelAndView model, @CookieValue(name = "userkey", required = false) String userKey){
 
 //        if(userKey == null || userKey.equals(""))
 //        {

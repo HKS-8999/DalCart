@@ -1,11 +1,7 @@
 package dalcart.app.models;
 
 import dalcart.app.Repository.ProductDB;
-import dalcart.app.controllers.OrderController;
 import dalcart.app.items.*;
-import dalcart.app.utils.CommonUtils;
-
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -18,7 +14,7 @@ public class ProductModel implements IProductModel
     private Integer productQuantity;
     private Boolean enabled;
     private String productImage;
-    public Product product;
+//    public Product product;
     ProductDB productDB = new ProductDB();
 
     @Override
@@ -67,7 +63,7 @@ public class ProductModel implements IProductModel
     }
 
     @Override
-    public void setProductQuantity() {
+    public void setProductQuantity(Integer productQuantity) {
         this.productQuantity = productQuantity;
     }
 
@@ -91,31 +87,43 @@ public class ProductModel implements IProductModel
         this.productImage = productImage;
     }
 
+
     public ArrayList getProducts()
     {
 //        productDB = new ProductDB();
-        ArrayList<IProduct> productDetail;
+        ArrayList<IProductModel> productDetail;
         productDetail = productDB.getProductDetails();
         return productDetail;
     }
 
     public ArrayList getProductsToDisplay(String searchWord)
     {
-        ArrayList<IProduct> productDetail;
+        ArrayList<IProductModel> productDetail;
         productDetail = productDB.getProductDetailsForDisplay(searchWord);
         return productDetail;
     }
 
+    public void addProductToCart(Map<String,String> parameters)
+    {
+        productDB.addProductToCart(parameters);
+    }
+
+    public IProductModel getProductById(Integer productId)
+    {
+        IProductModel iproduct;
+        iproduct = productDB.getProductById(productId);
+        return iproduct;
+    }
+
+    public void saveProduct(IProductModel product)
+    {
+        productDB.saveProduct(product);
+    }
+
     public void updateProduct(Integer productId, Integer productQuantity, Boolean productState)
     {
-//        productDB = new ProductDB();
         productDB.updateProduct(productId, productQuantity, productState);
     }
 
-    public void addProductToCart(Map<String,String> parameters) throws SQLException
-    {
-//        OrderController.addToOrder(user, products);
-        productDB.addProductToCart(parameters);
-    }
 
 }
