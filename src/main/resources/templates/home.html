@@ -19,7 +19,7 @@
         <input type="text" placeholder="Search" id="search" name="searchword">
         <button class="btn btn-primary" type = "submit" id = "btn1" onclick="searchProduct()">Search</Button>
         <a href = "#"><button class="btn btn-primary" type = "submit" id = "btn2">My Cart</button></a>
-        <butoon class="btn btn-primary" type = "submit" id = "btn3">Log Out</butoon>
+        <button class="btn btn-primary" type = "submit" id = "btn3">Log Out</button>
 <!--        <a class="active" href="/checkout">My Cart</a>-->
 <!--        <a href="#about">About</a>-->
     </div>
@@ -82,13 +82,16 @@
     function searchProduct()
     {
         var keyword = $('#search').val();
-        var staticLocation = window.location;
-        if(staticLocation.contains('?'))
+        // window.location = window.location + "?search=" + keyword;
+        if(window.location.href.indexOf("?") > -1)
         {
-            windows.location = windows.location.replace(RegExp("([?&]"+search+"(?=[=&#]|$)[^#&]*|(?=#|$)"+keyword+")"), "");
+            // alert("Hiiiii");
+            window.location.replace(("(\\?search.*)","?search=" + keyword));
         }
-        window.location = window.location + '?search=' + keyword;
-
+        else
+        {
+            window.location = window.location + "?search=" + keyword;
+        }
     }
 
 </script>
