@@ -6,6 +6,7 @@ public class HeaderSetter
     public static String messageToDisplay()
     {
         int m = Calendar.getInstance().get(Calendar.MONTH);
+//        int m = 15;
         if(m >= 3 && m <= 5)
         {
             HomeHeader spring = new Spring();

@@ -2,15 +2,10 @@ package dalcart.app.models;
 
 import dalcart.app.Repository.IUserPersistence;
 
+import java.util.Locale;
 
-public class User implements IUser {
-    private String email;
-    private String firstName;
-    private String lastName;
-    private String password;
-    private String mobileNo;
 
-    private int userID;
+public class User extends IUser {
 
     public int getUserId(){return userID;}
 
@@ -42,6 +37,18 @@ public class User implements IUser {
         return mobileNo;
     }
 
+    @Override
+    public void loadUserAttributes(IUserPersistence userPersistence) {
+        IUser user = userPersistence.loadUserAttributesbyUsername(this.email);
+        this.setEmail(user.getEmail());
+        this.setPassword(user.getPassword());
+        this.setUserID(user.getUserID());
+        this.setFirstName(user.getFirstName());
+        this.setLastName(user.getLastName());
+        this.setMobileNo(user.getMobileNo());
+        this.setDesignation(user.getDesignation());
+    }
+
     public void setMobileNo(String mobileNo) {
         this.mobileNo = mobileNo;
     }
@@ -54,12 +61,35 @@ public class User implements IUser {
         return email;
     }
 
-    public IUserPersistence.Result createNewUser(User user, IUserPersistence userPersistence) throws Exception {
-
+    public IUserPersistence.Result createNewUser(IUser user, IUserPersistence userPersistence) throws Exception {
         this.userID = userPersistence.save(user);
         return IUserPersistence.Result.SUCCESS;
     }
     public Integer getUserID(){
         return this.userID;
+    }
+
+    public void setUserID(int userID){
+        this.userID = userID;
+    }
+
+    public Security.RESULT hasAccess(Security security, IUser user){
+        return security.authenticateUser(user);
+    }
+
+
+    public String getDesignation() {
+        return designation;
+    }
+
+    public void setDesignation(String designation) {
+        this.designation = designation;
+    }
+
+    public boolean isAdmin(String designation){
+        if(designation.toLowerCase().trim().equals("admin")){
+            return true;
+        }
+        return false;
     }
 }

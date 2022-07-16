@@ -1,10 +1,8 @@
 package dalcart.app.controllers;
 
-
-import dalcart.app.items.IProduct;
 import dalcart.app.models.IProductModel;
 import dalcart.app.models.ProductModel;
-import mocks.MockProduct;
+//import mocks.MockProduct;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -38,10 +36,10 @@ public class AdminController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("admin");
         Map<Integer, String> listOfProducts = new HashMap<Integer,String>();
-        List<IProduct> mockProducts = new ArrayList<>();
+        List<IProductModel> mockProducts = new ArrayList<>();
 
 //        String keyword = null;
-        ArrayList<IProduct> products = productModel.getProducts();
+        ArrayList<IProductModel> products = productModel.getProducts();
         if(products != null) {
             modelAndView.addObject("products", products);
         }

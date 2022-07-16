@@ -1,14 +1,15 @@
 package dalcart.app.Repository;
 
+import com.fasterxml.jackson.core.JsonToken;
 import dalcart.app.controllers.OrderController;
 import dalcart.app.database.ConnectionManager;
-import dalcart.app.items.IProduct;
-import dalcart.app.items.Product;
+import dalcart.app.models.IProductModel;
 import dalcart.app.models.ProductModel;
 import dalcart.app.models.User;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Map;
@@ -16,7 +17,6 @@ import java.util.Map;
 @Repository
 public class ProductDB
 {
-    ProductModel productModel;
     OrderController orderController = new OrderController();
     Statement statement;
     ResultSet resultSet;
@@ -25,7 +25,7 @@ public class ProductDB
 
     public ArrayList getProductDetails()
     {
-            ArrayList<IProduct> product_detail = new ArrayList<>();
+            ArrayList<IProductModel> product_detail = new ArrayList<>();
             try
             {
                 String query = "select * from " + tableName + " ;";
@@ -33,14 +33,15 @@ public class ProductDB
                 resultSet = preparedStatement.executeQuery(query);
                 while(resultSet.next())
                 {
-                    Product p = new Product();
+                    ProductModel p = new ProductModel();
                     p.setProductId(resultSet.getInt(1));
                     p.setProductName(resultSet.getString(2));
                     p.setProductDescription(resultSet.getString(3));
-                    p.setProductQuantity(resultSet.getInt(5));
                     p.setProductPrice(resultSet.getInt(4));
+                    p.setProductQuantity(resultSet.getInt(5));
+                    p.setProductImage(resultSet.getString(6));
                     p.setEnabled(resultSet.getBoolean(7));
-                    p.setProductImage(resultSet.getString(8));
+
                     product_detail.add(p);
                 }
                 return product_detail;
@@ -56,7 +57,7 @@ public class ProductDB
     {
         if(keyword == null || keyword == "")
         {
-            ArrayList<IProduct> product_detail = new ArrayList<>();
+            ArrayList<IProductModel> product_detail = new ArrayList<>();
             try
             {
                 String query = "select * from " + tableName + " where enabled = 1 ;";
@@ -64,14 +65,14 @@ public class ProductDB
                 resultSet = preparedStatement.executeQuery(query);
                 while(resultSet.next())
                 {
-                    Product p = new Product();
+                    ProductModel p = new ProductModel();
                     p.setProductId(resultSet.getInt(1));
                     p.setProductName(resultSet.getString(2));
                     p.setProductDescription(resultSet.getString(3));
-                    p.setProductQuantity(resultSet.getInt(5));
                     p.setProductPrice(resultSet.getInt(4));
-                    p.setEnabled(resultSet.getBoolean(7));
-                    p.setProductImage(resultSet.getString(8));
+                    p.setProductQuantity(resultSet.getInt(5));
+                    p.setProductImage(resultSet.getString(6));
+//                    p.setEnabled(resultSet.getBoolean(7));
                     product_detail.add(p);
                 }
                 return product_detail;
@@ -84,7 +85,7 @@ public class ProductDB
         }
         else
         {
-            ArrayList<Product> product_detail = new ArrayList<>();
+            ArrayList<ProductModel> product_detail = new ArrayList<>();
             try
             {
                 String query = "select * from " + tableName + " where product_name like '%" + keyword + "%' ;";
@@ -93,16 +94,17 @@ public class ProductDB
                 resultSet = preparedStatement.executeQuery(query);
                 while(resultSet.next())
                 {
-                    Product p = new Product();
+                    ProductModel p = new ProductModel();
                     p.setProductId(resultSet.getInt(1));
                     p.setProductName(resultSet.getString(2));
                     p.setProductDescription(resultSet.getString(3));
-                    p.setProductQuantity(resultSet.getInt(5));
                     p.setProductPrice(resultSet.getInt(4));
-                    p.setEnabled(resultSet.getBoolean(7));
-                    p.setProductImage(resultSet.getString(8));
+                    p.setProductQuantity(resultSet.getInt(5));
+                    p.setProductImage(resultSet.getString(6));
+//                    p.setEnabled(resultSet.getBoolean(7));
+
                     product_detail.add(p);
-                    System.out.println(p.getProductId());
+//                    System.out.println(p.getProductId());
                 }
                 return product_detail;
 
@@ -114,22 +116,27 @@ public class ProductDB
         }
     }
 
-    public IProduct getProductById(Integer productId)
+    public IProductModel getProductById(Integer productId)
     {
         try {
             String query = "select * from " + tableName + " where id = " + productId + ";";
             preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(query);
             resultSet = preparedStatement.executeQuery(query);
-            IProduct p = new Product();
+            IProductModel p = new ProductModel();
             while (resultSet.next()) {
                 p.setProductId(resultSet.getInt(1));
                 p.setProductName(resultSet.getString(2));
                 p.setProductDescription(resultSet.getString(3));
-                p.setProductQuantity(resultSet.getInt(5));
                 p.setProductPrice(resultSet.getInt(4));
+                p.setProductQuantity(resultSet.getInt(5));
+                p.setProductImage(resultSet.getString(6));
                 p.setEnabled(resultSet.getBoolean(7));
-                p.setProductImage(resultSet.getString(8));
             }
+            System.out.println(p.getProductId());
+            System.out.println(p.getProductName());
+            System.out.println(p.getProductDescription());
+            System.out.println(p.getProductPrice());
+            System.out.println(p.getProductQuantity());
             return p;
         }
         catch(SQLException e)
@@ -143,10 +150,11 @@ public class ProductDB
         try
         {
             String query = "select id from " + tableName + " ;";
-            preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(query);
+            preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(query,ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_READ_ONLY);
             resultSet = preparedStatement.executeQuery(query);
             resultSet.last();
             Integer productId = resultSet.getInt(1);
+            System.out.println(productId);
             return productId;
         }
         catch(SQLException e)
@@ -156,9 +164,17 @@ public class ProductDB
         }
     }
 
-    public void saveProduct(ProductModel product)
+    public void saveProduct(IProductModel product)
     {
-        Integer id = getLastProductId();
+        product.setProductId(4);
+        product.setProductName("Hoodies");
+        product.setProductDescription("Woolen Winter hoodies");
+        product.setProductPrice(60);
+        product.setProductQuantity(25);
+        product.setProductImage("abc.jpg");
+        product.setEnabled(true);
+
+//        Integer id = getLastProductId();
         try
         {
             LocalDate date = java.time.LocalDate.now();
@@ -170,7 +186,14 @@ public class ProductDB
             preparedStatement.setInt(3,product.getProductPrice());
             preparedStatement.setInt(4,product.getProductQuantity());
             preparedStatement.setString(5,product.getProductImage());
-            preparedStatement.setBoolean(6,product.getEnabled());
+            if(product.getEnabled())
+            {
+                preparedStatement.setInt(6,1);
+            }
+            else
+            {
+                preparedStatement.setInt(6,0);
+            }
             preparedStatement.setString(7, String.valueOf(date));
             preparedStatement.setString(8, "0000-00-00");
             preparedStatement.executeUpdate();
@@ -183,9 +206,19 @@ public class ProductDB
 
     public void updateProduct(Integer productId, Integer productQuantity, Boolean productState)
     {
+        int state;
         try
         {
-            String query = "update " + tableName + " set product_quantity = " + productQuantity + ", set enabled = " + productState + " where id = " + productId + ";";
+            LocalDate date = java.time.LocalDate.now();
+            if(productState)
+            {
+                state = 1;
+            }
+            else
+            {
+                state = 0;
+            }
+            String query = "update " + tableName + " set product_quantity = " + productQuantity + ", enabled = " + state + ", updated_at = '" + date + "' where id = " + productId + ";";
             statement = ConnectionManager.getInstance().getConnection().createStatement();
             statement.executeUpdate(query);
         }
@@ -195,9 +228,9 @@ public class ProductDB
         }
     }
 
-    public void addProductToCart(Map<String, String> parameters) throws SQLException
+    public void addProductToCart(Map<String, String> parameters)
     {
-        IProduct[] products = new IProduct[1];
+        IProductModel[] products = new IProductModel[1];
         User user = new User();
         user.setUserId(1);
         user.setEmail("zdssd");
@@ -209,6 +242,14 @@ public class ProductDB
         //        System.out.println(user.getUserID());
 //        System.out.println(products[0]);
 //        System.out.println(products[0].getProductId());
-        orderController.addToOrder(user, products);
+        try
+        {
+            orderController.addToOrder(user, products);
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+
     }
 }
