@@ -82,10 +82,8 @@
     function searchProduct()
     {
         var keyword = $('#search').val();
-        // window.location = window.location + "?search=" + keyword;
         if(window.location.href.indexOf("?") > -1)
         {
-            // alert("Hiiiii");
             window.location.replace(("(\\?search.*)","?search=" + keyword));
         }
         else
