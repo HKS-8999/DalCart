@@ -27,17 +27,17 @@ public class MockOnlinePayment implements IOnlinePayment {
         if (cardNumber.equals("1234567890") && cVV.equals("112") && Expiry.equals("10/22"))
         {
             System.out.print("This is a Valid card");
-            return "abc";
+            return "abcd";
         }
         else if(cardNum.equals("0987654321") && cvv.equals("211") && exp.equals("12/23"))
         {
             System.out.print("This is a Valid card");
-            return "xyz";
+            return "wxyz";
         }
         else
         {
             System.out.print("The card details doesnot match");
-            return "pqr";
+            return "pqrs";
         }
     }
 }
