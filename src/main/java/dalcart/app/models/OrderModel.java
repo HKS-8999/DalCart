@@ -63,17 +63,15 @@ public class OrderModel implements IOrderModel {
         return this.state;
     }
 
-    public static IOrderModel getOrderByUserId(Integer orderId) {
-        return null;
+    public static IOrderModel getOrderByUserId(Integer userId) {
+        return OrderDB.findByUserId(userId);
     }
 
     public IOrderModel findOrderByNumber(String orderNumber){
-
         return null;
     }
 
     public IOrderModel findOrderById(int id){
-
         return null;
     }
 
