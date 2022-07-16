@@ -13,8 +13,8 @@ public class OrderModel implements IOrderModel {
     private String updatedAt;
     private Integer userId;
 
-    public Product p;
     OrderState state;
+//    public Product p;
 
 
     @Override
