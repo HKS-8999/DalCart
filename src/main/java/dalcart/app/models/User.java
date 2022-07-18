@@ -2,7 +2,6 @@ package dalcart.app.models;
 
 import dalcart.app.Repository.IUserPersistence;
 
-
 public class User implements IUser {
     private String email;
     private String firstName;

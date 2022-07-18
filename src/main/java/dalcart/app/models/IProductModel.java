@@ -21,11 +21,11 @@ public interface IProductModel
     public String getProductImage();
 
 
-    public ArrayList<IProductModel> getProductsToDisplay(String searchWord);
-    public ArrayList<IProductModel> getProducts();
-    public void addProductToCart(Map<String,String> parameters);
-    public void saveProduct(IProductModel product);
-    public void updateProduct(Integer productId, Integer productQuantity, Boolean productState);
-    public Integer getLastProductId();
-    public IProductModel getProductById(Integer productId);
+    public ArrayList<IProductModel> getProductsToDisplay(String searchWord, IProductDB productDB);
+    public ArrayList<IProductModel> getProducts(IProductDB productDB);
+    public void addProductToCart(Map<String,String> parameters, IProductDB productDB);
+    public void saveProduct(IProductModel product, IProductDB productDB);
+    public void updateProduct(Integer productId, Integer productQuantity, Boolean productState, IProductDB productDB);
+    public Integer getLastProductId(IProductDB productDB);
+    public IProductModel getProductById(Integer productId, IProductDB productDB);
 }

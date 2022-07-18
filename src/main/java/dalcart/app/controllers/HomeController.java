@@ -1,6 +1,8 @@
 package dalcart.app.controllers;
 
+import dalcart.app.Repository.ProductDB;
 import dalcart.app.items.HeaderSetter;
+import dalcart.app.models.IProductDB;
 import dalcart.app.models.IProductModel;
 import dalcart.app.models.ProductModel;
 import org.springframework.stereotype.Controller;
@@ -15,10 +17,11 @@ import java.util.Map;
 public class HomeController
 {
     IProductModel productModel = new ProductModel();
+    IProductDB productDB = new ProductDB();
     @GetMapping("/home")
     public ModelAndView listgetproducts (ModelAndView model, @RequestParam(name = "search", required = false) String keyword, @CookieValue(name = "userkey", required = false) String userKey) throws IOException
     {
-        ArrayList<IProductModel> lstprodcts = productModel.getProductsToDisplay(keyword);
+        ArrayList<IProductModel> lstprodcts = productModel.getProductsToDisplay(keyword, productDB);
         model.addObject("listproducts",lstprodcts);
         String message = HeaderSetter.messageToDisplay();
         model.addObject("header", message);
@@ -32,7 +35,7 @@ public class HomeController
     {
         try
         {
-            productModel.addProductToCart(allParams);
+            productModel.addProductToCart(allParams, productDB);
         }
         catch (Exception e)
         {

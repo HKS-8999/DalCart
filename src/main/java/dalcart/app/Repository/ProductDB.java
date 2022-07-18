@@ -3,6 +3,7 @@ package dalcart.app.Repository;
 import com.fasterxml.jackson.core.JsonToken;
 import dalcart.app.controllers.OrderController;
 import dalcart.app.database.ConnectionManager;
+import dalcart.app.models.IProductDB;
 import dalcart.app.models.IProductModel;
 import dalcart.app.models.ProductModel;
 import dalcart.app.models.User;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 @Repository
-public class ProductDB
+public class ProductDB implements IProductDB
 {
     OrderController orderController = new OrderController();
     Statement statement;

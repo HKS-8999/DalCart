@@ -13,8 +13,8 @@ public class ProductModel implements IProductModel
     private Integer productQuantity;
     private Boolean enabled;
     private String productImage;
-//    public Product product;
-    ProductDB productDB = new ProductDB();
+
+//    IProductDB productDB = new ProductDB();
 
     @Override
     public String getProductName() {
@@ -87,44 +87,43 @@ public class ProductModel implements IProductModel
     }
 
 
-    public ArrayList getProducts()
+    public ArrayList getProducts(IProductDB productDB)
     {
-//        productDB = new ProductDB();
         ArrayList<IProductModel> productDetail;
         productDetail = productDB.getProductDetails();
         return productDetail;
     }
 
-    public ArrayList getProductsToDisplay(String searchWord)
+    public ArrayList getProductsToDisplay(String searchWord, IProductDB productDB)
     {
         ArrayList<IProductModel> productDetail;
         productDetail = productDB.getProductDetailsForDisplay(searchWord);
         return productDetail;
     }
 
-    public void addProductToCart(Map<String,String> parameters)
+    public void addProductToCart(Map<String,String> parameters, IProductDB productDB)
     {
         productDB.addProductToCart(parameters);
     }
 
-    public IProductModel getProductById(Integer productId)
+    public IProductModel getProductById(Integer productId, IProductDB productDB)
     {
         IProductModel iproduct;
         iproduct = productDB.getProductById(productId);
         return iproduct;
     }
 
-    public void saveProduct(IProductModel product)
+    public void saveProduct(IProductModel product, IProductDB productDB)
     {
         productDB.saveProduct(product);
     }
 
-    public void updateProduct(Integer productId, Integer productQuantity, Boolean productState)
+    public void updateProduct(Integer productId, Integer productQuantity, Boolean productState, IProductDB productDB)
     {
         productDB.updateProduct(productId, productQuantity, productState);
     }
 
-    public Integer getLastProductId()
+    public Integer getLastProductId(IProductDB productDB)
     {
         Integer id;
         id = productDB.getLastProductId();

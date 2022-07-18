@@ -1,5 +1,7 @@
 package dalcart.app.controllers;
 
+import dalcart.app.Repository.ProductDB;
+import dalcart.app.models.IProductDB;
 import dalcart.app.models.IProductModel;
 import dalcart.app.models.ProductModel;
 //import mocks.MockProduct;
@@ -22,6 +24,7 @@ public class AdminController {
 
 //    @Autowired
     ProductModel productModel = new ProductModel();
+    IProductDB productDB = new ProductDB();
 
     @GetMapping(value = {""})
     public ModelAndView index(@CookieValue(name = "userkey", required = false) String userKey) {
@@ -39,7 +42,7 @@ public class AdminController {
         List<IProductModel> mockProducts = new ArrayList<>();
 
 //        String keyword = null;
-        ArrayList<IProductModel> products = productModel.getProducts();
+        ArrayList<IProductModel> products = productModel.getProducts(productDB);
         if(products != null) {
             modelAndView.addObject("products", products);
         }
