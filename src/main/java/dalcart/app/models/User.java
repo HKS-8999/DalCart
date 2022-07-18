@@ -73,11 +73,6 @@ public class User extends IUser {
         this.userID = userID;
     }
 
-    public Security.RESULT hasAccess(Security security, IUser user){
-        return security.authenticateUser(user);
-    }
-
-
     public String getDesignation() {
         return designation;
     }

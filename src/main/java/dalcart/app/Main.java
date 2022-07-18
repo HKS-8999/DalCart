@@ -16,6 +16,10 @@
 
 package dalcart.app;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.slf4j.Log4jLoggerFactory;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,9 +47,8 @@ public class Main {
   // @Autowired
   // private DataSource dataSource;
 
-  public static void main(String[] args) throws Exception {
+  public static void main(String[] args) {
       SpringApplication.run(Main.class, args);
-
   }
 
   @RequestMapping("/")
