@@ -10,4 +10,8 @@ public class ValidateUserAttributes implements IValidate{
                 .matcher(user.getEmail())
                 .matches();
     }
+
+    public boolean isPasswordValid(IUser user){
+        return true;
+    }
 }
