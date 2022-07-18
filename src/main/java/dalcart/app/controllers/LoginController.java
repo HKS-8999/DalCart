@@ -58,9 +58,9 @@ public class LoginController {
             securityFactory = new SecurityFactory();
             IUserPersistence iUserPersistence = userPersistanceFactory.createIUserPersistance();
             Security security = securityFactory.createSecurity(iUserPersistence);
-            IUser newUser = newUserFactory.createUser();
 
-            if(newUser.hasAccess(security,user).equals(Security.RESULT.AUTHORIZED))
+
+            if(security.authenticateUser(user).equals(Security.RESULT.AUTHORIZED))
             {
                 user.loadUserAttributes(iUserPersistence);
                 System.out.println(user.isAdmin(user.getDesignation()));
