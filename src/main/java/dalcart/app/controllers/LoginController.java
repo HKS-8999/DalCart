@@ -1,10 +1,8 @@
 package dalcart.app.controllers;
 
-import dalcart.app.Factories.ISecurityFactory;
-import dalcart.app.Factories.IUserPersistanceFactory;
-import dalcart.app.Factories.SecurityFactory;
-import dalcart.app.Factories.UserPersistanceFactory;
+import dalcart.app.Factories.*;
 import dalcart.app.Repository.IUserPersistence;
+import dalcart.app.models.IUser;
 import dalcart.app.models.Security;
 
 import dalcart.app.models.SecurityService;
@@ -27,6 +25,8 @@ import javax.servlet.http.HttpSession;
 public class LoginController {
     IUserPersistanceFactory userPersistanceFactory;
     ISecurityFactory securityFactory;
+
+    IUserFactory newUserFactory;
     @RequestMapping("/login")
     public ModelAndView loginPage(HttpServletRequest request)
     {
@@ -54,11 +54,13 @@ public class LoginController {
         try
         {
             userPersistanceFactory = new UserPersistanceFactory();
+            newUserFactory = new UserFactory();
             securityFactory = new SecurityFactory();
             IUserPersistence iUserPersistence = userPersistanceFactory.createIUserPersistance();
             Security security = securityFactory.createSecurity(iUserPersistence);
+            IUser newUser = newUserFactory.createUser();
 
-            if(security.authenticateUser(user).equals(Security.RESULT.AUTHORIZED))
+            if(newUser.hasAccess(security,user).equals(Security.RESULT.AUTHORIZED))
             {
                 user.loadUserAttributes(iUserPersistence);
                 System.out.println(user.isAdmin(user.getDesignation()));

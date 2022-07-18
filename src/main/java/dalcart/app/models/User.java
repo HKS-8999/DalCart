@@ -16,7 +16,6 @@ public class User extends IUser {
         this.setDesignation(user.getDesignation());
     }
 
-
     public IUserPersistence.Result createNewUser(IUser user, IUserPersistence userPersistence) throws Exception {
         this.userID = userPersistence.save(user);
         return IUserPersistence.Result.SUCCESS;

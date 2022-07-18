@@ -12,9 +12,6 @@ import java.sql.*;
 @Repository
 public class UserDB implements IUserPersistence {
 
-
-    Connection connection;
-
     ResultSet resultset;
 
     PreparedStatement preparedStatement;
@@ -22,7 +19,6 @@ public class UserDB implements IUserPersistence {
     public UserDB() {
 
     }
-
     @Override
     public Integer save(IUser u) throws Exception {
         try {
