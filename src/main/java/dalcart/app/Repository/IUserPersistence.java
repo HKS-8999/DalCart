@@ -6,7 +6,6 @@ import dalcart.app.models.User;
 import java.sql.ResultSet;
 
 public interface IUserPersistence {
-    IUser loadUserAttributesbyUsername(String email);
 
     enum Result {
         DOES_NOT_EXIST,
@@ -14,9 +13,12 @@ public interface IUserPersistence {
         SUCCESS
     }
 
+    IUser loadUserAttributesbyUsername(String email);
     Integer save(IUser u) throws Exception;
 
-    int loadUserID(String email);
-    public String loadUserPasswordbyUsername(String email);
+    IUser loadUserAttributesByUserId(int userId);
+
+
+
 
 }

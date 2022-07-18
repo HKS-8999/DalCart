@@ -5,8 +5,6 @@ import dalcart.app.Factories.IUserPersistanceFactory;
 import dalcart.app.Factories.UserFactory;
 import dalcart.app.Factories.UserPersistanceFactory;
 import dalcart.app.Repository.IUserPersistence;
-import dalcart.app.Repository.UserDB;
-import dalcart.app.models.User;
 import dalcart.app.models.IUser;
 
 import org.springframework.stereotype.Controller;
