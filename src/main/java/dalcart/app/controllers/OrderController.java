@@ -13,26 +13,31 @@ import java.sql.SQLException;
 
 public class OrderController {
     public void addToOrder(User user, IProductModel[] products) throws SQLException {
-        //if order is not already there for the user it creates it
         IOrderModel order;
         IOrderModel existingOrder = OrderModel.getOrderByUserId(user.getUserID());
+        System.out.println("User Id:" + user.getUserID());
         Integer orderId;
         ConnectionManager connectionManager = ConnectionManager.getInstance();
         connectionManager.begin();
         if(existingOrder == null)
         {
+            System.out.println("Creating new order");
             order = new OrderModel();
             order.setUserId(user.getUserID());
             order.setState(new OrderAtCart());
             orderId = order.save();
-        }else{
+        }
+        else
+        {
             order = existingOrder;
             orderId = existingOrder.getOrderId();
         }
 
         if (orderId != null) {
+            System.out.println("Order ID: " + orderId);
             //attach product ids with Orders in order_products table
             for (IProductModel product : products) {
+                System.out.println("Product ID:" + product.getProductId());
                 OrderProducts.saveOrderProduct(orderId, product.getProductId());
             }
         }

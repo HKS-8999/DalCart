@@ -22,9 +22,10 @@ class OrderProducts  {
         try {
             preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(query);
             preparedStatement.setInt(1, orderId);
-            preparedStatement.setInt(1, productId);
+            preparedStatement.setInt(2, productId);
             preparedStatement.executeUpdate();
         }catch(Exception e){
+            e.printStackTrace();
             return false;
         }
         return true;

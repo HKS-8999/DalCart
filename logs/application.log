@@ -1,0 +1,42 @@
+2022-07-15 20:06:33,674 INFO o.s.w.c.ContextLoader [restartedMain] Root WebApplicationContext: initialization completed in 1793 ms
+2022-07-15 20:06:34,243 INFO o.s.s.c.ThreadPoolTaskExecutor [restartedMain] Initializing ExecutorService 'applicationTaskExecutor'
+2022-07-15 20:06:35,161 INFO o.s.s.a.ScheduledAnnotationBeanPostProcessor [restartedMain] No TaskScheduler/ScheduledExecutorService bean found for scheduled processing
+2022-07-15 20:06:35,588 INFO o.s.w.s.DispatcherServlet [RMI TCP Connection(3)-134.190.129.62] Initializing Servlet 'dispatcherServlet'
+2022-07-15 20:06:35,594 INFO o.s.w.s.DispatcherServlet [RMI TCP Connection(3)-134.190.129.62] Completed initialization in 5 ms
+2022-07-15 20:06:48,333 ERROR d.a.c.LoginController [http-nio-8080-exec-1] sadas
+2022-07-15 20:07:29,304 INFO o.s.s.c.ThreadPoolTaskExecutor [SpringContextShutdownHook] Shutting down ExecutorService 'applicationTaskExecutor'
+2022-07-15 20:27:57,101 INFO o.s.w.c.ContextLoader [restartedMain] Root WebApplicationContext: initialization completed in 1745 ms
+2022-07-15 20:27:57,754 INFO o.s.s.c.ThreadPoolTaskExecutor [restartedMain] Initializing ExecutorService 'applicationTaskExecutor'
+2022-07-15 20:27:58,662 INFO o.s.s.a.ScheduledAnnotationBeanPostProcessor [restartedMain] No TaskScheduler/ScheduledExecutorService bean found for scheduled processing
+2022-07-15 20:27:58,862 INFO o.s.w.s.DispatcherServlet [RMI TCP Connection(1)-134.190.129.62] Initializing Servlet 'dispatcherServlet'
+2022-07-15 20:27:58,868 INFO o.s.w.s.DispatcherServlet [RMI TCP Connection(1)-134.190.129.62] Completed initialization in 6 ms
+2022-07-15 20:31:06,783 INFO o.s.s.c.ThreadPoolTaskExecutor [SpringContextShutdownHook] Shutting down ExecutorService 'applicationTaskExecutor'
+2022-07-15 20:31:20,018 INFO o.s.w.c.ContextLoader [restartedMain] Root WebApplicationContext: initialization completed in 2587 ms
+2022-07-15 20:31:21,020 INFO o.s.s.c.ThreadPoolTaskExecutor [restartedMain] Initializing ExecutorService 'applicationTaskExecutor'
+2022-07-15 20:31:22,567 INFO o.s.s.a.ScheduledAnnotationBeanPostProcessor [restartedMain] No TaskScheduler/ScheduledExecutorService bean found for scheduled processing
+2022-07-15 20:31:23,189 INFO o.s.w.s.DispatcherServlet [RMI TCP Connection(4)-134.190.129.62] Initializing Servlet 'dispatcherServlet'
+2022-07-15 20:31:23,195 INFO o.s.w.s.DispatcherServlet [RMI TCP Connection(4)-134.190.129.62] Completed initialization in 6 ms
+2022-07-15 20:33:04,815 INFO o.s.s.c.ThreadPoolTaskExecutor [SpringContextShutdownHook] Shutting down ExecutorService 'applicationTaskExecutor'
+2022-07-15 20:33:11,227 INFO o.s.w.c.ContextLoader [restartedMain] Root WebApplicationContext: initialization completed in 1553 ms
+2022-07-15 20:33:11,834 INFO o.s.s.c.ThreadPoolTaskExecutor [restartedMain] Initializing ExecutorService 'applicationTaskExecutor'
+2022-07-15 20:33:12,743 INFO o.s.s.a.ScheduledAnnotationBeanPostProcessor [restartedMain] No TaskScheduler/ScheduledExecutorService bean found for scheduled processing
+2022-07-15 20:33:13,244 INFO o.s.w.s.DispatcherServlet [RMI TCP Connection(1)-134.190.129.62] Initializing Servlet 'dispatcherServlet'
+2022-07-15 20:33:13,250 INFO o.s.w.s.DispatcherServlet [RMI TCP Connection(1)-134.190.129.62] Completed initialization in 5 ms
+2022-07-15 20:34:02,408 INFO o.s.s.c.ThreadPoolTaskExecutor [SpringContextShutdownHook] Shutting down ExecutorService 'applicationTaskExecutor'
+2022-07-15 20:34:08,563 INFO o.s.w.c.ContextLoader [restartedMain] Root WebApplicationContext: initialization completed in 1718 ms
+2022-07-15 20:34:09,209 INFO o.s.s.c.ThreadPoolTaskExecutor [restartedMain] Initializing ExecutorService 'applicationTaskExecutor'
+2022-07-15 20:34:10,150 INFO o.s.s.a.ScheduledAnnotationBeanPostProcessor [restartedMain] No TaskScheduler/ScheduledExecutorService bean found for scheduled processing
+2022-07-15 20:34:10,438 INFO o.s.w.s.DispatcherServlet [RMI TCP Connection(1)-134.190.129.62] Initializing Servlet 'dispatcherServlet'
+2022-07-15 20:34:10,443 INFO o.s.w.s.DispatcherServlet [RMI TCP Connection(1)-134.190.129.62] Completed initialization in 4 ms
+2022-07-15 20:35:04,818 INFO o.s.s.c.ThreadPoolTaskExecutor [SpringContextShutdownHook] Shutting down ExecutorService 'applicationTaskExecutor'
+2022-07-15 20:35:11,963 INFO o.s.w.c.ContextLoader [restartedMain] Root WebApplicationContext: initialization completed in 1667 ms
+2022-07-15 20:35:12,604 INFO o.s.s.c.ThreadPoolTaskExecutor [restartedMain] Initializing ExecutorService 'applicationTaskExecutor'
+2022-07-15 20:35:13,535 INFO o.s.s.a.ScheduledAnnotationBeanPostProcessor [restartedMain] No TaskScheduler/ScheduledExecutorService bean found for scheduled processing
+2022-07-15 20:35:13,948 INFO o.s.w.s.DispatcherServlet [RMI TCP Connection(2)-134.190.129.62] Initializing Servlet 'dispatcherServlet'
+2022-07-15 20:35:13,952 INFO o.s.w.s.DispatcherServlet [RMI TCP Connection(2)-134.190.129.62] Completed initialization in 4 ms
+2022-07-18 18:23:17,548 INFO o.s.w.c.ContextLoader [restartedMain] Root WebApplicationContext: initialization completed in 1732 ms
+2022-07-18 18:23:18,180 INFO o.s.s.c.ThreadPoolTaskExecutor [restartedMain] Initializing ExecutorService 'applicationTaskExecutor'
+2022-07-18 18:23:19,108 INFO o.s.s.a.ScheduledAnnotationBeanPostProcessor [restartedMain] No TaskScheduler/ScheduledExecutorService bean found for scheduled processing
+2022-07-18 18:23:19,627 INFO o.s.w.s.DispatcherServlet [RMI TCP Connection(2)-134.190.129.62] Initializing Servlet 'dispatcherServlet'
+2022-07-18 18:23:19,640 INFO o.s.w.s.DispatcherServlet [RMI TCP Connection(2)-134.190.129.62] Completed initialization in 13 ms
+2022-07-18 18:24:17,278 INFO o.s.s.c.ThreadPoolTaskExecutor [SpringContextShutdownHook] Shutting down ExecutorService 'applicationTaskExecutor'
