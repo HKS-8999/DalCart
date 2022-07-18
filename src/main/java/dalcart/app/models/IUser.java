@@ -82,4 +82,6 @@ public abstract class IUser {
     public abstract IUserPersistence.Result createNewUser(IUser user, IUserPersistence userPersistence) throws Exception;
 
     public abstract void loadUserAttributes(IUserPersistence userPersistence);
+
+    public abstract boolean isAdmin(String designation);
 }

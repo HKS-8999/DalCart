@@ -34,19 +34,12 @@ public class SecurityService implements Security {
         }
     }
 
-    public static boolean isSessionValid(HttpSession session){
-//        String userID = session.getAttribute("user").toString();
-//        String admin = session.getAttribute("admin").toString();
-//
-//
-//        if(userID == null || admin == null){
-//            return false;
-//        }
-//        return true;
-
+    public static boolean isSessionValid(HttpSession session)
+    {
             Enumeration<String> names = session.getAttributeNames();
 
-            if(names.hasMoreElements()){
+            if(names.hasMoreElements())
+            {
                 return true;
             }
             return false;

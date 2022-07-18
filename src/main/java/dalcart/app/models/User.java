@@ -2,9 +2,6 @@ package dalcart.app.models;
 
 import dalcart.app.Repository.IUserPersistence;
 
-import java.util.Locale;
-
-
 public class User extends IUser {
 
     @Override
@@ -25,7 +22,7 @@ public class User extends IUser {
         return IUserPersistence.Result.SUCCESS;
     }
 
-    public Security.RESULT hasAccess(Security security, IUser user){
+    public Security.RESULT hasAccess(Security security, IUser user) {
         return security.authenticateUser(user);
     }
 

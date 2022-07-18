@@ -35,7 +35,7 @@ public class HomeController
     }
 
     @PostMapping("/home")
-    public ModelAndView addProductIntoCart(@RequestParam Map<String,String> allParams, ModelAndView model, @CookieValue(name = "userkey", required = false) String userKey)
+    public ModelAndView addProductIntoCart(@RequestParam Map<String,String> allParams, ModelAndView model)
     {
         try
         {

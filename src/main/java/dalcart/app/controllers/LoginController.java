@@ -1,15 +1,21 @@
 package dalcart.app.controllers;
 
+import dalcart.app.Factories.ISecurityFactory;
+import dalcart.app.Factories.IUserPersistanceFactory;
+import dalcart.app.Factories.SecurityFactory;
+import dalcart.app.Factories.UserPersistanceFactory;
 import dalcart.app.Repository.IUserPersistence;
-import dalcart.app.Repository.UserDB;
 import dalcart.app.models.Security;
 
 import dalcart.app.models.SecurityService;
 import dalcart.app.models.User;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,17 +25,23 @@ import javax.servlet.http.HttpSession;
 
 @Controller
 public class LoginController {
-    @GetMapping("/login")
+    IUserPersistanceFactory userPersistanceFactory;
+    ISecurityFactory securityFactory;
+    @RequestMapping("/login")
     public ModelAndView loginPage(HttpServletRequest request)
     {
+        Logger logger = LogManager.getLogger(this.getClass());
+
         HttpSession session = request.getSession();
 
-        if(SecurityService.isSessionValid(session) == false){
+        if(SecurityService.isSessionValid(session) == false)
+        {
             ModelAndView modelAndView = new ModelAndView();
             modelAndView.setViewName("login");
             return modelAndView;
         }
-        else{
+        else
+        {
             return new ModelAndView("redirect:/home");
         }
 
@@ -41,29 +53,29 @@ public class LoginController {
         ModelAndView modelAndView = new ModelAndView();
         try
         {
-            IUserPersistence iUserPersistence = new UserDB();
-            Security security = new SecurityService(iUserPersistence);
+            userPersistanceFactory = new UserPersistanceFactory();
+            securityFactory = new SecurityFactory();
+            IUserPersistence iUserPersistence = userPersistanceFactory.createIUserPersistance();
+            Security security = securityFactory.createSecurity(iUserPersistence);
 
-            if(security.authenticateUser(user).equals(Security.RESULT.AUTHORIZED)) {
+            if(security.authenticateUser(user).equals(Security.RESULT.AUTHORIZED))
+            {
                 user.loadUserAttributes(iUserPersistence);
                 System.out.println(user.isAdmin(user.getDesignation()));
-                if (user.isAdmin(user.getDesignation())) {
+                if (user.isAdmin(user.getDesignation()))
+                {
                     session.setAttribute("admin", user.getUserID());
                     return new ModelAndView("redirect:/admin");
-
                 }
                 else
                 {
                     session.setAttribute("user",user.getUserID());
-//                    modelAndView.setViewName("redirect:/home");
                     return new ModelAndView("redirect:/home");
                 }
             }
             else
                 {
-//                    modelAndView.setViewName("redirect:/invalidUsernameandPassword");
                     return new ModelAndView("invalidUsernameandPassword");
-
                 }
         }
         catch (Exception e)
