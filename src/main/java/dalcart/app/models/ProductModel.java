@@ -100,9 +100,11 @@ public class ProductModel implements IProductModel
         return productDetail;
     }
 
-    public void addProductToCart(Map<String,String> parameters, IProductPersistence productDB, Integer userId)
+    public IProductPersistence.StorageResult addProductToCart(Map<String,String> parameters, IProductPersistence productDB, Integer userId)
     {
-        productDB.addProductToCart(parameters, userId);
+        IProductPersistence.StorageResult result;
+        result = productDB.addProductToCart(parameters, userId);
+        return result;
     }
 
     public IProductModel getProductById(Integer productId, IProductPersistence productDB)
@@ -112,14 +114,18 @@ public class ProductModel implements IProductModel
         return iProduct;
     }
 
-    public void saveProduct(IProductModel product, IProductPersistence productDB)
+    public IProductPersistence.StorageResult saveProduct(IProductModel product, IProductPersistence productDB)
     {
-        productDB.saveProduct(product);
+        IProductPersistence.StorageResult result;
+        result = productDB.saveProduct(product);
+        return result;
     }
 
-    public void updateProduct(Integer productId, Integer productQuantity, Boolean productState, IProductPersistence productDB)
+    public IProductPersistence.StorageResult updateProduct(Integer productId, Integer productQuantity, Boolean productState, IProductPersistence productDB)
     {
-        productDB.updateProduct(productId, productQuantity, productState);
+        IProductPersistence.StorageResult result;
+        result = productDB.updateProduct(productId, productQuantity, productState);
+        return result;
     }
 
     public Integer getLastProductId(IProductPersistence productDB)

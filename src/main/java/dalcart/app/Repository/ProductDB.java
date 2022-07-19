@@ -168,7 +168,7 @@ public class ProductDB implements IProductPersistence
         }
     }
 
-    public void saveProduct(IProductModel product)
+    public StorageResult saveProduct(IProductModel product)
     {
 //        product.setProductId(4);
 //        product.setProductName("Hoodies");
@@ -199,14 +199,16 @@ public class ProductDB implements IProductPersistence
             preparedStatement.setString(7, String.valueOf(date));
             preparedStatement.setString(8, "0000-00-00");
             preparedStatement.executeUpdate();
+            return StorageResult.STORAGE_SUCCESS;
         }
         catch (SQLException e)
         {
             e.printStackTrace();
+            return StorageResult.STORAGE_FAILURE;
         }
     }
 
-    public void updateProduct(Integer productId, Integer productQuantity, Boolean productState)
+    public StorageResult updateProduct(Integer productId, Integer productQuantity, Boolean productState)
     {
         int state;
         try
@@ -223,14 +225,16 @@ public class ProductDB implements IProductPersistence
             String query = "update " + tableName + " set product_quantity = " + productQuantity + ", enabled = " + state + ", updated_at = '" + date + "' where id = " + productId + ";";
             statement = ConnectionManager.getInstance().getConnection().createStatement();
             statement.executeUpdate(query);
+            return StorageResult.STORAGE_SUCCESS;
         }
         catch (SQLException e)
         {
             e.printStackTrace();
+            return StorageResult.STORAGE_FAILURE;
         }
     }
 
-    public void addProductToCart(Map<String, String> parameters, Integer userId)
+    public StorageResult addProductToCart(Map<String, String> parameters, Integer userId)
     {
         IProductModel[] products = new IProductModel[1];
         IUserFactory userFactory = new UserFactory();
@@ -247,11 +251,12 @@ public class ProductDB implements IProductPersistence
         try
         {
             orderController.addToOrder(user, products);
+            return StorageResult.STORAGE_SUCCESS;
         }
         catch (SQLException e)
         {
             e.printStackTrace();
+            return StorageResult.STORAGE_FAILURE;
         }
-
     }
 }

@@ -18,9 +18,9 @@ public interface IProductPersistence
     public ArrayList getProductDetailsForDisplay(String keyword);
     public IProductModel getProductById(Integer productId);
     public Integer getLastProductId();
-    public void saveProduct(IProductModel product);
-    public void updateProduct(Integer productId, Integer productQuantity, Boolean productState);
-    public void addProductToCart(Map<String, String> parameters, Integer userId);
+    public StorageResult saveProduct(IProductModel product);
+    public StorageResult updateProduct(Integer productId, Integer productQuantity, Boolean productState);
+    public StorageResult addProductToCart(Map<String, String> parameters, Integer userId);
 
 //    public StorageResult saveProduct();
 //    public StorageResult deleteProduct();
