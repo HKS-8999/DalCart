@@ -12,7 +12,7 @@ import dalcart.app.models.*;
 import java.sql.SQLException;
 
 public class OrderController {
-    public void addToOrder(User user, IProductModel[] products) throws SQLException {
+    public void addToOrder(IUser user, IProductModel[] products) throws SQLException {
         //if order is not already there for the user it creates it
         IOrderModel order;
         IOrderModel existingOrder = OrderModel.getOrderByUserId(user.getUserID());

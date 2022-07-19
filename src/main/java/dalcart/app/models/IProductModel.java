@@ -1,5 +1,7 @@
 package dalcart.app.models;
 
+import dalcart.app.Repository.IProductPersistence;
+
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -21,11 +23,11 @@ public interface IProductModel
     public String getProductImage();
 
 
-    public ArrayList<IProductModel> getProductsToDisplay(String searchWord);
-    public ArrayList<IProductModel> getProducts();
-    public void addProductToCart(Map<String,String> parameters);
-    public void saveProduct(IProductModel product);
-    public void updateProduct(Integer productId, Integer productQuantity, Boolean productState);
-    public Integer getLastProductId();
-    public IProductModel getProductById(Integer productId);
+    public ArrayList<IProductModel> getProductsToDisplay(String searchWord, IProductPersistence productDB);
+    public ArrayList<IProductModel> getProducts(IProductPersistence productDB);
+    public void addProductToCart(Map<String,String> parameters, IProductPersistence productDB, Integer userId);
+    public void saveProduct(IProductModel product, IProductPersistence productDB);
+    public void updateProduct(Integer productId, Integer productQuantity, Boolean productState, IProductPersistence productDB);
+    public Integer getLastProductId(IProductPersistence productDB);
+    public IProductModel getProductById(Integer productId, IProductPersistence productDB);
 }

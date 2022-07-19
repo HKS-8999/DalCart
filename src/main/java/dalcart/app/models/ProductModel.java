@@ -1,6 +1,6 @@
 package dalcart.app.models;
 
-import dalcart.app.Repository.ProductDB;
+import dalcart.app.Repository.IProductPersistence;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -13,8 +13,6 @@ public class ProductModel implements IProductModel
     private Integer productQuantity;
     private Boolean enabled;
     private String productImage;
-//    public Product product;
-    ProductDB productDB = new ProductDB();
 
     @Override
     public String getProductName() {
@@ -87,7 +85,7 @@ public class ProductModel implements IProductModel
     }
 
 
-    public ArrayList getProducts()
+    public ArrayList<IProductModel> getProducts(IProductPersistence productDB)
     {
 //        productDB = new ProductDB();
         ArrayList<IProductModel> productDetail;
@@ -95,36 +93,36 @@ public class ProductModel implements IProductModel
         return productDetail;
     }
 
-    public ArrayList getProductsToDisplay(String searchWord)
+    public ArrayList<IProductModel> getProductsToDisplay(String searchWord, IProductPersistence productDB)
     {
         ArrayList<IProductModel> productDetail;
         productDetail = productDB.getProductDetailsForDisplay(searchWord);
         return productDetail;
     }
 
-    public void addProductToCart(Map<String,String> parameters)
+    public void addProductToCart(Map<String,String> parameters, IProductPersistence productDB, Integer userId)
     {
-        productDB.addProductToCart(parameters);
+        productDB.addProductToCart(parameters, userId);
     }
 
-    public IProductModel getProductById(Integer productId)
+    public IProductModel getProductById(Integer productId, IProductPersistence productDB)
     {
-        IProductModel iproduct;
-        iproduct = productDB.getProductById(productId);
-        return iproduct;
+        IProductModel iProduct;
+        iProduct = productDB.getProductById(productId);
+        return iProduct;
     }
 
-    public void saveProduct(IProductModel product)
+    public void saveProduct(IProductModel product, IProductPersistence productDB)
     {
         productDB.saveProduct(product);
     }
 
-    public void updateProduct(Integer productId, Integer productQuantity, Boolean productState)
+    public void updateProduct(Integer productId, Integer productQuantity, Boolean productState, IProductPersistence productDB)
     {
         productDB.updateProduct(productId, productQuantity, productState);
     }
 
-    public Integer getLastProductId()
+    public Integer getLastProductId(IProductPersistence productDB)
     {
         Integer id;
         id = productDB.getLastProductId();

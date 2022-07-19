@@ -84,15 +84,15 @@
     function searchProduct()
     {
         var keyword = $('#search').val();
-        var staticLocation = window.location;
-        if(staticLocation.contains('?'))
+        if(window.location.href.indexOf("?") > -1)
         {
-            windows.location = windows.location.replace(RegExp("([?&]"+search+"(?=[=&#]|$)[^#&]*|(?=#|$)"+keyword+")"), "");
+            window.location.replace(("(\\?search.*)","?search=" + keyword));
         }
-        window.location = window.location + '?search=' + keyword;
-
+        else
+        {
+            window.location = window.location + "?search=" + keyword;
+        }
     }
-
 </script>
 </body>
 </html>
