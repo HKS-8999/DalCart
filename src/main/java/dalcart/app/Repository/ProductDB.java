@@ -235,7 +235,7 @@ public class ProductDB implements IProductPersistence
         IProductModel[] products = new IProductModel[1];
         IUserFactory userFactory = new UserFactory();
         IUser user = userFactory.createUser();
-        user = loadUserByUserID();
+//        user = loadUserByUserID();
 //        User user = new User();
 //        user.setUserId(1);
 //        user.setEmail("zdssd");
