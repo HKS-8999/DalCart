@@ -1,9 +1,6 @@
 package dalcart.app.Repository;
 
-import dalcart.app.database.ConnectionManager;
-
 import dalcart.app.models.IUser;
-import dalcart.app.models.Security;
 import dalcart.app.models.User;
 import org.springframework.stereotype.Repository;
 

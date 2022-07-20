@@ -1,7 +1,7 @@
 package dalcart.app.controllers;
 
 import dalcart.app.Repository.OrderProducts;
-import dalcart.app.database.ConnectionManager;
+import dalcart.app.Repository.ConnectionManager;
 
 import dalcart.app.items.OrderAtCart;
 import dalcart.app.models.IOrderModel;

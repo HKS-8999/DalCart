@@ -1,15 +1,12 @@
 package dalcart.app.Repository;
 
-import com.fasterxml.jackson.core.JsonToken;
 import dalcart.app.controllers.OrderController;
-import dalcart.app.database.ConnectionManager;
 import dalcart.app.models.IProductModel;
 import dalcart.app.models.ProductModel;
 import dalcart.app.models.User;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Map;
