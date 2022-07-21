@@ -7,15 +7,13 @@ public interface ISecurity {
         USERNAME_INVALID,
         PASSWORD_INVALID,
         IS_NOT_AUTHORIZED,
-        AUTHORIZED,
-
+        AUTHORIZED;
     }
+
     RESULT authenticateUser(IUser user);
+
     public boolean isUserRoleAdmin(HttpSession session);
 
     public boolean isUserRoleUser(HttpSession session);
-
-
-
 
 }

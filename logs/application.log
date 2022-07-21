@@ -200,3 +200,9 @@ java.util.NoSuchElementException: null
 2022-07-20 22:18:55,985 INFO o.s.w.s.DispatcherServlet [http-nio-8080-exec-8] Initializing Servlet 'dispatcherServlet'
 2022-07-20 22:18:56,004 INFO o.s.w.s.DispatcherServlet [http-nio-8080-exec-8] Completed initialization in 18 ms
 2022-07-20 22:20:05,345 INFO o.s.s.c.ThreadPoolTaskExecutor [SpringContextShutdownHook] Shutting down ExecutorService 'applicationTaskExecutor'
+2022-07-20 23:18:10,021 INFO o.s.w.c.ContextLoader [restartedMain] Root WebApplicationContext: initialization completed in 1599 ms
+2022-07-20 23:18:10,817 INFO o.s.s.c.ThreadPoolTaskExecutor [restartedMain] Initializing ExecutorService 'applicationTaskExecutor'
+2022-07-20 23:18:12,227 INFO o.s.s.a.ScheduledAnnotationBeanPostProcessor [restartedMain] No TaskScheduler/ScheduledExecutorService bean found for scheduled processing
+2022-07-20 23:18:13,289 INFO o.s.w.s.DispatcherServlet [http-nio-8080-exec-1] Initializing Servlet 'dispatcherServlet'
+2022-07-20 23:18:13,314 INFO o.s.w.s.DispatcherServlet [http-nio-8080-exec-1] Completed initialization in 23 ms
+2022-07-20 23:18:42,354 INFO o.s.s.c.ThreadPoolTaskExecutor [SpringContextShutdownHook] Shutting down ExecutorService 'applicationTaskExecutor'

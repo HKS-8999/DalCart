@@ -4,6 +4,7 @@ import dalcart.app.Factories.*;
 import dalcart.app.Repository.IUserPersistence;
 import dalcart.app.models.ISecurity;
 
+import dalcart.app.models.IValidate;
 import dalcart.app.models.SecurityService;
 import dalcart.app.models.User;
 import org.apache.logging.log4j.LogManager;
@@ -24,6 +25,7 @@ public class LoginController {
     ISecurityFactory securityFactory;
     IUserFactory newUserFactory;
 
+    IValidateFactory validateFactory;
     @RequestMapping("/login")
     public ModelAndView loginPage(HttpServletRequest request)
     {
@@ -50,28 +52,28 @@ public class LoginController {
             userPersistanceFactory = new UserPersistanceFactory();
             newUserFactory = new UserFactory();
             securityFactory = new SecurityFactory();
+            validateFactory = new ValidateFactory();
             IUserPersistence iUserPersistence = userPersistanceFactory.createIUserPersistance();
             ISecurity security = securityFactory.createSecurity(iUserPersistence);
-
-            if(security.authenticateUser(user).equals(ISecurity.RESULT.AUTHORIZED))
-            {
-                user.loadUserAttributes(iUserPersistence);
-                System.out.println(user.isAdmin(user.getDesignation()));
-                if (user.isAdmin(user.getDesignation()))
-                {
-                    session.setAttribute("admin", user.getUserID());
-                    return new ModelAndView("redirect:/admin");
+            IValidate validate = validateFactory.createValidations();
+            if(validate.isPasswordValid(user) && validate.isUserNameValid(user)) {
+                if (security.authenticateUser(user).equals(ISecurity.RESULT.AUTHORIZED)) {
+                    user.loadUserAttributes(iUserPersistence);
+                    System.out.println(user.isAdmin(user.getDesignation()));
+                    if (user.isAdmin(user.getDesignation())) {
+                        session.setAttribute("admin", user.getUserID());
+                        return new ModelAndView("redirect:/admin");
+                    } else {
+                        session.setAttribute("user", user.getUserID());
+                        return new ModelAndView("redirect:/home");
+                    }
                 }
                 else
                 {
-                    session.setAttribute("user",user.getUserID());
-                    return new ModelAndView("redirect:/home");
-                }
-            }
-            else
-                {
                     return new ModelAndView("invalidUsernameandPassword");
                 }
+            }
+            return new ModelAndView("invalidUsernameandPassword");
         }
         catch (Exception e)
         {
