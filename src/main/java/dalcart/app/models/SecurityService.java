@@ -7,7 +7,9 @@ import javax.servlet.http.HttpSession;
 import java.util.Enumeration;
 
 @Service
-public class SecurityService implements Security {
+public class SecurityService implements ISecurity {
+    private static final String admin = "admin";
+    private static final String user = "user";
     IUserPersistence userPersistence;
 
     public SecurityService(IUserPersistence userPersistence){
@@ -43,5 +45,25 @@ public class SecurityService implements Security {
                 return true;
             }
             return false;
+    }
+
+    public boolean isUserRoleAdmin(HttpSession session)
+    {
+        Enumeration<String> names = session.getAttributeNames();
+
+        if(names.nextElement().equals(admin)){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isUserRoleUser(HttpSession session)
+    {
+        Enumeration<String> names = session.getAttributeNames();
+
+        if(names.nextElement().equals(admin)){
+            return true;
+        }
+        return false;
     }
 }

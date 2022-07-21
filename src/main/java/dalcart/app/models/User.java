@@ -21,7 +21,7 @@ public class User extends IUser {
         return IUserPersistence.Result.SUCCESS;
     }
 
-    public Security.RESULT hasAccess(Security security, IUser user) {
+    public ISecurity.RESULT hasAccess(ISecurity security, IUser user) {
         return security.authenticateUser(user);
     }
 

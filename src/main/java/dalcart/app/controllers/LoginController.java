@@ -2,8 +2,7 @@ package dalcart.app.controllers;
 
 import dalcart.app.Factories.*;
 import dalcart.app.Repository.IUserPersistence;
-import dalcart.app.models.IUser;
-import dalcart.app.models.Security;
+import dalcart.app.models.ISecurity;
 
 import dalcart.app.models.SecurityService;
 import dalcart.app.models.User;
@@ -19,21 +18,17 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-
-
 @Controller
 public class LoginController {
     IUserPersistanceFactory userPersistanceFactory;
     ISecurityFactory securityFactory;
-
     IUserFactory newUserFactory;
+
     @RequestMapping("/login")
     public ModelAndView loginPage(HttpServletRequest request)
     {
         Logger logger = LogManager.getLogger(this.getClass());
-
         HttpSession session = request.getSession();
-
         if(SecurityService.isSessionValid(session) == false)
         {
             ModelAndView modelAndView = new ModelAndView();
@@ -44,7 +39,6 @@ public class LoginController {
         {
             return new ModelAndView("redirect:/home");
         }
-
     }
 
     @PostMapping("/login")
@@ -57,10 +51,9 @@ public class LoginController {
             newUserFactory = new UserFactory();
             securityFactory = new SecurityFactory();
             IUserPersistence iUserPersistence = userPersistanceFactory.createIUserPersistance();
-            Security security = securityFactory.createSecurity(iUserPersistence);
+            ISecurity security = securityFactory.createSecurity(iUserPersistence);
 
-
-            if(security.authenticateUser(user).equals(Security.RESULT.AUTHORIZED))
+            if(security.authenticateUser(user).equals(ISecurity.RESULT.AUTHORIZED))
             {
                 user.loadUserAttributes(iUserPersistence);
                 System.out.println(user.isAdmin(user.getDesignation()));
@@ -92,5 +85,4 @@ public class LoginController {
         request.getSession().invalidate();
         return "redirect:/home";
     }
-
 }
