@@ -1,7 +1,10 @@
 package dalcart.app.models;
 
+import org.springframework.stereotype.Service;
+
 import java.util.regex.Pattern;
 
+@Service
 public class ValidateUserAttributes implements IValidate
 {
     public boolean isUserNameValid(IUser user)

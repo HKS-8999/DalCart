@@ -20,12 +20,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Controller
-public class LoginController {
+public class LoginController
+{
     IUserPersistanceFactory userPersistanceFactory;
     ISecurityFactory securityFactory;
     IUserFactory newUserFactory;
 
     IValidateFactory validateFactory;
+
     @RequestMapping("/login")
     public ModelAndView loginPage(HttpServletRequest request)
     {
@@ -44,7 +46,8 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public ModelAndView submitForm(@ModelAttribute User user, HttpServletRequest request ){
+    public ModelAndView submitForm(@ModelAttribute User user, HttpServletRequest request)
+    {
         HttpSession session = request.getSession();
         ModelAndView modelAndView = new ModelAndView();
         try
@@ -56,14 +59,19 @@ public class LoginController {
             IUserPersistence iUserPersistence = userPersistanceFactory.createIUserPersistance();
             ISecurity security = securityFactory.createSecurity(iUserPersistence);
             IValidate validate = validateFactory.createValidations();
-            if(validate.isPasswordValid(user) && validate.isUserNameValid(user)) {
-                if (security.authenticateUser(user).equals(ISecurity.RESULT.AUTHORIZED)) {
+            if(validate.isPasswordValid(user) && validate.isUserNameValid(user))
+            {
+                if (security.authenticateUser(user).equals(ISecurity.RESULT.AUTHORIZED))
+                {
                     user.loadUserAttributes(iUserPersistence);
                     System.out.println(user.isAdmin(user.getDesignation()));
-                    if (user.isAdmin(user.getDesignation())) {
+                    if (user.isAdmin(user.getDesignation()))
+                    {
                         session.setAttribute("admin", user.getUserID());
                         return new ModelAndView("redirect:/admin");
-                    } else {
+                    }
+                    else
+                    {
                         session.setAttribute("user", user.getUserID());
                         return new ModelAndView("redirect:/home");
                     }
@@ -82,8 +90,10 @@ public class LoginController {
         modelAndView.setViewName("login");
         return modelAndView;
     }
+
     @GetMapping("/logout")
-    public String destroySession(HttpServletRequest request) {
+    public String destroySession(HttpServletRequest request)
+    {
         request.getSession().invalidate();
         return "redirect:/home";
     }
