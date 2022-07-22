@@ -1,12 +1,8 @@
 package dalcart.app.models;
 
-import dalcart.app.Repository.IUserPersistence;
-import dalcart.app.models.User;
-
 import javax.servlet.http.HttpSession;
 
-
-public interface Security {
+public interface ISecurity {
     public enum RESULT{
         USERNAME_INVALID,
         PASSWORD_INVALID,
@@ -16,6 +12,8 @@ public interface Security {
 
     RESULT authenticateUser(IUser user);
 
-//    public boolean isSessionValid(HttpSession session);
+    public boolean isUserRoleAdmin(HttpSession session);
+
+    public boolean isUserRoleUser(HttpSession session);
 
 }

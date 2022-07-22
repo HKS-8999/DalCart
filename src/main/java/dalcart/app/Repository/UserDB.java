@@ -1,9 +1,6 @@
 package dalcart.app.Repository;
 
-import dalcart.app.database.ConnectionManager;
-
 import dalcart.app.models.IUser;
-import dalcart.app.models.Security;
 import dalcart.app.models.User;
 import org.springframework.stereotype.Repository;
 
@@ -12,9 +9,6 @@ import java.sql.*;
 @Repository
 public class UserDB implements IUserPersistence {
 
-
-    Connection connection;
-
     ResultSet resultset;
 
     PreparedStatement preparedStatement;
@@ -22,11 +16,11 @@ public class UserDB implements IUserPersistence {
     public UserDB() {
 
     }
-
     @Override
-    public Integer save(IUser u) throws Exception {
-        try {
-
+    public Integer save(IUser u) throws Exception
+    {
+        try
+        {
             String query = "insert into user (email, first_name, last_name,password, mobile_no) values ( ?, ?, ?, ?, ?);";
             preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, u.getEmail());
@@ -40,69 +34,49 @@ public class UserDB implements IUserPersistence {
             rs.next();
             return rs.getInt(1);
 
-        } catch (SQLException e) {
+        }
+        catch (SQLException e)
+        {
             e.printStackTrace();
         }
         return null;
     }
 
     @Override
-    public int loadUserID(String email) {
-        String query = "select id from user where email = ?;";
-        try {
-            int result = 0;
+    public IUser loadUserAttributesByUserId(int userId)
+    {
+        String query = "select * from user where id = ?;";
+        try
+        {
+            IUser user = new User();
             preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(query);
-            preparedStatement.setString(1, email);
+            preparedStatement.setInt(1, userId);
+            System.out.println(preparedStatement);
             resultset = preparedStatement.executeQuery();
-            while (resultset.next()) {
-                result = resultset.getInt("id");
+            while (resultset.next())
+            {
+                int userID = resultset.getInt("id");
+                String emailID = resultset.getString("email");
+                String firstName = resultset.getString("first_name");
+                String lastName = resultset.getString("last_name");
+                String password = resultset.getString("password");
+                String mobileNo = resultset.getString("mobile_no");
+                String designation = resultset.getString("designation");
+                user.setFirstName(firstName);
+                user.setLastName(lastName);
+                user.setMobileNo(mobileNo);
+                user.setUserID(userID);
+                user.setPassword(password);
+                user.setEmail(emailID);
+                user.setDesignation(designation);
             }
-            return result;
-
-        } catch (SQLException e) {
+            return user;
+        }
+        catch (SQLException e)
+        {
             throw new RuntimeException(e);
         }
     }
-
-    public String loadUserPasswordbyUsername(String email) {
-        String query = "select email from user where email = ?;";
-        try {
-            String result = "";
-            preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(query);
-            preparedStatement.setString(1, email);
-            System.out.println(preparedStatement);
-            resultset = preparedStatement.executeQuery();
-
-            System.out.println(resultset + "xxx");
-            while (resultset.next()) {
-                result = resultset.getString("email");
-            }
-            return result;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException();
-        }
-    }
-
-    public String loadUsername(String email) {
-        String query = "select email from user where email = ?;";
-        try {
-            String result = null;
-            System.out.println(email);
-            preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(query);
-            preparedStatement.setString(1, email);
-            System.out.println(preparedStatement);
-            resultset = preparedStatement.executeQuery();
-            while (resultset.next()) {
-                result = resultset.getString("email");
-            }
-            return result;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException();
-        }
-    }
-
 
     @Override
     public IUser loadUserAttributesbyUsername(String email) {

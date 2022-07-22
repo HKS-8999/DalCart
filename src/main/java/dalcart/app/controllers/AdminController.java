@@ -4,12 +4,14 @@ import dalcart.app.models.IProductModel;
 import dalcart.app.models.ProductModel;
 //import mocks.MockProduct;
 
+import dalcart.app.models.SecurityService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,10 +26,10 @@ public class AdminController {
     ProductModel productModel = new ProductModel();
 
     @GetMapping(value = {""})
-    public ModelAndView index(@CookieValue(name = "userkey", required = false) String userKey) {
-
+    public ModelAndView index(HttpSession session) {
         //check if user key is valid else rediret to login page
-        if(userKey == null){
+
+        if(SecurityService.isSessionValid(session) == false){
             ModelAndView modelAndView =  new ModelAndView("redirect:/login");
             modelAndView.addObject("modelAttribute" , modelAndView);
             return modelAndView;

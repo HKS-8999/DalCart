@@ -1,0 +1,23 @@
+
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'index')}">
+<link rel="stylesheet" type="text/css" href="/stylesheets/404.css" />
+    <body>
+    <!--      <div class="admin-header" id="admin-name">-->
+    <!--         <li th:text="${name}"></li>-->
+    <!--         <button id="test-button">Click Me!</button>-->
+    <!--      </div>-->
+    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script th:src="@{/webjars/jquery-ui/jquery-ui.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <div class="mainbox">
+        <div class="err">4</div>
+        <div class="err3">0</div>
+        <div class="err2">4</div>
+        <div class="msg">Maybe this page moved? Got deleted? Is hiding out in quarantine? Never existed in the first place?<p>Let's go <a href="/home">home</a> and try from there.</p></div>
+    </div>
+    </body>
+</html>
+

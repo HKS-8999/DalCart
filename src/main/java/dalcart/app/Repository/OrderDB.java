@@ -1,16 +1,13 @@
 package dalcart.app.Repository;
 
-import dalcart.app.database.ConnectionManager;
 import dalcart.app.items.*;
 import dalcart.app.models.IOrderModel;
 import dalcart.app.models.IProductModel;
 import dalcart.app.models.OrderModel;
-import dalcart.app.utils.OrderUtils;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.UUID;
 
 @Repository
 public
@@ -75,6 +72,32 @@ class OrderDB  {
                 order.setState(getStateByName(resultSet.getString(3)));
             }
             return order;
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static IOrderModel findByUserId(int userId){
+        //ArrayList<IProductModel> product_detail = new ArrayList<>();
+        try{
+
+            String query = "select * from orders where user_id = " + userId + " limit 1";
+            Statement statement = ConnectionManager.getInstance().getConnection().createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+            IOrderModel order = new OrderModel();
+            boolean resultSetNotEmpty = false;
+            while(resultSet.next())
+            {
+                resultSetNotEmpty = true;
+                order.setOrderId(resultSet.getInt(1));
+                order.setUserId(resultSet.getInt(2));
+                order.setState(getStateByName(resultSet.getString(3)));
+            }
+            if(resultSetNotEmpty) {
+                return order;
+            }
 
         }catch (SQLException e){
             e.printStackTrace();
