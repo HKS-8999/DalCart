@@ -72,5 +72,21 @@ public class AdminController {
         return "success";
     }
 
+    @PostMapping(value = {"/submit_product_creation_data"})
+    @ResponseBody
+    public String updateProductCteationData(@RequestParam Map<String,String> allParams) throws SQLException {
+        IProductModel productModel = new ProductModel();
+        ConnectionManager connectionManager = ConnectionManager.getInstance();
+        connectionManager.begin();
+//        productModel.setProductName();
+//        productModel.setProductDescription();
+//        productModel.setProductQuantity();
+//        productModel.setProductPrice();
+//        productModel.setProductImage();
+//        productModel.setEnabled();
+        connectionManager.commit();
+        return "success";
+    }
+
 
 }
