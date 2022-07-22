@@ -26,9 +26,7 @@ public class OrderController {
             order.setUserId(user.getUserID());
             order.setState(new OrderAtCart());
             orderId = order.save();
-        }
-        else
-        {
+        }else{
             order = existingOrder;
             orderId = existingOrder.getOrderId();
         }
@@ -37,6 +35,7 @@ public class OrderController {
             System.out.println("Order ID: " + orderId);
             for (IProductModel product : products) {
                 System.out.println("Product ID:" + product.getProductId());
+                product.updateProduct(product.getProductId(),product.getProductQuantity()-1,product.getEnabled());
                 OrderProducts.saveOrderProduct(orderId, product.getProductId());
             }
         }
