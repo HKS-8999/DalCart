@@ -1,5 +1,6 @@
 package dalcart.app.controllers;
 
+import dalcart.app.Repository.ConnectionManager;
 import dalcart.app.models.IProductModel;
 import dalcart.app.models.ISecurity;
 import dalcart.app.models.ProductModel;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpSession;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -52,8 +54,10 @@ public class AdminController {
 
     @PostMapping(value = {"/submit_product_data"})
     @ResponseBody
-    public String updateProductData(@RequestParam Map<String,String> allParams){
+    public String updateProductData(@RequestParam Map<String,String> allParams) throws SQLException {
         IProductModel productModel = new ProductModel();
+        ConnectionManager connectionManager = ConnectionManager.getInstance();
+        connectionManager.begin();
         allParams.forEach((keyName,value) -> {
             IProductModel product = productModel.getProductById(Integer.parseInt(keyName.split("-")[2]));
             if(keyName.contains("product-inventory")){
@@ -64,6 +68,7 @@ public class AdminController {
             }
             product.updateProduct(product.getProductId(),product.getProductQuantity(),product.getEnabled());
         });
+        connectionManager.commit();
         return "success";
     }
 
