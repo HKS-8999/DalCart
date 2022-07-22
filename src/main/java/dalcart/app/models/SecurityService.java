@@ -22,16 +22,20 @@ public class SecurityService implements ISecurity {
         String password = user.getPassword();
         user.loadUserAttributes(userPersistence);
 
-        if(email == null || email.isEmpty() || user.getEmail() == null){
+        if(email == null || email.isEmpty() || user.getEmail() == null)
+        {
             return RESULT.USERNAME_INVALID;
         }
-        else if (password == null || user.getPassword() == null) {
+        else if (password == null || user.getPassword() == null)
+        {
             return RESULT.PASSWORD_INVALID;
         }
-        else if (user.getEmail().equals(email)  && user.getPassword().equals(password)){
+        else if (user.getEmail().equals(email)  && user.getPassword().equals(password))
+        {
             return RESULT.AUTHORIZED;
         }
-        else{
+        else
+        {
             return RESULT.IS_NOT_AUTHORIZED;
         }
     }
@@ -39,7 +43,6 @@ public class SecurityService implements ISecurity {
     public static boolean isSessionValid(HttpSession session)
     {
             Enumeration<String> names = session.getAttributeNames();
-
             if(names.hasMoreElements())
             {
                 return true;
@@ -50,7 +53,6 @@ public class SecurityService implements ISecurity {
     public boolean isUserRoleAdmin(HttpSession session)
     {
         Enumeration<String> names = session.getAttributeNames();
-
         if(names.nextElement().equals(admin)){
             return true;
         }
@@ -60,8 +62,7 @@ public class SecurityService implements ISecurity {
     public boolean isUserRoleUser(HttpSession session)
     {
         Enumeration<String> names = session.getAttributeNames();
-
-        if(names.nextElement().equals(admin)){
+        if(names.nextElement().equals(user)){
             return true;
         }
         return false;

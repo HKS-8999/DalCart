@@ -35,7 +35,6 @@ public class OrderController {
 
         if (orderId != null) {
             System.out.println("Order ID: " + orderId);
-            //attach product ids with Orders in order_products table
             for (IProductModel product : products) {
                 System.out.println("Product ID:" + product.getProductId());
                 OrderProducts.saveOrderProduct(orderId, product.getProductId());

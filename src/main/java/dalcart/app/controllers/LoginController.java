@@ -2,11 +2,8 @@ package dalcart.app.controllers;
 
 import dalcart.app.Factories.*;
 import dalcart.app.Repository.IUserPersistence;
-import dalcart.app.models.ISecurity;
+import dalcart.app.models.*;
 
-import dalcart.app.models.IValidate;
-import dalcart.app.models.SecurityService;
-import dalcart.app.models.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -25,7 +22,6 @@ public class LoginController
     IUserPersistanceFactory userPersistanceFactory;
     ISecurityFactory securityFactory;
     IUserFactory newUserFactory;
-
     IValidateFactory validateFactory;
 
     @RequestMapping("/login")
@@ -59,12 +55,14 @@ public class LoginController
             IUserPersistence iUserPersistence = userPersistanceFactory.createIUserPersistance();
             ISecurity security = securityFactory.createSecurity(iUserPersistence);
             IValidate validate = validateFactory.createValidations();
+            ISecurePassword securePassword = new SecurePassword();
             if(validate.isPasswordValid(user) && validate.isUserNameValid(user))
             {
+
+                securePassword.encrypt(user);
                 if (security.authenticateUser(user).equals(ISecurity.RESULT.AUTHORIZED))
                 {
                     user.loadUserAttributes(iUserPersistence);
-                    System.out.println(user.isAdmin(user.getDesignation()));
                     if (user.isAdmin(user.getDesignation()))
                     {
                         session.setAttribute("admin", user.getUserID());

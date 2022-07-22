@@ -21,10 +21,10 @@ public class ValidateUserAttributes implements IValidate
         {
             for (char ch : user.getPassword().trim().toCharArray())
             {
-                if (Character.isLowerCase(ch) == false && Character.isDigit(ch) == false)
-                {
-                    return false;
-                }
+//                if (Character.isLowerCase(ch) == false && Character.isDigit(ch) == false)
+//                {
+//                    return false;
+//                }
             }
             return true;
         }

@@ -14,11 +14,8 @@ public interface IUserPersistence {
     }
 
     IUser loadUserAttributesbyUsername(String email);
-    Integer save(IUser u) throws Exception;
+    void save(IUser u) throws Exception;
 
     IUser loadUserAttributesByUserId(int userId);
-
-
-
 
 }

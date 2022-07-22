@@ -17,7 +17,7 @@ public class User extends IUser {
     }
     @Override
     public IUserPersistence.Result createNewUser(IUser user, IUserPersistence userPersistence) throws Exception {
-        this.userID = userPersistence.save(user);
+        userPersistence.save(user);
         return IUserPersistence.Result.SUCCESS;
     }
 

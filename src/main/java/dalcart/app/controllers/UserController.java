@@ -2,10 +2,8 @@ package dalcart.app.controllers;
 
 import dalcart.app.Factories.*;
 import dalcart.app.Repository.IUserPersistence;
-import dalcart.app.models.IUser;
+import dalcart.app.models.*;
 
-import dalcart.app.models.IValidate;
-import dalcart.app.models.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -37,8 +35,10 @@ public class UserController
             IUserPersistence iUserPersistence = userPersistence.createIUserPersistance();
             validateFactory = new ValidateFactory();
             IValidate validate = validateFactory.createValidations();
+            ISecurePassword securePassword = new SecurePassword();
             if(validate.isUserNameValid(newUser) && validate.isFirstNameAndLastNameValid(newUser) && validate.isMobileNumberValid(newUser) && validate.isPasswordValid(newUser))
             {
+                user = securePassword.encrypt(newUser);
                 user.createNewUser(newUser, iUserPersistence);
             }
             else
@@ -50,7 +50,7 @@ public class UserController
         {
             throw new RuntimeException(e);
         }
-        modelAndView.setViewName("login");
+        modelAndView.setViewName("redirect:/login");
         return modelAndView;
     }
 }
