@@ -44,6 +44,9 @@
                             </div>
                         </div>
                     </div>
+                    <div class="add_new_product">
+                        Add new Product ..
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-12 text-center admin-button-column">
@@ -61,6 +64,7 @@
               data: dataString,
               success: function () {
                 alert("Product Data Submitted Successfully!");
+                location.reload();
               },
               error: function (request, status, error) {
                 alert("Submit Failed, Please Try Again After Sometime");

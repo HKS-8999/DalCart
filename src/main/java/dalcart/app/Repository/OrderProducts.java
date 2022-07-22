@@ -23,13 +23,13 @@ class OrderProducts  {
             ResultSet result = preparedStatement.executeQuery();
 
             if(result.next()){
-                System.out.println("Product Found");
+                //System.out.println("Product Found");
                 query = "update order_products set product_quantity = (product_quantity + 1) where order_id = ? and product_id = ?";
                 preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(query);
                 preparedStatement.setInt(1, orderId);
                 preparedStatement.setInt(2, productId);
             }else{
-                System.out.println("Product Not Found");
+                //System.out.println("Product Not Found");
                 query = "insert into order_products (order_id, product_id, product_quantity) values (?,?,?);";
                 preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(query);
                 preparedStatement.setInt(1, orderId);
@@ -37,7 +37,7 @@ class OrderProducts  {
                 preparedStatement.setInt(3, 1);
             }
 
-            System.out.println("Updating");
+            //System.out.println("Updating");
 
             preparedStatement.executeUpdate();
         }catch(Exception e){

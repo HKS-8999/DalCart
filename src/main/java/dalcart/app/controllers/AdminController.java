@@ -1,6 +1,7 @@
 package dalcart.app.controllers;
 
 import dalcart.app.models.IProductModel;
+import dalcart.app.models.ISecurity;
 import dalcart.app.models.ProductModel;
 //import mocks.MockProduct;
 
@@ -28,11 +29,11 @@ public class AdminController {
     @GetMapping(value = {""})
     public ModelAndView index(HttpSession session) {
         //check if user key is valid else rediret to login page
-
-        if(SecurityService.isSessionValid(session) == false){
-            ModelAndView modelAndView =  new ModelAndView("redirect:/login");
-            modelAndView.addObject("modelAttribute" , modelAndView);
-            return modelAndView;
+        //|| ISecurity.isUserRoleAdmin() == false
+        if(SecurityService.isSessionValid(session) == false ){
+            //ModelAndView modelAndView =  new ModelAndView("redirect:/login");
+            //modelAndView.addObject("modelAttribute" , modelAndView);
+            //return modelAndView;
         }
 
         ModelAndView modelAndView = new ModelAndView();
@@ -52,8 +53,17 @@ public class AdminController {
     @PostMapping(value = {"/submit_product_data"})
     @ResponseBody
     public String updateProductData(@RequestParam Map<String,String> allParams){
-        allParams.forEach((k,v) -> System.out.println("Key = "
-                + k + ", Value = " + v));
+        IProductModel productModel = new ProductModel();
+        allParams.forEach((keyName,value) -> {
+            IProductModel product = productModel.getProductById(Integer.parseInt(keyName.split("-")[2]));
+            if(keyName.contains("product-inventory")){
+                System.out.println("Updating Product Quantity By: " + value);
+                product.setProductQuantity(product.getProductQuantity() + Integer.parseInt(value));
+            }else{
+                product.setEnabled(value.equals("on"));
+            }
+            product.updateProduct(product.getProductId(),product.getProductQuantity(),product.getEnabled());
+        });
         return "success";
     }
 
