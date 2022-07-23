@@ -80,12 +80,13 @@ public class AdminController {
         IProductModel productModel = new ProductModel();
         ConnectionManager connectionManager = ConnectionManager.getInstance();
         connectionManager.begin();
-//        productModel.setProductName();
-//        productModel.setProductDescription();
-//        productModel.setProductQuantity();
-//        productModel.setProductPrice();
-//        productModel.setProductImage();
-//        productModel.setEnabled();
+        productModel.setProductName(allParams.get("product-name"));
+        productModel.setProductDescription(allParams.get("product-description"));
+        productModel.setProductQuantity(1);
+        productModel.setProductPrice(Integer.parseInt(allParams.get("product-price")));
+        productModel.setProductImage(allParams.get("product-image"));
+        productModel.setEnabled((allParams.get("product-enabled") != null));
+        productModel.saveProduct(productModel);
         connectionManager.commit();
         return "success";
     }
