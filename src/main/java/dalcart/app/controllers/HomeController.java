@@ -40,7 +40,8 @@ public class HomeController
     @GetMapping("/home")
     public ModelAndView viewProducts (ModelAndView model, @RequestParam(name = "search", required = false) String keyword, HttpSession session) throws IOException
     {
-        if (SecurityService.isSessionValid(session) == false) {
+        if (SecurityService.isSessionValid(session) == false)
+        {
             ModelAndView modelAndView = new ModelAndView("redirect:/login");
             return modelAndView;
         }

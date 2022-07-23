@@ -65,14 +65,14 @@ public class AdminController
         ConnectionManager connectionManager = ConnectionManager.getInstance();
         connectionManager.begin();
         allParams.forEach((keyName,value) -> {
-            IProductModel product = productModel.getProductById(Integer.parseInt(keyName.split("-")[2]));
+            IProductModel product = productModel.getProductById(Integer.parseInt(keyName.split("-")[2]),productDB);
             if(keyName.contains("product-inventory")){
                 System.out.println("Updating Product Quantity By: " + value);
                 product.setProductQuantity(product.getProductQuantity() + Integer.parseInt(value));
             }else{
                 product.setEnabled(value.equals("on"));
             }
-            product.updateProduct(product.getProductId(),product.getProductQuantity(),product.getEnabled());
+            product.updateProduct(product.getProductId(),product.getProductQuantity(),product.getEnabled(), productDB);
         });
         connectionManager.commit();
         return "success";

@@ -14,7 +14,6 @@ import java.util.Map;
 @Repository
 public class ProductDB implements IProductPersistence
 {
-    OrderController orderController = new OrderController();
     Statement statement;
     ResultSet resultSet;
     PreparedStatement preparedStatement;
@@ -246,6 +245,7 @@ public class ProductDB implements IProductPersistence
         products[0] = getProductById(Integer.valueOf(parameters.get("id")));
         try
         {
+            OrderController orderController = new OrderController();
             orderController.addToOrder(user, products);
             return StorageResult.STORAGE_SUCCESS;
         }

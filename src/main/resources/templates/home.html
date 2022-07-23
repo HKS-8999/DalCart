@@ -67,10 +67,10 @@
 //        e.preventDefault();
         $.ajax({
             type: "POST",
-            url: "/home",
+            url: "/home2",
             data: {
                 id: event, // < note use of 'this' here
-                userkey: getCookie("userkey")
+                // userkey: getCookie("userkey")
             },
             success: function(result) {
                 alert('Product Added to Cart');

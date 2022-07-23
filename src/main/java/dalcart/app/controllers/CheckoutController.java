@@ -10,11 +10,14 @@ import dalcart.app.Repository.OrderProducts;
 import dalcart.app.models.IOrderModel;
 import dalcart.app.models.IProductModel;
 import dalcart.app.models.SecurityService;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
@@ -32,7 +35,7 @@ public class CheckoutController
     OrderProducts o = new OrderProducts();
     OrderDB db = new OrderDB();
     @GetMapping("/cart")
-    public ModelAndView listgetproducts (ModelAndView model, HttpSession session) throws IOException
+    public ModelAndView listgetproducts (@RequestParam(name="message",required = false) String message, ModelAndView model, HttpSession session) throws IOException
     {
         if (SecurityService.isSessionValid(session) == false)
         {
@@ -40,7 +43,7 @@ public class CheckoutController
             return modelAndView;
         }
 
-        HashMap<Integer, Integer> productIds;
+        HashMap<Integer, Integer> productIds = new HashMap<>();
         Integer userId = (Integer) session.getAttribute("user");
         productIds = o.getProductsOfUser(userId);
         ArrayList<IProductModel> allProducts = new ArrayList<>();
@@ -49,9 +52,9 @@ public class CheckoutController
             Integer id = val.getKey();
             allProducts.add(productModel.getProductById(id, productDB));
         }
-
         model.addObject("products",allProducts);
         model.addObject("quantity",productIds);
+        model.addObject("message", message);
         model.setViewName("checkout");
         return model;
     }
@@ -59,7 +62,7 @@ public class CheckoutController
     @PostMapping("/increaseQuantityOfProduct")
     public ModelAndView increaseProductQuantity(@RequestParam Map<String,String> allParams, ModelAndView model, HttpSession session)
     {
-        if (SecurityService.isSessionValid(session) == false)
+        if(SecurityService.isSessionValid(session) == false)
         {
             ModelAndView modelAndView = new ModelAndView("redirect:/login");
             return modelAndView;
@@ -68,10 +71,29 @@ public class CheckoutController
         IOrderModel order = db.findOrderInCartByUserId(userId);
         Integer orderId =order.getOrderId();
         Boolean b = o.increaseProductQuantity(Integer.valueOf(allParams.get("id")),Integer.valueOf(allParams.get("quantity")), orderId);
-//        if(b)
-//        {
-//            model.addObject("message","Product is not available in this quantity.");
-//        }
+        if(b == false)
+        {
+            model.addObject("message","Product is not available in this quantity.");
+        }
+        return model;
+    }
+
+    @PostMapping("/decreaseQuantityOfProduct")
+    public ModelAndView decreaseProductQuantity(@RequestParam Map<String,String> allParams, ModelAndView model, HttpSession session)
+    {
+        if(SecurityService.isSessionValid(session) == false)
+        {
+            ModelAndView modelAndView = new ModelAndView("redirect:/login");
+            return modelAndView;
+        }
+        Integer userId = (Integer) session.getAttribute("user");
+        IOrderModel order = db.findOrderInCartByUserId(userId);
+        Integer orderId =order.getOrderId();
+        Boolean b = o.decreaseProductQuantity(Integer.valueOf(allParams.get("id")),Integer.valueOf(allParams.get("quantity")), orderId);
+        if(b == false)
+        {
+            model.addObject("message","Product quantity is 1.");
+        }
         return model;
     }
 
@@ -87,7 +109,7 @@ public class CheckoutController
             Integer userId = (Integer) session.getAttribute("user");
             IOrderModel order = db.findOrderInCartByUserId(userId);
             Integer orderId =order.getOrderId();
-            o.increaseProductQuantity(Integer.valueOf(allParams.get("id")),Integer.valueOf(allParams.get("quantity")), orderId);
+            db.removeProductFromCart(orderId,Integer.valueOf(allParams.get("id")));
 //            productModel.addProductToCart(allParams,  productDB, userId);
         }
         catch (Exception e)

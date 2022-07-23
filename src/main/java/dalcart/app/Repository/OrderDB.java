@@ -106,33 +106,30 @@ class OrderDB  {
         return null;
     }
 
-<<<<<<< HEAD
     public IOrderModel findOrderInCartByUserId(int userId)
     {
-        try
-        {
+        try {
 
             String query = "select * from orders where user_id = " + userId + " and state = 'cart';";
             statement = ConnectionManager.getInstance().getConnection().createStatement();
             ResultSet resultSet = statement.executeQuery(query);
             IOrderModel order = new OrderModel();
             boolean resultSetNotEmpty = false;
-            while(resultSet.next())
-            {
+            while (resultSet.next()) {
                 resultSetNotEmpty = true;
                 order.setOrderId(resultSet.getInt(1));
                 order.setUserId(resultSet.getInt(2));
                 order.setState(getStateByName(resultSet.getString(3)));
             }
-            if(resultSetNotEmpty) {
+            if (resultSetNotEmpty) {
                 return order;
             }
 
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
-=======
+    }
     public static boolean removeProductFromCart(Integer orderId, Integer productId){
         try {
 
@@ -150,6 +147,5 @@ class OrderDB  {
             return false;
         }
         return true;
->>>>>>> c4c6f52c3dc075bbd27dc0a606c50c4770a3ed1d
     }
 }

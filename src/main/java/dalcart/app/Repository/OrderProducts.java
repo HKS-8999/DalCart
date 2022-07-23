@@ -17,8 +17,7 @@ import java.sql.ResultSet;
 
 
 @Repository
-public
-class OrderProducts  {
+public class OrderProducts  {
 
     static PreparedStatement preparedStatement;
     static Statement statement;
@@ -90,7 +89,7 @@ class OrderProducts  {
     {
         Integer updatedQuantity = productQuantity + 1;
         Integer availableProduct = productModel.getProductQuantity(productDB,productId);
-        if(availableProduct > 0)
+        if(updatedQuantity <= availableProduct)
         {
             String query = "update order_products set product_quantity = " + updatedQuantity + " where order_id = " + orderId + " and product_id = " + productId + ";";
             try
@@ -110,25 +109,24 @@ class OrderProducts  {
         }
     }
 
-    public boolean decreaseProductQuantity(Integer productQuantity)
+    public boolean decreaseProductQuantity(Integer productId, Integer productQuantity, Integer orderId)
     {
         Integer updatedQuantity = productQuantity - 1;
-        String query = "update order_products set product_quantity = " + updatedQuantity + ";";
-        try
+        if(updatedQuantity > 0)
         {
-            statement = ConnectionManager.getInstance().getConnection().createStatement();
-            statement.executeUpdate(query);
+            String query = "update order_products set product_quantity = " + updatedQuantity + " where order_id = " + orderId + " and product_id = " + productId + ";";
+            try
+            {
+                statement = ConnectionManager.getInstance().getConnection().createStatement();
+                statement.executeUpdate(query);
+            }
+            catch(Exception e)
+            {
+                e.printStackTrace();
+            }
             return true;
         }
-        catch(Exception e)
-        {
-            e.printStackTrace();
-            return false;
-        }
+        return false;
     }
 
-//    public boolean removeProductFromCart(Integer productId, Integer orderId)
-//    {
-//
-//    }
 }
