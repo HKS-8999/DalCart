@@ -61,11 +61,13 @@ public class AdminController
     @PostMapping(value = {"/submit_product_data"})
     @ResponseBody
     public String updateProductData(@RequestParam Map<String,String> allParams) throws SQLException {
+        System.out.println("product Update Request Received");
         IProductModel productModel = new ProductModel();
         ConnectionManager connectionManager = ConnectionManager.getInstance();
         connectionManager.begin();
         allParams.forEach((keyName,value) -> {
             IProductModel product = productModel.getProductById(Integer.parseInt(keyName.split("-")[2]),productDB);
+            product.setEnabled(false);
             if(keyName.contains("product-inventory")){
                 System.out.println("Updating Product Quantity By: " + value);
                 product.setProductQuantity(product.getProductQuantity() + Integer.parseInt(value));
@@ -74,6 +76,24 @@ public class AdminController
             }
             product.updateProduct(product.getProductId(),product.getProductQuantity(),product.getEnabled(), productDB);
         });
+        connectionManager.commit();
+        return "success";
+    }
+
+    @PostMapping(value = {"/submit_product_creation_data"})
+    @ResponseBody
+    public String updateProductCteationData(@RequestParam Map<String,String> allParams) throws SQLException {
+        System.out.println("product Create Request Received");
+        IProductModel productModel = new ProductModel();
+        ConnectionManager connectionManager = ConnectionManager.getInstance();
+        connectionManager.begin();
+        productModel.setProductName(allParams.get("product-name"));
+        productModel.setProductDescription(allParams.get("product-description"));
+        productModel.setProductQuantity(1);
+        productModel.setProductPrice(Integer.parseInt(allParams.get("product-price")));
+        productModel.setProductImage(allParams.get("product-image"));
+        productModel.setEnabled((allParams.get("product-enabled") != null));
+        productModel.saveProduct(productModel);
         connectionManager.commit();
         return "success";
     }

@@ -9,8 +9,38 @@
       <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
       <script th:src="@{/webjars/jquery-ui/jquery-ui.min.js}"></script>
       <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+        <div class="product-form">
+            <div class = "close-mark" onclick="closeDialogueForAddingProduct()" >✖</div>
+            <form class = "product-creation-form">
+                <div class="form-group">
+                    <label for="create-product">Product Name</label>
+                    <input type="text" class="form-control" name="product-name" placeholder="Enter Product Name">
+                    <small id="productHelp" class="form-text text-muted">Enter the name of the Product</small>
+                </div>
+                <div class="form-group">
+                    <label for="create-product">Product Description</label>
+                    <textarea class="form-control" name="product-description" placeholder="Enter Product Description"></textarea>
+                    <small id="productDescriptionHelp" class="form-text text-muted">Enter the description of the product</small>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" name="product-enabled">
+                    <label class="form-check-label" for="create-product">Enabled</label>
+                </div>
+                <div class="form-group">
+                    <label for="create-product">Product Image URL</label>
+                    <input type="text" class="form-control" name="product-image" placeholder="Enter Product Image URL">
+                    <small id="productImageHelp" class="form-text text-muted">Enter the image url of the Product Format: https://....</small>
+                </div>
+                <div class="form-group">
+                    <label for="create-product">Product Price</label>
+                    <input type="text" class="form-control" name="product-price" placeholder="Enter Product Price">
+                    <small id="productPriceHelp" class="form-text text-muted">Product Price Should be a decimal value</small>
+                </div>
+                <input type="submit" class="btn btn-primary"/>
+            </form>
+        </div>
         <div class = container admin-container>
-            <form action="" >
+            <form class="product-update-form" >
                 <div class="row">
                     <div class="container ">
                          <div class="row">
@@ -43,36 +73,104 @@
                                 <input class="form-check-input inventory-input product-detail" th:name = "'product-enabled-' + ${product.productId}" type="checkbox"  th:checked="${product.enabled}"/>
                             </div>
                         </div>
+                        <div class="row d-flex product-list-row text-right align-items-right add-product" id="addProductDialog">
+                            <div class = "add-new-product" onclick="openDialogueForAddingProduct()">Add new Product&nbsp;&nbsp;</div>
+                            <div class = "plus-icon">
+                                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                     viewBox="0 0 455 455" style="enable-background:new 0 0 455 455;" xml:space="preserve">
+                                    <polygon points="455,212.5 242.5,212.5 242.5,0 212.5,0 212.5,212.5 0,212.5 0,242.5 212.5,242.5 212.5,455 242.5,455 242.5,242.5
+                                        455,242.5 "/>
+                                                                    <g>
+                                    </g>
+                                                                    <g>
+                                    </g>
+                                                                    <g>
+                                    </g>
+                                                                    <g>
+                                    </g>
+                                                                    <g>
+                                    </g>
+                                                                    <g>
+                                    </g>
+                                                                    <g>
+                                    </g>
+                                                                    <g>
+                                    </g>
+                                                                    <g>
+                                    </g>
+                                                                    <g>
+                                    </g>
+                                                                    <g>
+                                    </g>
+                                                                    <g>
+                                    </g>
+                                                                    <g>
+                                    </g>
+                                                                    <g>
+                                    </g>
+                                                                    <g>
+                                    </g>
+                                </svg>
+
+                            </div>
+                        </div>
                     </div>
-                    <div class="add_new_product">
-                        Add new Product ..
-                    </div>
+
                 </div>
                 <div class="row">
                     <div class="col-lg-12 text-center admin-button-column">
                         <input type="submit" class="btn btn-dark admin-button"/>
                     </div>
+
                 </div>
             </form>
         </div>
       <script>
-        $( "form" ).on( "submit", function(e) {
+         $( ".product-update-form" ).on( "submit", function(e) {
+            e.preventDefault();
+            //alert("products updated");
             var dataString = $(this).serialize();
             $.ajax({
               type: "POST",
               url: "/admin/submit_product_data",
               data: dataString,
               success: function () {
-                alert("Product Data Submitted Successfully!");
+                alert("Products Updated Successfully!");
                 location.reload();
               },
               error: function (request, status, error) {
                 alert("Submit Failed, Please Try Again After Sometime");
               }
             });
-            e.preventDefault();
-          });
+         });
 
+         $(".product-creation-form" ).on( "submit", function(e) {
+            e.preventDefault();
+            //alert("product created");
+            var dataString = $(this).serialize();
+            //location.reload();
+            $.ajax({
+              type: "POST",
+              url: "/admin/submit_product_creation_data",
+              data: dataString,
+              success: function () {
+                alert("Product Created Successfully!");
+                $(this).css("display","none");
+                location.reload();
+              },
+              error: function (request, status, error) {
+                alert("Submit Failed, Please Try Again After Sometime");
+              }
+            });
+           });
+
+         function openDialogueForAddingProduct(){
+            $(".product-form").css("display","block");
+         }
+
+         function closeDialogueForAddingProduct(){
+            $(".product-form").css("display","none");
+         }
       </script>
    </body>
 </html>
