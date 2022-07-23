@@ -1,16 +1,19 @@
 package dalcart.app.controllers;
 
-import dalcart.app.Repository.ConnectionManager;
+import dalcart.app.Factories.IProductModelFactory;
+import dalcart.app.Factories.IProductPersistenceFactory;
+import dalcart.app.Factories.ProductModelFactory;
+import dalcart.app.Factories.ProductPersistenceFactory;
+import dalcart.app.Repository.IProductPersistence;
 import dalcart.app.models.IProductModel;
-import dalcart.app.models.ISecurity;
+
+import dalcart.app.Repository.ConnectionManager;
 import dalcart.app.models.ProductModel;
-//import mocks.MockProduct;
 
 import dalcart.app.models.SecurityService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpSession;
@@ -23,10 +26,13 @@ import java.util.Map;
 @Controller
 @RequestMapping(value = {"/admin"})
 @Component
-public class AdminController {
+public class AdminController
+{
+    IProductModelFactory productModelFactory = new ProductModelFactory();
+    IProductPersistenceFactory productPersistenceFactory = new ProductPersistenceFactory();
 
-//    @Autowired
-    ProductModel productModel = new ProductModel();
+    IProductPersistence productDB = productPersistenceFactory.createIProductPersistence();
+    IProductModel productModel = productModelFactory.createProductModel();
 
     @GetMapping(value = {""})
     public ModelAndView index(HttpSession session) {
@@ -44,7 +50,7 @@ public class AdminController {
         List<IProductModel> mockProducts = new ArrayList<>();
 
 //        String keyword = null;
-        ArrayList<IProductModel> products = productModel.getProducts();
+        ArrayList<IProductModel> products = productModel.getProducts(productDB);
         if(products != null) {
             modelAndView.addObject("products", products);
         }
@@ -60,7 +66,7 @@ public class AdminController {
         ConnectionManager connectionManager = ConnectionManager.getInstance();
         connectionManager.begin();
         allParams.forEach((keyName,value) -> {
-            IProductModel product = productModel.getProductById(Integer.parseInt(keyName.split("-")[2]));
+            IProductModel product = productModel.getProductById(Integer.parseInt(keyName.split("-")[2]),productDB);
             product.setEnabled(false);
             if(keyName.contains("product-inventory")){
                 System.out.println("Updating Product Quantity By: " + value);
@@ -68,7 +74,7 @@ public class AdminController {
             }else{
                 product.setEnabled(value.equals("on"));
             }
-            product.updateProduct(product.getProductId(),product.getProductQuantity(),product.getEnabled());
+            product.updateProduct(product.getProductId(),product.getProductQuantity(),product.getEnabled(), productDB);
         });
         connectionManager.commit();
         return "success";
