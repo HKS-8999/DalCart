@@ -3,7 +3,6 @@ package dalcart.app.models;
 import dalcart.app.Repository.IProductPersistence;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 public class ProductModel implements IProductModel
 {
@@ -88,7 +87,6 @@ public class ProductModel implements IProductModel
 
     public ArrayList<IProductModel> getProducts(IProductPersistence productDB)
     {
-//        productDB = new ProductDB();
         ArrayList<IProductModel> productDetail;
         productDetail = productDB.getProductDetails();
         return productDetail;
@@ -99,13 +97,6 @@ public class ProductModel implements IProductModel
         ArrayList<IProductModel> productDetail;
         productDetail = productDB.getProductDetailsForDisplay(searchWord);
         return productDetail;
-    }
-
-    public IProductPersistence.StorageResult addProductToCart(Map<String,String> parameters, IProductPersistence productDB, Integer userId)
-    {
-        IProductPersistence.StorageResult result;
-        result = productDB.addProductToCart(parameters, userId);
-        return result;
     }
 
     public IProductModel getProductById(Integer productId, IProductPersistence productDB)

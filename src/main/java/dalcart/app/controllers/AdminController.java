@@ -62,7 +62,8 @@ public class AdminController
     @ResponseBody
     public String updateProductData(@RequestParam Map<String,String> allParams) throws SQLException {
         System.out.println("product Update Request Received");
-        IProductModel productModel = new ProductModel();
+//        IProductModel productModel = new ProductModel();
+        IProductModel productModel = productModelFactory.createProductModel();
         ConnectionManager connectionManager = ConnectionManager.getInstance();
         connectionManager.begin();
         allParams.forEach((keyName,value) -> {
@@ -84,7 +85,8 @@ public class AdminController
     @ResponseBody
     public String updateProductCteationData(@RequestParam Map<String,String> allParams) throws SQLException {
         System.out.println("product Create Request Received");
-        IProductModel productModel = new ProductModel();
+//        IProductModel productModel = new ProductModel();
+        IProductModel productModel = productModelFactory.createProductModel();
         ConnectionManager connectionManager = ConnectionManager.getInstance();
         connectionManager.begin();
         productModel.setProductName(allParams.get("product-name"));
@@ -93,7 +95,7 @@ public class AdminController
         productModel.setProductPrice(Integer.parseInt(allParams.get("product-price")));
         productModel.setProductImage(allParams.get("product-image"));
         productModel.setEnabled((allParams.get("product-enabled") != null));
-        productModel.saveProduct(productModel);
+        productModel.saveProduct(productModel,productDB);
         connectionManager.commit();
         return "success";
     }

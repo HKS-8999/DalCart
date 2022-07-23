@@ -26,7 +26,6 @@ public interface IProductModel
 
     public ArrayList<IProductModel> getProductsToDisplay(String searchWord, IProductPersistence productDB);
     public ArrayList<IProductModel> getProducts(IProductPersistence productDB);
-    public IProductPersistence.StorageResult addProductToCart(Map<String,String> parameters, IProductPersistence productDB, Integer userId);
     public IProductPersistence.StorageResult saveProduct(IProductModel product, IProductPersistence productDB);
     public IProductPersistence.StorageResult updateProduct(Integer productId, Integer productQuantity, Boolean productState, IProductPersistence productDB);
     public Integer getLastProductId(IProductPersistence productDB);
