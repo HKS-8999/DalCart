@@ -2,6 +2,7 @@ package dalcart.app.models;
 
 import dalcart.app.Repository.IProductPersistence;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class ProductModel implements IProductModel
@@ -138,6 +139,11 @@ public class ProductModel implements IProductModel
     public Integer getProductQuantity(IProductPersistence productDB, Integer productQuantity)
     {
         return productDB.getProductQuantity(productQuantity);
+    }
+
+    public Integer getTotalOfProducts(IProductPersistence productDB, HashMap<Integer, Integer> products)
+    {
+        return productDB.getTotalOfProducts(products);
     }
 
 }

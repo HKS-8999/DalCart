@@ -3,6 +3,7 @@ package dalcart.app.Repository;
 import dalcart.app.models.IProductModel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 
@@ -22,6 +23,7 @@ public interface IProductPersistence
     public StorageResult updateProduct(Integer productId, Integer productQuantity, Boolean productState);
     public StorageResult addProductToCart(Map<String, String> parameters, Integer userId);
     public Integer getProductQuantity(Integer productId);
+    public Integer getTotalOfProducts(HashMap<Integer, Integer> products);
 
 //    public StorageResult saveProduct();
 //    public StorageResult deleteProduct();

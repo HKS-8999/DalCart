@@ -35,7 +35,7 @@ public class CheckoutController
     OrderProducts o = new OrderProducts();
     OrderDB db = new OrderDB();
     @GetMapping("/cart")
-    public ModelAndView listgetproducts (@RequestParam(name="message",required = false) String message, ModelAndView model, HttpSession session) throws IOException
+    public ModelAndView listgetproducts (ModelAndView model, HttpSession session) throws IOException
     {
         if (SecurityService.isSessionValid(session) == false)
         {
@@ -52,9 +52,10 @@ public class CheckoutController
             Integer id = val.getKey();
             allProducts.add(productModel.getProductById(id, productDB));
         }
+        Integer total = productModel.getTotalOfProducts(productDB,productIds);
         model.addObject("products",allProducts);
         model.addObject("quantity",productIds);
-        model.addObject("message", message);
+        model.addObject("total", total);
         model.setViewName("checkout");
         return model;
     }

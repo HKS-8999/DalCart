@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 @Repository
@@ -269,6 +270,30 @@ public class ProductDB implements IProductPersistence
                 quantity = resultSet.getInt(1);
             }
             return quantity;
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public Integer getTotalOfProducts(HashMap<Integer, Integer> products)
+    {
+        try
+        {
+            Integer total = 0;
+            for (Map.Entry<Integer, Integer> val : products.entrySet()) {
+                Integer id = val.getKey();
+                String query = "select product_price from " + tableName + " where id = " + id + ";";
+                preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+                resultSet = preparedStatement.executeQuery(query);
+                while(resultSet.next())
+                {
+                    total += (resultSet.getInt(1))* val.getValue();
+                }
+            }
+            return total;
         }
         catch (SQLException e)
         {

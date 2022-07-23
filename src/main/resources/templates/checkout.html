@@ -6,13 +6,17 @@
     <title>Checkout</title>
 </head>
 <body>
-<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
-<script th:src="@{/webjars/jquery-ui/jquery-ui.min.js}"></script>
-<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script th:src="@{/webjars/jquery-ui/jquery-ui.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 
-<div style="background: cornflowerblue; font-family: 'Arial Rounded MT Bold'; font-size: xx-large; text-align: center;">
-    <h1><u>Dal-Cart</u></h1>
-</div>
+    <div style="background: cornflowerblue; font-family: 'Arial Rounded MT Bold'; font-size: xx-large; text-align: center;">
+        <h1><u>Dal-Cart</u></h1>
+    </div>
+
+    <div class="topnav" style="padding-bottom: 50px; padding-left: 100px">
+        <a href = "/home"><button class="btn btn-primary" type = "submit" id = "btn2">Go to home</button></a>
+    </div>
     <div class = container admin-container>
         <form action="" >
             <div class="row">
@@ -58,6 +62,9 @@
                 </div>
             </div>
         </form>
+    </div>
+    <div style="padding-left: 650px">
+        <h2>Total : <span th:text="${total}"></span></h2>
     </div>
 
 <script type="text/javascript">

@@ -55,7 +55,7 @@ public class HomeController
         return model;
     }
 
-    @PostMapping("/home")
+    @PostMapping("/addToCart")
     public ModelAndView addProductIntoCart(@RequestParam Map<String,String> allParams, ModelAndView model, HttpSession session)
     {
         if (SecurityService.isSessionValid(session) == false) {
