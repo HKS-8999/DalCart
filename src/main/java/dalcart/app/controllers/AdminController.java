@@ -55,6 +55,7 @@ public class AdminController {
     @PostMapping(value = {"/submit_product_data"})
     @ResponseBody
     public String updateProductData(@RequestParam Map<String,String> allParams) throws SQLException {
+        System.out.println("product Update Request Received");
         IProductModel productModel = new ProductModel();
         ConnectionManager connectionManager = ConnectionManager.getInstance();
         connectionManager.begin();
@@ -75,6 +76,7 @@ public class AdminController {
     @PostMapping(value = {"/submit_product_creation_data"})
     @ResponseBody
     public String updateProductCteationData(@RequestParam Map<String,String> allParams) throws SQLException {
+        System.out.println("product Create Request Received");
         IProductModel productModel = new ProductModel();
         ConnectionManager connectionManager = ConnectionManager.getInstance();
         connectionManager.begin();
