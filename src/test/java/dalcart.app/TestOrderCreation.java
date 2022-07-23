@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import static org.junit.Assert.*;
 
 @SpringBootTest
-class TestingApplicationTests {
+class TestOrderCreation {
 
     @Test
     void makeIdempotentOrderTransaction() throws SQLException {
