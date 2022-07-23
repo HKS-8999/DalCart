@@ -164,13 +164,6 @@ public class ProductDB implements IProductPersistence
 
     public StorageResult saveProduct(IProductModel product)
     {
-//        product.setProductId(4);
-//        product.setProductName("Hoodies");
-//        product.setProductDescription("Woolen Winter hoodies");
-//        product.setProductPrice(60);
-//        product.setProductQuantity(25);
-//        product.setProductImage("abc.jpg");
-//        product.setEnabled(true);
         try
         {
             LocalDate date = java.time.LocalDate.now();
