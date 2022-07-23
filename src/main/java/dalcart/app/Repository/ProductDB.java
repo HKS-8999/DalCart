@@ -1,9 +1,6 @@
 package dalcart.app.Repository;
 
-import dalcart.app.Factories.IProductModelFactory;
-import dalcart.app.Factories.IUserFactory;
-import dalcart.app.Factories.ProductModelFactory;
-import dalcart.app.Factories.UserFactory;
+import dalcart.app.Factories.*;
 import dalcart.app.controllers.OrderController;
 import dalcart.app.database.ConnectionManager;
 import dalcart.app.models.IProductModel;
@@ -238,8 +235,10 @@ public class ProductDB implements IProductPersistence
     {
         IProductModel[] products = new IProductModel[1];
         IUserFactory userFactory = new UserFactory();
+        IUserPersistanceFactory iUserPersistanceFactory = new UserPersistanceFactory();
         IUser user = userFactory.createUser();
-//        user = loadUserByUserID();
+        IUserPersistence userPersistence = iUserPersistanceFactory.createIUserPersistance();
+        user = userPersistence.loadUserAttributesByUserId(userId);
 //        User user = new User();
 //        user.setUserId(1);
 //        user.setEmail("zdssd");
@@ -257,6 +256,27 @@ public class ProductDB implements IProductPersistence
         {
             e.printStackTrace();
             return StorageResult.STORAGE_FAILURE;
+        }
+    }
+
+    public Integer getProductQuantity(Integer productId)
+    {
+        Integer quantity = 0;
+        try
+        {
+            String query = "select product_quantity from " + tableName + " where id = " + productId + ";";
+            preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            resultSet = preparedStatement.executeQuery(query);
+            while(resultSet.next())
+            {
+                quantity = resultSet.getInt(1);
+            }
+            return quantity;
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+            return null;
         }
     }
 }

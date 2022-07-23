@@ -18,6 +18,7 @@ class OrderDB  {
 
     Connection connection;
     static PreparedStatement preparedStatement;
+    static Statement statement;
 
     public static OrderState getStateByName(String orderState){
         String state = orderState.toLowerCase();
@@ -88,6 +89,33 @@ class OrderDB  {
 
             String query = "select * from orders where user_id = " + userId + " limit 1";
             Statement statement = ConnectionManager.getInstance().getConnection().createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+            IOrderModel order = new OrderModel();
+            boolean resultSetNotEmpty = false;
+            while(resultSet.next())
+            {
+                resultSetNotEmpty = true;
+                order.setOrderId(resultSet.getInt(1));
+                order.setUserId(resultSet.getInt(2));
+                order.setState(getStateByName(resultSet.getString(3)));
+            }
+            if(resultSetNotEmpty) {
+                return order;
+            }
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public IOrderModel findOrderInCartByUserId(int userId)
+    {
+        try
+        {
+
+            String query = "select * from orders where user_id = " + userId + " and state = 'cart';";
+            statement = ConnectionManager.getInstance().getConnection().createStatement();
             ResultSet resultSet = statement.executeQuery(query);
             IOrderModel order = new OrderModel();
             boolean resultSetNotEmpty = false;

@@ -135,4 +135,9 @@ public class ProductModel implements IProductModel
         return id;
     }
 
+    public Integer getProductQuantity(IProductPersistence productDB, Integer productQuantity)
+    {
+        return productDB.getProductQuantity(productQuantity);
+    }
+
 }

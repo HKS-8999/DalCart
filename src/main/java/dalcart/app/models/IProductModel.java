@@ -30,4 +30,5 @@ public interface IProductModel
     public IProductPersistence.StorageResult updateProduct(Integer productId, Integer productQuantity, Boolean productState, IProductPersistence productDB);
     public Integer getLastProductId(IProductPersistence productDB);
     public IProductModel getProductById(Integer productId, IProductPersistence productDB);
+    public Integer getProductQuantity(IProductPersistence productDB, Integer productQuantity);
 }

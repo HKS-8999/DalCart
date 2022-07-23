@@ -21,6 +21,7 @@ public interface IProductPersistence
     public StorageResult saveProduct(IProductModel product);
     public StorageResult updateProduct(Integer productId, Integer productQuantity, Boolean productState);
     public StorageResult addProductToCart(Map<String, String> parameters, Integer userId);
+    public Integer getProductQuantity(Integer productId);
 
 //    public StorageResult saveProduct();
 //    public StorageResult deleteProduct();

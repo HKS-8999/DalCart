@@ -25,13 +25,26 @@ public class HomeController
     IProductPersistenceFactory productPersistenceFactory = new ProductPersistenceFactory();
     IProductPersistence productDB = productPersistenceFactory.createIProductPersistence();
 
-    @GetMapping("/home")
-    public ModelAndView listgetproducts (ModelAndView model, @RequestParam(name = "search", required = false) String keyword, HttpSession session) throws IOException
+    @GetMapping("")
+    public ModelAndView homepage (ModelAndView model, @RequestParam(name = "search", required = false) String keyword, HttpSession session) throws IOException
     {
         if (SecurityService.isSessionValid(session) == false) {
             ModelAndView modelAndView = new ModelAndView("redirect:/login");
             return modelAndView;
         }
+
+        ModelAndView modelAndView = new ModelAndView("redirect:/home");
+        return modelAndView;
+    }
+
+    @GetMapping("/home")
+    public ModelAndView viewProducts (ModelAndView model, @RequestParam(name = "search", required = false) String keyword, HttpSession session) throws IOException
+    {
+        if (SecurityService.isSessionValid(session) == false) {
+            ModelAndView modelAndView = new ModelAndView("redirect:/login");
+            return modelAndView;
+        }
+
         ArrayList<IProductModel> lstprodcts = productModel.getProductsToDisplay(keyword,productDB);
         model.addObject("listproducts",lstprodcts);
         String message = HeaderSetter.messageToDisplay();
@@ -50,7 +63,7 @@ public class HomeController
         }
         try
         {
-            Integer userId = Integer.parseInt(session.getId());
+            Integer userId = (Integer) session.getAttribute("user");
             productModel.addProductToCart(allParams,  productDB, userId);
         }
         catch (Exception e)
