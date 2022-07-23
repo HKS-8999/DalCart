@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'index')}">
+<link rel="stylesheet" type="text/css" href="/stylesheets/home.css" />
+<head>
+    <meta charset="UTF-8">
+    <title>Checkout</title>
+</head>
+<body>
+    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script th:src="@{/webjars/jquery-ui/jquery-ui.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+
+    <div style="background: cornflowerblue; font-family: 'Arial Rounded MT Bold'; font-size: xx-large; text-align: center;">
+        <h1><u>Dal-Cart</u></h1>
+    </div>
+
+    <div class="topnav" style="padding-bottom: 50px; padding-left: 100px">
+        <a href = "/home"><button class="btn btn-primary" type = "submit" id = "btn2">Go to home</button></a>
+    </div>
+    <div class = container admin-container>
+        <form action="" >
+            <div class="row">
+                <div class="container ">
+                    <div class="row">
+                        <div class="col-lg-12 center text-center admin-title">
+                            My Cart
+                        </div>
+                    </div>
+
+                    <div>
+                    <h1><span th:text="${message}"></span></h1>
+                    </div>
+
+                    <div class="row product-list-header">
+                        <div class="col-lg-2 text-center product-list-header-item">
+                            Product Name
+                        </div>
+                        <div class="col-lg-2 text-center product-list-header-item">
+                            Product Price
+                        </div>
+                        <div class="col-lg-2 text-center product-list-header-item">
+                            Product Quantity
+                        </div>
+                        <div class="col-lg-2 text-center product-list-header-item">
+                            Increase Quantity
+                        </div>
+                        <div class="col-lg-2 text-center product-list-header-item">
+                            Decrease Quantity
+                        </div>
+                        <div class="col-lg-2 text-center product-list-header-item">
+                            Remove from cart
+                        </div>
+                    </div>
+                    <div class="row product-list-row text-center product-row" th:each="product: ${products}">
+                        <div class="col-lg-2 flex" th:text="${product.productName}"></div>
+                        <div class="col-lg-2 flex" th:text="${product.productPrice}" ></div>
+                        <div class="col-lg-2 flex" th:text="${quantity.get(product.productId)}" ></div>
+                        <div class="col-lg-2 flex"><button th:value="${quantity.get(product.productId)}" th:id = "${product.productId}" type = "submit" onclick="increase(this.id,this.value)">+</button></div>
+                        <div class="col-lg-2 flex"><button th:value="${quantity.get(product.productId)}" th:id = "${product.productId}" type = "submit" onclick="decrease(this.id,this.value)">-</button></div>
+                        <div class="col-lg-2 flex"><button th:id = "${product.productId}" type = "submit" onclick="removeFromCart(this.id)">Remove</button></div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div style="padding-left: 650px">
+        <h2>Total : <span th:text="${total}"></span></h2>
+    </div>
+
+<script type="text/javascript">
+
+    function increase(event,data)
+    {
+        $.ajax({
+            type: "POST",
+            url: "/increaseQuantityOfProduct",
+            data: {
+                id: event,
+                quantity: data
+            }
+        });
+    }
+
+    function decrease(event,data)
+    {
+        $.ajax({
+            type: "POST",
+            url: "/decreaseQuantityOfProduct",
+            data: {
+                id: event,
+                quantity: data
+            }
+        });
+    }
+
+    function removeFromCart(event)
+    {
+        $.ajax({
+            type: "POST",
+            url: "/removeFromCart",
+            data: {
+                id: event
+            }
+        });
+    }
+
+</script>
+
+</body>
+</html>
