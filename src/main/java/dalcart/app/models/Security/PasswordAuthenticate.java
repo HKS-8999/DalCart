@@ -1,4 +1,4 @@
-package dalcart.app.models.Validation;
+package dalcart.app.models.Security;
 
 import dalcart.app.Repository.IUserPersistence;
 import dalcart.app.models.IUser;

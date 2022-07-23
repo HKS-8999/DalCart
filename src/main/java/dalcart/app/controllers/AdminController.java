@@ -4,11 +4,10 @@ import dalcart.app.models.IProductModel;
 import dalcart.app.models.ProductModel;
 //import mocks.MockProduct;
 
-import dalcart.app.models.SecurityService;
+import dalcart.app.models.SessionService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpSession;
@@ -26,10 +25,16 @@ public class AdminController {
     ProductModel productModel = new ProductModel();
 
     @GetMapping(value = {""})
-    public ModelAndView index(HttpSession session) {
+    public ModelAndView index(HttpSession session, SessionService securityService) {
         //check if user key is valid else rediret to login page
 
-        if(SecurityService.isSessionValid(session) == false){
+        if(securityService.isAdminInSession(session) == false){
+            ModelAndView modelAndView = new ModelAndView("login");
+            modelAndView.addObject("modelAttribute", modelAndView);
+            return modelAndView;
+        }
+
+        if(securityService.isSessionValid(session) == false){
             ModelAndView modelAndView =  new ModelAndView("redirect:/login");
             modelAndView.addObject("modelAttribute" , modelAndView);
             return modelAndView;
@@ -39,15 +44,12 @@ public class AdminController {
         modelAndView.setViewName("admin");
         Map<Integer, String> listOfProducts = new HashMap<Integer,String>();
         List<IProductModel> mockProducts = new ArrayList<>();
-
-//        String keyword = null;
         ArrayList<IProductModel> products = productModel.getProducts();
         if(products != null) {
             modelAndView.addObject("products", products);
         }
         return modelAndView;
     }
-
 
     @PostMapping(value = {"/submit_product_data"})
     @ResponseBody
@@ -56,6 +58,4 @@ public class AdminController {
                 + k + ", Value = " + v));
         return "success";
     }
-
-
 }

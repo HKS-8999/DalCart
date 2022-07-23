@@ -1,14 +1,14 @@
 package dalcart.app.Factories;
 
 import dalcart.app.Repository.IUserPersistence;
-import dalcart.app.models.ISecurity;
-import dalcart.app.models.SecurityService;
+import dalcart.app.models.*;
 
 public class SecurityFactory implements ISecurityFactory{
 
     @Override
-    public ISecurity createSecurity(IUserPersistence userFactory) {
-        return new SecurityService(userFactory);
+    public IAuthenticate createSecurity(IUserPersistence userFactory, IUser user) {
+        //return new SessionService(userFactory);
+        return new Authentication(userFactory,user);
     }
-
+    public ISecurePassword createSecurePassword() {return new SecurePassword();}
 }

@@ -17,12 +17,10 @@ public class User extends IUser {
     }
     @Override
     public IUserPersistence.Result createNewUser(IUser user, IUserPersistence userPersistence) throws Exception {
-        userPersistence.save(user);
-        return IUserPersistence.Result.SUCCESS;
-    }
-
-    public ISecurity.RESULT hasAccess(ISecurity security, IUser user) {
-        return security.authenticateUser(user);
+        if(userPersistence.save(user)){
+            return IUserPersistence.Result.SUCCESS;
+        }
+        return IUserPersistence.Result.STORAGE_FAILURE;
     }
 
     public boolean isAdmin(String designation){

@@ -1,49 +1,44 @@
 package dalcart.app.models;
 
 import dalcart.app.Repository.IUserPersistence;
-import dalcart.app.models.Validation.EmailAndPasswordAuthenticate;
-import dalcart.app.models.Validation.EmailAuthenticate;
-import dalcart.app.models.Validation.PasswordAuthenticate;
-import dalcart.app.models.Validation.Security;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
 import java.util.Enumeration;
 
 @Service
-public class SecurityService implements ISecurity {
-    private static final String admin = "admin";
-    private static final String user = "user";
+public class SessionService implements ISession {
+    private static final String adminRole = "admin";
+    private static final String userRole = "user";
+
     IUserPersistence userPersistence;
 
-    public SecurityService(IUserPersistence userPersistence){
+    public SessionService(IUserPersistence userPersistence) {
         this.userPersistence = userPersistence;
     }
 
-    public static boolean isSessionValid(HttpSession session)
-    {
+    public static boolean isSessionValid(HttpSession session) {
         Enumeration<String> names = session.getAttributeNames();
-        if(names.hasMoreElements())
-        {
+        if (names.hasMoreElements()) {
             return true;
         }
         return false;
     }
 
-    public boolean isUserRoleAdmin(HttpSession session)
-    {
+    public boolean isAdminInSession(HttpSession session) {
         Enumeration<String> names = session.getAttributeNames();
-        if(names.nextElement().equals(admin)){
+        if (names.nextElement().equals(adminRole)) {
             return true;
         }
         return false;
     }
 
-    public boolean isUserRoleUser(HttpSession session)
-    {
+    public boolean isUserInSession(HttpSession session) {
         Enumeration<String> names = session.getAttributeNames();
-        if(names.nextElement().equals(user)){
-            return true;
+        while(names.hasMoreElements()){
+            if (names.nextElement().equals(userRole)) {
+                return true;
+            }
         }
         return false;
     }
