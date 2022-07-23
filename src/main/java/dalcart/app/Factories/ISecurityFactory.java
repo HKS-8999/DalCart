@@ -1,8 +1,8 @@
 package dalcart.app.Factories;
 
 import dalcart.app.Repository.IUserPersistence;
-import dalcart.app.models.Security;
+import dalcart.app.models.ISecurity;
 
 public interface ISecurityFactory {
-    public Security createSecurity(IUserPersistence userPersistance);
+    public ISecurity createSecurity(IUserPersistence userPersistance);
 }

@@ -2,11 +2,8 @@ package dalcart.app.Repository;
 
 import dalcart.app.Factories.*;
 import dalcart.app.controllers.OrderController;
-import dalcart.app.database.ConnectionManager;
 import dalcart.app.models.IProductModel;
 import dalcart.app.models.IUser;
-import dalcart.app.models.ProductModel;
-import dalcart.app.models.User;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;

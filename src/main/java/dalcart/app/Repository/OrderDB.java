@@ -1,16 +1,13 @@
 package dalcart.app.Repository;
 
-import dalcart.app.database.ConnectionManager;
 import dalcart.app.items.*;
 import dalcart.app.models.IOrderModel;
 import dalcart.app.models.IProductModel;
 import dalcart.app.models.OrderModel;
-import dalcart.app.utils.OrderUtils;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.UUID;
 
 @Repository
 public
@@ -109,6 +106,7 @@ class OrderDB  {
         return null;
     }
 
+<<<<<<< HEAD
     public IOrderModel findOrderInCartByUserId(int userId)
     {
         try
@@ -134,5 +132,24 @@ class OrderDB  {
             e.printStackTrace();
         }
         return null;
+=======
+    public static boolean removeProductFromCart(Integer orderId, Integer productId){
+        try {
+
+            String query = "delete from order_products where order_id = ? and product_id = ?";
+            preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(query);
+            preparedStatement.setInt(1,orderId);
+            preparedStatement.setInt(2,productId);
+            preparedStatement.executeUpdate();
+
+            query = "delete from orders where id in (select ord.id from orders as ord left join order_products as ordp on ord.id = ordp.order_id where ordp.order_id is null)";
+            preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(query);
+            preparedStatement.executeUpdate();
+
+        }catch (Exception e){
+            return false;
+        }
+        return true;
+>>>>>>> c4c6f52c3dc075bbd27dc0a606c50c4770a3ed1d
     }
 }

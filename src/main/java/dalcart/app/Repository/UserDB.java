@@ -1,9 +1,6 @@
 package dalcart.app.Repository;
 
-import dalcart.app.database.ConnectionManager;
-
 import dalcart.app.models.IUser;
-import dalcart.app.models.Security;
 import dalcart.app.models.User;
 import org.springframework.stereotype.Repository;
 
@@ -11,7 +8,7 @@ import java.sql.*;
 
 @Repository
 public class UserDB implements IUserPersistence {
-
+    private static final String DEFAULT_ROLE = "user";
     ResultSet resultset;
 
     PreparedStatement preparedStatement;
@@ -20,29 +17,24 @@ public class UserDB implements IUserPersistence {
 
     }
     @Override
-    public Integer save(IUser u) throws Exception
+    public void save(IUser u) throws Exception
     {
         try
         {
-            String query = "insert into user (email, first_name, last_name,password, mobile_no) values ( ?, ?, ?, ?, ?);";
+            String query = "insert into user (email, first_name, last_name,password, mobile_no, designation) values ( ?, ?, ?, ?, ?, ?);";
             preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, u.getEmail());
             preparedStatement.setString(2, u.getFirstName());
             preparedStatement.setString(3, u.getLastName());
             preparedStatement.setString(4, u.getPassword());
             preparedStatement.setString(5, u.getMobileNo());
+            preparedStatement.setString(6, DEFAULT_ROLE);
             preparedStatement.executeUpdate();
-
-            ResultSet rs = preparedStatement.getGeneratedKeys();
-            rs.next();
-            return rs.getInt(1);
-
         }
         catch (SQLException e)
         {
             e.printStackTrace();
         }
-        return null;
     }
 
     @Override

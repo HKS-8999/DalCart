@@ -2,11 +2,8 @@ package dalcart.app.controllers;
 
 import dalcart.app.Factories.*;
 import dalcart.app.Repository.IUserPersistence;
-import dalcart.app.models.IUser;
-import dalcart.app.models.Security;
+import dalcart.app.models.*;
 
-import dalcart.app.models.SecurityService;
-import dalcart.app.models.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -19,21 +16,19 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-
-
 @Controller
-public class LoginController {
+public class LoginController
+{
     IUserPersistanceFactory userPersistanceFactory;
     ISecurityFactory securityFactory;
-
     IUserFactory newUserFactory;
+    IValidateFactory validateFactory;
+
     @RequestMapping("/login")
     public ModelAndView loginPage(HttpServletRequest request)
     {
         Logger logger = LogManager.getLogger(this.getClass());
-
         HttpSession session = request.getSession();
-
         if(SecurityService.isSessionValid(session) == false)
         {
             ModelAndView modelAndView = new ModelAndView();
@@ -44,11 +39,11 @@ public class LoginController {
         {
             return new ModelAndView("redirect:/home");
         }
-
     }
 
     @PostMapping("/login")
-    public ModelAndView submitForm(@ModelAttribute User user, HttpServletRequest request ){
+    public ModelAndView submitForm(@ModelAttribute User user, HttpServletRequest request)
+    {
         HttpSession session = request.getSession();
         ModelAndView modelAndView = new ModelAndView();
         try
@@ -56,29 +51,35 @@ public class LoginController {
             userPersistanceFactory = new UserPersistanceFactory();
             newUserFactory = new UserFactory();
             securityFactory = new SecurityFactory();
+            validateFactory = new ValidateFactory();
             IUserPersistence iUserPersistence = userPersistanceFactory.createIUserPersistance();
-            Security security = securityFactory.createSecurity(iUserPersistence);
-
-
-            if(security.authenticateUser(user).equals(Security.RESULT.AUTHORIZED))
+            ISecurity security = securityFactory.createSecurity(iUserPersistence);
+            IValidate validate = validateFactory.createValidations();
+            ISecurePassword securePassword = new SecurePassword();
+            if(validate.isPasswordValid(user) && validate.isUserNameValid(user))
             {
-                user.loadUserAttributes(iUserPersistence);
-                System.out.println(user.isAdmin(user.getDesignation()));
-                if (user.isAdmin(user.getDesignation()))
+
+                securePassword.encrypt(user);
+                if (security.authenticateUser(user).equals(ISecurity.RESULT.AUTHORIZED))
                 {
-                    session.setAttribute("admin", user.getUserID());
-                    return new ModelAndView("redirect:/admin");
+                    user.loadUserAttributes(iUserPersistence);
+                    if (user.isAdmin(user.getDesignation()))
+                    {
+                        session.setAttribute("admin", user.getUserID());
+                        return new ModelAndView("redirect:/admin");
+                    }
+                    else
+                    {
+                        session.setAttribute("user", user.getUserID());
+                        return new ModelAndView("redirect:/home");
+                    }
                 }
                 else
                 {
-                    session.setAttribute("user",user.getUserID());
-                    return new ModelAndView("redirect:/home");
-                }
-            }
-            else
-                {
                     return new ModelAndView("invalidUsernameandPassword");
                 }
+            }
+            return new ModelAndView("invalidUsernameandPassword");
         }
         catch (Exception e)
         {
@@ -87,10 +88,11 @@ public class LoginController {
         modelAndView.setViewName("login");
         return modelAndView;
     }
+
     @GetMapping("/logout")
-    public String destroySession(HttpServletRequest request) {
+    public String destroySession(HttpServletRequest request)
+    {
         request.getSession().invalidate();
         return "redirect:/home";
     }
-
 }

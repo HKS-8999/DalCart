@@ -1,7 +1,7 @@
 package dalcart.app.controllers;
 
 import dalcart.app.Repository.OrderProducts;
-import dalcart.app.database.ConnectionManager;
+import dalcart.app.Repository.ConnectionManager;
 
 import dalcart.app.items.OrderAtCart;
 import dalcart.app.models.IOrderModel;
@@ -28,18 +28,16 @@ public class OrderController {
             order.setUserId(user.getUserID());
             order.setState(new OrderAtCart());
             orderId = order.save();
-        }
-        else
-        {
+        }else{
             order = existingOrder;
             orderId = existingOrder.getOrderId();
         }
 
         if (orderId != null) {
             System.out.println("Order ID: " + orderId);
-            //attach product ids with Orders in order_products table
             for (IProductModel product : products) {
                 System.out.println("Product ID:" + product.getProductId());
+                product.updateProduct(product.getProductId(),product.getProductQuantity()-1,product.getEnabled());
                 OrderProducts.saveOrderProduct(orderId, product.getProductId());
             }
         }

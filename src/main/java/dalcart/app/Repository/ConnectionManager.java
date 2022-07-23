@@ -1,6 +1,4 @@
-package dalcart.app.database;
-
-
+package dalcart.app.Repository;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -9,7 +7,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
-
 
 public class ConnectionManager  {
     private static ConnectionManager instance = null;
@@ -37,8 +34,10 @@ public class ConnectionManager  {
         return this.connection;
     }
 
-    public static ConnectionManager getInstance() throws SQLException {
-        if (instance == null || instance.getConnection().isClosed()) {
+    public static ConnectionManager getInstance() throws SQLException
+    {
+        if (instance == null || instance.getConnection().isClosed())
+        {
             instance = new ConnectionManager();
         }
         return instance;
@@ -49,10 +48,8 @@ public class ConnectionManager  {
     }
     public void commit() throws SQLException {
         this.connection.commit();
-        //this.connection.close();
     }
     public void rollback() throws SQLException {
         this.connection.rollback();
-        //this. connection.close();
     }
 }
