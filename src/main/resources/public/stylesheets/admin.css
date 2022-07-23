@@ -55,6 +55,7 @@
     display: flex;
     float: right;
     cursor: pointer;
+    padding: 5px;
 }
 
 .add-new-product{

@@ -61,6 +61,7 @@ public class AdminController {
         connectionManager.begin();
         allParams.forEach((keyName,value) -> {
             IProductModel product = productModel.getProductById(Integer.parseInt(keyName.split("-")[2]));
+            product.setEnabled(false);
             if(keyName.contains("product-inventory")){
                 System.out.println("Updating Product Quantity By: " + value);
                 product.setProductQuantity(product.getProductQuantity() + Integer.parseInt(value));
