@@ -64,7 +64,7 @@
         </form>
     </div>
     <div style="padding-left: 650px">
-        <h2>Total : <span th:text="${total}"></span></h2>
+        <h2>Total : <span th:text="${total}"> CAD</span></h2>
     </div>
 
 <script type="text/javascript">
@@ -77,6 +77,12 @@
             data: {
                 id: event,
                 quantity: data
+            },
+            success: function(result) {
+                alert('increased');
+            },
+            error: function(result) {
+                alert('error');
             }
         });
     }

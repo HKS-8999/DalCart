@@ -22,15 +22,12 @@
         <a href = "/logout"><button class="btn btn-primary" type = "submit" id = "btn3">Log Out</button></a>
     </div>
 
-<!--    <div style="padding-bottom: 50px;">-->
-<!--        <label for="gsxception processing template "home": Failed to convert from type [javearch">Search product: </label>-->
-<!--        <input type="search" id="gsearch" name="gsearch">-->
-<!--    </div>-->
+    <div style="padding-left: 100px">
+        <h1><i><span th:text="${nothingToShow}"></span></i></h1>
+    </div>
 
     <div class="row card-deck">
         <div class="col-lg-4 col-md-6 mb-4" th:each="product : ${listproducts}">
-
-<!--            <form action="#" th:action="@{/home}" th:object="${product}" method="POST">-->
 
             <div class="card text-center" style="border:2px solid black; padding-left: 50px; padding-top: 50px; padding-bottom: 20px;">
                 <div class="card-header">
@@ -59,13 +56,11 @@
 
     function addToCart(event)
     {
-//        e.preventDefault();
         $.ajax({
             type: "POST",
             url: "/addToCart",
             data: {
-                id: event, // < note use of 'this' here
-                // userkey: getCookie("userkey")
+                id: event
             },
             success: function(result) {
                 alert('Product Added to Cart');

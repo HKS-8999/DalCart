@@ -25,7 +25,7 @@ public class HomeController
     IProductPersistence productDB = productPersistenceFactory.createIProductPersistence();
 
     @GetMapping("")
-    public ModelAndView homepage (ModelAndView model, @RequestParam(name = "search", required = false) String keyword, HttpSession session) throws IOException
+    public ModelAndView homepage (HttpSession session) throws IOException
     {
         if (SecurityService.isSessionValid(session) == false) {
             ModelAndView modelAndView = new ModelAndView("redirect:/login");
@@ -45,10 +45,15 @@ public class HomeController
             return modelAndView;
         }
 
-        ArrayList<IProductModel> lstprodcts = productModel.getProductsToDisplay(keyword,productDB);
-        model.addObject("listproducts",lstprodcts);
+        ArrayList<IProductModel> listOfProducts = productModel.getProductsToDisplay(keyword,productDB);
+        model.addObject("listproducts",listOfProducts);
         String message = HeaderSetter.messageToDisplay();
         model.addObject("header", message);
+
+        if(listOfProducts.size() == 0)
+        {
+            model.addObject("nothingToShow","No Products to Display.");
+        }
 
         model.setViewName("home");
         return model;

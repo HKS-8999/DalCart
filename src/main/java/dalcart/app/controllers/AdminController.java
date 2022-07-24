@@ -39,9 +39,9 @@ public class AdminController
         //check if user key is valid else rediret to login page
         //|| ISecurity.isUserRoleAdmin() == false
         if(SecurityService.isSessionValid(session) == false ){
-            //ModelAndView modelAndView =  new ModelAndView("redirect:/login");
-            //modelAndView.addObject("modelAttribute" , modelAndView);
-            //return modelAndView;
+            ModelAndView modelAndView =  new ModelAndView("redirect:/login");
+            modelAndView.addObject("modelAttribute" , modelAndView);
+            return modelAndView;
         }
 
         ModelAndView modelAndView = new ModelAndView();
