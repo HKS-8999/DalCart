@@ -179,7 +179,6 @@
             }
 
             $(".submit-order" ).on( "submit", function(e) {
-                alert("Order Request Submitted");
                 e.preventDefault();
                 //alert("product created");
                 var dataString = $(this).serialize();
@@ -189,7 +188,6 @@
                   url: "/order/submit_order",
                   data: dataString,
                   success: function () {
-                    alert("Product Created Successfully!");
                     $(this).css("display","none");
                     window.location = "/thankyou"
                   },
