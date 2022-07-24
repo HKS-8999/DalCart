@@ -60,7 +60,7 @@ public class LoginController
             if(validate.isPasswordValid(user) && validate.isUserNameValid(user))
             {
                 securePassword.encrypt(user);
-                System.out.println(authentication.authenticate(user));
+
                 if (authentication.authenticate(user).equals(Security.RESULT.AUTHORIZED))
                 {
                     user.loadUserAttributes(iUserPersistence);

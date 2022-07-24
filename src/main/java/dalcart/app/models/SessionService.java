@@ -27,8 +27,10 @@ public class SessionService implements ISession {
 
     public boolean isAdminInSession(HttpSession session) {
         Enumeration<String> names = session.getAttributeNames();
-        if (names.nextElement().equals(adminRole)) {
-            return true;
+        while(names.hasMoreElements()){
+            if (names.nextElement().equals(adminRole)) {
+                return true;
+            }
         }
         return false;
     }

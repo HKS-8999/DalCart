@@ -1,8 +1,14 @@
 package dalcart.app.controllers;
 
+import dalcart.app.Factories.IProductModelFactory;
+import dalcart.app.Factories.IProductPersistenceFactory;
+import dalcart.app.Factories.ProductModelFactory;
+import dalcart.app.Factories.ProductPersistenceFactory;
+import dalcart.app.Repository.IProductPersistence;
 import dalcart.app.models.IProductModel;
+
+import dalcart.app.Repository.ConnectionManager;
 import dalcart.app.models.ProductModel;
-//import mocks.MockProduct;
 
 import dalcart.app.models.SessionService;
 import org.springframework.stereotype.Controller;
@@ -11,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpSession;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,24 +26,21 @@ import java.util.Map;
 @Controller
 @RequestMapping(value = {"/admin"})
 @Component
-public class AdminController {
+public class AdminController
+{
+    IProductModelFactory productModelFactory = new ProductModelFactory();
+    IProductPersistenceFactory productPersistenceFactory = new ProductPersistenceFactory();
 
-//    @Autowired
-    ProductModel productModel = new ProductModel();
+    IProductPersistence productDB = productPersistenceFactory.createIProductPersistence();
+    IProductModel productModel = productModelFactory.createProductModel();
 
     @GetMapping(value = {""})
-    public ModelAndView index(HttpSession session, SessionService securityService) {
+    public ModelAndView index(HttpSession session, SessionService sessionService) {
         //check if user key is valid else rediret to login page
 
-        if(securityService.isAdminInSession(session) == false){
-            ModelAndView modelAndView = new ModelAndView("login");
-            modelAndView.addObject("modelAttribute", modelAndView);
-            return modelAndView;
-        }
 
-        if(securityService.isSessionValid(session) == false){
-            ModelAndView modelAndView =  new ModelAndView("redirect:/login");
-            modelAndView.addObject("modelAttribute" , modelAndView);
+        if (sessionService.isAdminInSession(session) == false && sessionService.isSessionValid(session) == false) {
+            ModelAndView modelAndView = new ModelAndView("redirect:/login");
             return modelAndView;
         }
 
@@ -44,7 +48,10 @@ public class AdminController {
         modelAndView.setViewName("admin");
         Map<Integer, String> listOfProducts = new HashMap<Integer,String>();
         List<IProductModel> mockProducts = new ArrayList<>();
-        ArrayList<IProductModel> products = productModel.getProducts();
+
+
+//        String keyword = null;
+        ArrayList<IProductModel> products = productModel.getProducts(productDB);
         if(products != null) {
             modelAndView.addObject("products", products);
         }
@@ -53,9 +60,41 @@ public class AdminController {
 
     @PostMapping(value = {"/submit_product_data"})
     @ResponseBody
-    public String updateProductData(@RequestParam Map<String,String> allParams){
-        allParams.forEach((k,v) -> System.out.println("Key = "
-                + k + ", Value = " + v));
+    public String updateProductData(@RequestParam Map<String,String> allParams) throws SQLException {
+        System.out.println("product Update Request Received");
+        IProductModel productModel = new ProductModel();
+        ConnectionManager connectionManager = ConnectionManager.getInstance();
+        connectionManager.begin();
+        allParams.forEach((keyName,value) -> {
+            IProductModel product = productModel.getProductById(Integer.parseInt(keyName.split("-")[2]),productDB);
+            product.setEnabled(false);
+            if(keyName.contains("product-inventory")){
+                System.out.println("Updating Product Quantity By: " + value);
+                product.setProductQuantity(product.getProductQuantity() + Integer.parseInt(value));
+            }else{
+                product.setEnabled(value.equals("on"));
+            }
+            product.updateProduct(product.getProductId(),product.getProductQuantity(),product.getEnabled(), productDB);
+        });
+        connectionManager.commit();
+        return "success";
+    }
+
+    @PostMapping(value = {"/submit_product_creation_data"})
+    @ResponseBody
+    public String updateProductCteationData(@RequestParam Map<String,String> allParams) throws SQLException {
+        System.out.println("product Create Request Received");
+        IProductModel productModel = new ProductModel();
+        ConnectionManager connectionManager = ConnectionManager.getInstance();
+        connectionManager.begin();
+        productModel.setProductName(allParams.get("product-name"));
+        productModel.setProductDescription(allParams.get("product-description"));
+        productModel.setProductQuantity(1);
+        productModel.setProductPrice(Integer.parseInt(allParams.get("product-price")));
+        productModel.setProductImage(allParams.get("product-image"));
+        productModel.setEnabled((allParams.get("product-enabled") != null));
+        productModel.saveProduct(productModel, productDB);
+        connectionManager.commit();
         return "success";
     }
 }

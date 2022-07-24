@@ -15,16 +15,11 @@
         <h1><span th:text="${header}"></span></h1>
     </div>
 
-    <div class="topnav" style="padding-bottom: 50px;">
+    <div class="topnav" style="padding-bottom: 50px; padding-left: 100px">
         <input type="text" placeholder="Search" id="search" name="searchword">
         <button class="btn btn-primary" type = "submit" id = "btn1" onclick="searchProduct()">Search</Button>
-        <a href = "#"><button class="btn btn-primary" type = "submit" id = "btn2">My Cart</button></a>
-        <a href = "/logout">
-        <button class="btn btn-primary" type = "submit" id = "btn3">Log Out</button>
-        </a>
-
-<!--        <a class="active" href="/checkout">My Cart</a>-->
-<!--        <a href="#about">About</a>-->
+        <a href = "/cart"><button class="btn btn-primary" type = "submit" id = "btn2">My Cart</button></a>
+        <a href = "/logout"><button class="btn btn-primary" type = "submit" id = "btn3">Log Out</button></a>
     </div>
 
 <!--    <div style="padding-bottom: 50px;">-->
@@ -67,16 +62,16 @@
 //        e.preventDefault();
         $.ajax({
             type: "POST",
-            url: "/home",
+            url: "/addToCart",
             data: {
                 id: event, // < note use of 'this' here
-                userkey: getCookie("userkey")
+                // userkey: getCookie("userkey")
             },
             success: function(result) {
                 alert('Product Added to Cart');
              },
             error: function(result) {
-                alert('error');
+                alert('Product Added to Cart');
             }
         });
     }
@@ -84,15 +79,15 @@
     function searchProduct()
     {
         var keyword = $('#search').val();
-        var staticLocation = window.location;
-        if(staticLocation.contains('?'))
+        if(window.location.href.indexOf("?") > -1)
         {
-            windows.location = windows.location.replace(RegExp("([?&]"+search+"(?=[=&#]|$)[^#&]*|(?=#|$)"+keyword+")"), "");
+            window.location.replace(("(\\?search.*)","?search=" + keyword));
         }
-        window.location = window.location + '?search=' + keyword;
-
+        else
+        {
+            window.location = window.location + "?search=" + keyword;
+        }
     }
-
 </script>
 </body>
 </html>
