@@ -13,14 +13,19 @@ import dalcart.app.models.IOrderModel;
 import dalcart.app.models.OrderModel;
 import dalcart.app.models.User;
 import dalcart.app.models.*;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.sql.SQLException;
 
 @Controller
+@RequestMapping(value = {"/order"})
+@Component
 public class OrderController
 {
-
 //    IProductPersistenceFactory productPersistenceFactory = new ProductPersistenceFactory();
 //    IProductPersistence productDB = productPersistenceFactory.createIProductPersistence();
     public void addToOrder(IUser user, IProductModel[] products) throws SQLException
@@ -49,10 +54,16 @@ public class OrderController
             IProductPersistence productDB = productPersistenceFactory.createIProductPersistence();
             for (IProductModel product : products) {
                 System.out.println("Product ID:" + product.getProductId());
-                product.updateProduct(product.getProductId(),product.getProductQuantity()-1,product.getEnabled(), productDB);
+                //product.updateProduct(product.getProductId(),product.getProductQuantity()-1,product.getEnabled(), productDB);
                 OrderProducts.saveOrderProduct(orderId, product.getProductId());
             }
         }
         connectionManager.commit();
+    }
+
+    @PostMapping("/submit_order")
+    @ResponseBody
+    public String submitOrder() throws SQLException{
+        return "success";
     }
 }

@@ -93,7 +93,7 @@ public class AdminController
         productModel.setProductPrice(Integer.parseInt(allParams.get("product-price")));
         productModel.setProductImage(allParams.get("product-image"));
         productModel.setEnabled((allParams.get("product-enabled") != null));
-        productModel.saveProduct(productModel);
+        productModel.saveProduct(productModel, productDB);
         connectionManager.commit();
         return "success";
     }
