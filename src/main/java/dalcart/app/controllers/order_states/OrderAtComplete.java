@@ -1,21 +1,20 @@
-package dalcart.app.items;
+package dalcart.app.controllers.order_states;
 
 import dalcart.app.models.IOrderModel;
 import dalcart.app.utils.OrderUtils;
 
-public class OrderAtPayment implements OrderState{
+public class OrderAtComplete implements OrderState{
 
-    public OrderAtPayment(){
-    }
     @Override
     public void completeState(IOrderModel order) {
+        //no need to update state as this is the final state
         order.setState(this.getNextState());
         order.save();
     }
 
     @Override
     public OrderState getNextState() {
-        return (new OrderAtComplete());
+        return null;
     }
 
     @Override
@@ -25,6 +24,6 @@ public class OrderAtPayment implements OrderState{
 
     @Override
     public String getStateName() {
-        return "payment";
+        return "complete";
     }
 }

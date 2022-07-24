@@ -1,9 +1,12 @@
-package dalcart.app.items;
+package dalcart.app.controllers.order_states;
 
 import dalcart.app.models.IOrderModel;
 import dalcart.app.utils.OrderUtils;
 
-public class OrderAtAddress implements OrderState{
+public class OrderAtPayment implements OrderState {
+
+    public OrderAtPayment(){
+    }
     @Override
     public void completeState(IOrderModel order) {
         order.setState(this.getNextState());
@@ -17,11 +20,11 @@ public class OrderAtAddress implements OrderState{
 
     @Override
     public OrderState getCurrentState() {
-        return null;
+        return this;
     }
 
     @Override
     public String getStateName() {
-        return "address";
+        return "payment";
     }
 }

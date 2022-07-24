@@ -8,7 +8,7 @@ import dalcart.app.Repository.IProductPersistence;
 import dalcart.app.Repository.OrderProducts;
 import dalcart.app.Repository.ConnectionManager;
 
-import dalcart.app.items.OrderAtCart;
+import dalcart.app.controllers.order_states.OrderAtCart;
 import dalcart.app.models.IOrderModel;
 import dalcart.app.models.OrderModel;
 import dalcart.app.models.User;
@@ -64,6 +64,9 @@ public class OrderController
     @PostMapping("/submit_order")
     @ResponseBody
     public String submitOrder() throws SQLException{
+        //process the order at cart stage
+        //process the order at address stage
+        //process the order at payment stage
         return "success";
     }
 }

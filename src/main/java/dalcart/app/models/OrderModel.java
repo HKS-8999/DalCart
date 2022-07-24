@@ -1,6 +1,7 @@
 package dalcart.app.models;
 
 import dalcart.app.Repository.OrderDB;
+import dalcart.app.controllers.order_states.OrderState;
 import dalcart.app.items.*;
 import dalcart.app.utils.CommonUtils;
 import dalcart.app.utils.OrderUtils;
