@@ -17,7 +17,7 @@ public class UserDB implements IUserPersistence {
 
     }
     @Override
-    public void save(IUser u) throws Exception
+    public boolean save(IUser u) throws Exception
     {
         try
         {
@@ -30,10 +30,12 @@ public class UserDB implements IUserPersistence {
             preparedStatement.setString(5, u.getMobileNo());
             preparedStatement.setString(6, DEFAULT_ROLE);
             preparedStatement.executeUpdate();
+            return true;
         }
         catch (SQLException e)
         {
             e.printStackTrace();
+            return false;
         }
     }
 

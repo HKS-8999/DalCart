@@ -9,7 +9,7 @@ import dalcart.app.Repository.OrderDB;
 import dalcart.app.Repository.OrderProductsDB;
 import dalcart.app.models.IOrderModel;
 import dalcart.app.models.IProductModel;
-import dalcart.app.models.SecurityService;
+import dalcart.app.models.SessionService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,9 +32,9 @@ public class CheckoutController
     OrderProductsDB o = new OrderProductsDB();
     OrderDB db = new OrderDB();
     @GetMapping("/cart")
-    public ModelAndView listgetproducts (ModelAndView model, HttpSession session) throws IOException
+    public ModelAndView listgetproducts (ModelAndView model, HttpSession session, SessionService sessionService) throws IOException
     {
-        if (SecurityService.isSessionValid(session) == false)
+        if (sessionService.isSessionValid(session) == false)
         {
             ModelAndView modelAndView = new ModelAndView("redirect:/login");
             return modelAndView;
@@ -58,13 +58,9 @@ public class CheckoutController
     }
 
     @PostMapping("/increaseQuantityOfProduct")
-    public ModelAndView increaseProductQuantity(@RequestParam Map<String,String> allParams, ModelAndView model, HttpSession session)
+    public ModelAndView increaseProductQuantity(@RequestParam Map<String,String> allParams, ModelAndView model, HttpSession session, SessionService sessionService)
     {
-        if(SecurityService.isSessionValid(session) == false)
-        {
-            ModelAndView modelAndView = new ModelAndView("redirect:/login");
-            return modelAndView;
-        }
+
         Integer userId = (Integer) session.getAttribute("user");
         IOrderModel order = db.findOrderInCartByUserId(userId);
         Integer orderId =order.getOrderId();
@@ -77,13 +73,9 @@ public class CheckoutController
     }
 
     @PostMapping("/decreaseQuantityOfProduct")
-    public ModelAndView decreaseProductQuantity(@RequestParam Map<String,String> allParams, ModelAndView model, HttpSession session)
+    public ModelAndView decreaseProductQuantity(@RequestParam Map<String,String> allParams, ModelAndView model, HttpSession session, SessionService sessionService)
     {
-        if(SecurityService.isSessionValid(session) == false)
-        {
-            ModelAndView modelAndView = new ModelAndView("redirect:/login");
-            return modelAndView;
-        }
+
         Integer userId = (Integer) session.getAttribute("user");
         IOrderModel order = db.findOrderInCartByUserId(userId);
         Integer orderId =order.getOrderId();
@@ -96,9 +88,9 @@ public class CheckoutController
     }
 
     @PostMapping("/removeFromCart")
-    public ModelAndView removeFromCart(@RequestParam Map<String,String> allParams, ModelAndView model, HttpSession session)
+    public ModelAndView removeFromCart(@RequestParam Map<String,String> allParams, ModelAndView model, HttpSession session, SessionService sessionService)
     {
-        if (SecurityService.isSessionValid(session) == false) {
+        if (sessionService.isSessionValid(session) == false) {
             ModelAndView modelAndView = new ModelAndView("redirect:/login");
             return modelAndView;
         }

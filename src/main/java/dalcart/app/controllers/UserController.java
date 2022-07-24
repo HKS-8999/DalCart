@@ -10,13 +10,16 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.sql.SQLException;
+
 @Controller
 public class UserController
 {
     IUserFactory userFactory;
-
     IUserPersistanceFactory userPersistence;
     IValidateFactory validateFactory;
+
+    ISecurityFactory securityFactory;
 
     @GetMapping("/signup")
     public ModelAndView newUserRegistration()
@@ -30,27 +33,34 @@ public class UserController
         ModelAndView modelAndView = new ModelAndView();
         try {
             userFactory = new UserFactory();
-            IUser user = userFactory.createUser();
+            IUser user;
             userPersistence = new UserPersistanceFactory();
             IUserPersistence iUserPersistence = userPersistence.createIUserPersistance();
             validateFactory = new ValidateFactory();
             IValidate validate = validateFactory.createValidations();
-            ISecurePassword securePassword = new SecurePassword();
-            if(validate.isUserNameValid(newUser) && validate.isFirstNameAndLastNameValid(newUser) && validate.isMobileNumberValid(newUser) && validate.isPasswordValid(newUser))
-            {
+            securityFactory = new SecurityFactory();
+            ISecurePassword securePassword = securityFactory.createSecurePassword();
+
+            if(validate.isUserNameValid(newUser) && validate.isFirstNameAndLastNameValid(newUser) && validate.isMobileNumberValid(newUser) && validate.isPasswordValid(newUser)) {
                 user = securePassword.encrypt(newUser);
-                user.createNewUser(newUser, iUserPersistence);
+                IUserPersistence.Result result = user.createNewUser(newUser, iUserPersistence);
+                if (result.equals(IUserPersistence.Result.SUCCESS)){
+                    modelAndView.setViewName("redirect:/login");
+                }
+                else{
+                    throw new SQLException();
+                }
             }
             else
             {
-                return new ModelAndView("invalidUsernameandPassword");
+                return new ModelAndView("redirect:/invalidUsernameandPassword");
             }
         }
         catch (Exception e)
         {
             throw new RuntimeException(e);
         }
-        modelAndView.setViewName("redirect:/login");
+
         return modelAndView;
     }
 }

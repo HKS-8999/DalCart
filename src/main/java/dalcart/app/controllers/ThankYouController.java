@@ -1,6 +1,7 @@
 package dalcart.app.controllers;
 
-import dalcart.app.models.SecurityService;
+
+import dalcart.app.models.SessionService;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,9 +16,9 @@ import java.io.IOException;
 
 public class ThankYouController {
     @GetMapping(value = {"/thankyou"})
-    public ModelAndView thankyoupage (ModelAndView model, @RequestParam(name = "search", required = false) String keyword, HttpSession session) throws IOException
+    public ModelAndView thankyoupage (ModelAndView model, @RequestParam(name = "search", required = false) String keyword, HttpSession session, SessionService sessionService) throws IOException
     {
-        if (SecurityService.isSessionValid(session) == false) {
+        if (sessionService.isSessionValid(session) == false) {
             ModelAndView modelAndView = new ModelAndView("redirect:/login");
             return modelAndView;
         }
