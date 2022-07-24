@@ -1,16 +1,17 @@
 package dalcart.app.controllers.order_states;
 
 import dalcart.app.models.IOrderModel;
-import dalcart.app.utils.OrderUtils;
 
 public class OrderAtPayment implements OrderState {
 
     public OrderAtPayment(){
     }
     @Override
-    public void completeState(IOrderModel order) {
+    public boolean completeState(IOrderModel order) {
+        //checkhere if the payment details are valid
         order.setState(this.getNextState());
         order.save();
+        return true;
     }
 
     @Override
@@ -26,5 +27,9 @@ public class OrderAtPayment implements OrderState {
     @Override
     public String getStateName() {
         return "payment";
+    }
+
+    public boolean isComplete(){
+        return false;
     }
 }

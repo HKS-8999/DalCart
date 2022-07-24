@@ -6,18 +6,15 @@ import dalcart.app.Factories.ProductModelFactory;
 import dalcart.app.Factories.ProductPersistenceFactory;
 import dalcart.app.Repository.IProductPersistence;
 import dalcart.app.Repository.OrderDB;
-import dalcart.app.Repository.OrderProducts;
+import dalcart.app.Repository.OrderProductsDB;
 import dalcart.app.models.IOrderModel;
 import dalcart.app.models.IProductModel;
 import dalcart.app.models.SecurityService;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
@@ -32,7 +29,7 @@ public class CheckoutController
     IProductModel productModel = productModelFactory.createProductModel();
     IProductPersistenceFactory productPersistenceFactory = new ProductPersistenceFactory();
     IProductPersistence productDB = productPersistenceFactory.createIProductPersistence();
-    OrderProducts o = new OrderProducts();
+    OrderProductsDB o = new OrderProductsDB();
     OrderDB db = new OrderDB();
     @GetMapping("/cart")
     public ModelAndView listgetproducts (ModelAndView model, HttpSession session) throws IOException
