@@ -2513,3 +2513,9 @@ java.sql.SQLException: Access denied for user 'CSCI5308_2_DEVINT_USER'@'T813E.WP
 2022-07-23 20:52:39,363 INFO o.s.w.s.DispatcherServlet [RMI TCP Connection(1)-134.190.129.62] Initializing Servlet 'dispatcherServlet'
 2022-07-23 20:52:39,380 INFO o.s.w.s.DispatcherServlet [RMI TCP Connection(1)-134.190.129.62] Completed initialization in 16 ms
 2022-07-23 20:53:17,869 INFO o.s.s.c.ThreadPoolTaskExecutor [SpringContextShutdownHook] Shutting down ExecutorService 'applicationTaskExecutor'
+2022-07-24 18:06:54,706 INFO o.s.w.c.ContextLoader [restartedMain] Root WebApplicationContext: initialization completed in 2009 ms
+2022-07-24 18:06:55,389 INFO o.s.s.c.ThreadPoolTaskExecutor [restartedMain] Initializing ExecutorService 'applicationTaskExecutor'
+2022-07-24 18:06:56,403 INFO o.s.s.a.ScheduledAnnotationBeanPostProcessor [restartedMain] No TaskScheduler/ScheduledExecutorService bean found for scheduled processing
+2022-07-24 18:06:56,911 INFO o.s.w.s.DispatcherServlet [RMI TCP Connection(2)-134.190.129.62] Initializing Servlet 'dispatcherServlet'
+2022-07-24 18:06:56,923 INFO o.s.w.s.DispatcherServlet [RMI TCP Connection(2)-134.190.129.62] Completed initialization in 12 ms
+2022-07-24 18:09:04,545 INFO o.s.s.c.ThreadPoolTaskExecutor [SpringContextShutdownHook] Shutting down ExecutorService 'applicationTaskExecutor'
