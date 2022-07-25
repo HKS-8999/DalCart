@@ -17,7 +17,7 @@ build-production:
     name: production
     url: https://dalcart.herokuapp.com/
   only:
-    - master
+    - main
 
 build-staging:
   stage: build
@@ -51,7 +51,7 @@ test-production:
     name: production
     url: https://dalcart.herokuapp.com/
   only:
-    - master
+    - main
 
 test-staging:
   stage: test
@@ -89,7 +89,7 @@ deploy-production:
     name: production
     url: https://dalcart.herokuapp.com/
   only:
-    - master
+    - main
 
 deploy-staging:
     stage: deploy
