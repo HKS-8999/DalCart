@@ -102,16 +102,13 @@
         <div class="row d-flex align-items-center justify-content-center address-header-div">
             <span class="address-header-text">Payment Details</span>
             <div id = "container">
-                <div id = "heading">
-                    <p>Add Payment Method</p>
-                </div>
                 <div id = "box">
-                    <div id = "sub">
+                    <div class = "hide" id = "sub">
                         <label>CASH</label> <input type="radio" id="cash" name="payment"/>
                     </div>
                     <div id = "su![](../../public/lang-logo.png)bs">
                         <label>CREDIT/DEBIT</label>
-                        <input type="radio" id="card" name = "payment"/>
+                        <input class = "hide" type="radio" id="card" name = "payment" checked/>
                         <div id = "info">
                             <label>Card Number:  </label><input type="text" id="cardnumber" name="cardnumber"/>
                             <label>Expiry date:  </label><input type="text" placeholder="MM/YYYYY" id = "expirydate" name="expiry"/>
@@ -122,7 +119,7 @@
 
                 <div id = "buttonbox">
                     <a href = "/home">
-                        <input type="button" value = "BACK TO HOME PAGE" />
+                        <button value = "BACK TO HOME PAGE" />
                     </a>
                     <input type="submit" value = "PLACE ORDER"/>
                 </div>
@@ -264,4 +261,6 @@
 </script>
 </body>
 </html>
+
+
 
