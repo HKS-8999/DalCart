@@ -1,12 +1,13 @@
 package dalcart.app.Repository;
 
-import dalcart.app.Factories.*;
-import dalcart.app.controllers.OrderController;
+import dalcart.app.Factories.IProductModelFactory;
+import dalcart.app.Factories.ProductModelFactory;
 import dalcart.app.models.IProductModel;
-import dalcart.app.models.IUser;
 import org.springframework.stereotype.Repository;
-
-import java.sql.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,7 +36,6 @@ public class ProductDB implements IProductPersistence
                 {
                     IProductModelFactory productModelFactory = new ProductModelFactory();
                     IProductModel product = productModelFactory.createProductModel();
-//                    IProductModel p = new ProductModel();
                     product.setProductId(resultSet.getInt(1));
                     product.setProductName(resultSet.getString(2));
                     product.setProductDescription(resultSet.getString(3));
@@ -66,7 +66,6 @@ public class ProductDB implements IProductPersistence
                 resultSet = preparedStatement.executeQuery(query);
                 while(resultSet.next())
                 {
-//                    ProductModel p = new ProductModel();
                     IProductModelFactory productModelFactory = new ProductModelFactory();
                     IProductModel product = productModelFactory.createProductModel();
                     product.setProductId(resultSet.getInt(1));
@@ -90,12 +89,11 @@ public class ProductDB implements IProductPersistence
             ArrayList<IProductModel> product_detail = new ArrayList<>();
             try
             {
-                String query = "select * from " + tableName + " where product_name like '%" + keyword + "%' ;";
+                String query = "select * from " + tableName + " where product_name like '%" + keyword + "%' and enabled = 1 ;";
                 preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(query);
                 resultSet = preparedStatement.executeQuery(query);
                 while(resultSet.next())
                 {
-//                    ProductModel p = new ProductModel();
                     IProductModelFactory productModelFactory = new ProductModelFactory();
                     IProductModel product = productModelFactory.createProductModel();
                     product.setProductId(resultSet.getInt(1));
@@ -104,7 +102,6 @@ public class ProductDB implements IProductPersistence
                     product.setProductPrice(resultSet.getInt(4));
                     product.setProductQuantity(resultSet.getInt(5));
                     product.setProductImage(resultSet.getString(6));
-
                     product_detail.add(product);
                 }
                 return product_detail;
@@ -119,11 +116,11 @@ public class ProductDB implements IProductPersistence
 
     public IProductModel getProductById(Integer productId)
     {
-        try {
+        try
+        {
             String query = "select * from " + tableName + " where id = " + productId + ";";
             preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(query);
             resultSet = preparedStatement.executeQuery(query);
-//            IProductModel p = new ProductModel();
             IProductModelFactory productModelFactory = new ProductModelFactory();
             IProductModel product = productModelFactory.createProductModel();
             while (resultSet.next())
@@ -212,35 +209,6 @@ public class ProductDB implements IProductPersistence
             String query = "update " + tableName + " set product_quantity = " + productQuantity + ", enabled = " + state + ", updated_at = '" + date + "' where id = " + productId + ";";
             statement = ConnectionManager.getInstance().getConnection().createStatement();
             statement.executeUpdate(query);
-            return StorageResult.STORAGE_SUCCESS;
-        }
-        catch (SQLException e)
-        {
-            e.printStackTrace();
-            return StorageResult.STORAGE_FAILURE;
-        }
-    }
-
-    public StorageResult addProductToCart(Map<String, String> parameters, Integer userId)
-    {
-        IProductModel[] products = new IProductModel[1];
-        IUserFactory userFactory = new UserFactory();
-        IUserPersistanceFactory iUserPersistanceFactory = new UserPersistanceFactory();
-        IUser user = userFactory.createUser();
-        IUserPersistence userPersistence = iUserPersistanceFactory.createIUserPersistance();
-        user = userPersistence.loadUserAttributesByUserId(userId);
-//        User user = new User();
-//        user.setUserId(1);
-//        user.setEmail("zdssd");
-//        user.setFirstName("dfdfv");
-//        user.setLastName("ascc");
-//        user.setPassword("12345");
-//        user.setMobileNo("9875412368");
-        products[0] = getProductById(Integer.valueOf(parameters.get("id")));
-        try
-        {
-            OrderController orderController = new OrderController();
-            orderController.addToOrder(user, products);
             return StorageResult.STORAGE_SUCCESS;
         }
         catch (SQLException e)

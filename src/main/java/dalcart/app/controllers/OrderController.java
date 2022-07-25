@@ -15,17 +15,19 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
+import java.util.Map;
 
 @Controller
 @RequestMapping(value = {"/order"})
 @Component
 public class OrderController
 {
-//    IProductPersistenceFactory productPersistenceFactory = new ProductPersistenceFactory();
-//    IProductPersistence productDB = productPersistenceFactory.createIProductPersistence();
     public void addToOrder(IUser user, IProductModel[] products) throws SQLException
     {
         IOrderModel order;
@@ -61,13 +63,16 @@ public class OrderController
 
     @PostMapping("/submit_order")
     @ResponseBody
-    public boolean submitOrder() throws SQLException{
+    public boolean submitOrder(@RequestParam Map<String,String> allParams, ModelAndView model, HttpSession session, SessionService sessionService) throws SQLException{
         //process the order at cart stage
         //process the order at address stage
         //process the order at payment stage
         UserDB userdb = new UserDB();
         IUser user = userdb.loadUserAttributesByUserId(1);
         IOrderModel currentOrder = OrderModel.getOrderByUserId(user.getUserID());
+
+        CheckoutController checkoutController = new CheckoutController();
+        checkoutController.validateAndPlaceOrder(allParams, model, session, sessionService);
 
         while(currentOrder.getState().isComplete() == false){
             System.out.println("State:" + currentOrder.getState().getStateName());

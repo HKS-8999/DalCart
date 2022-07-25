@@ -39,6 +39,7 @@ public class LoginController
         {
             return new ModelAndView("redirect:/home");
         }
+
     }
 
     @PostMapping("/login")
@@ -93,6 +94,6 @@ public class LoginController
     public String logout(HttpServletRequest request)
     {
         request.getSession().invalidate();
-        return "redirect:/home";
+        return "redirect:/login";
     }
 }

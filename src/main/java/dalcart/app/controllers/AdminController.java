@@ -8,7 +8,6 @@ import dalcart.app.Repository.IProductPersistence;
 import dalcart.app.models.IProductModel;
 
 import dalcart.app.Repository.ConnectionManager;
-import dalcart.app.models.ProductModel;
 
 import dalcart.app.models.SessionService;
 import org.springframework.stereotype.Controller;
@@ -24,7 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping(value = {"/admin"})
+//@RequestMapping(value = {"/admin"})
 @Component
 public class AdminController
 {
@@ -34,6 +33,7 @@ public class AdminController
     IProductPersistence productDB = productPersistenceFactory.createIProductPersistence();
     IProductModel productModel = productModelFactory.createProductModel();
 
+<<<<<<< HEAD
     @GetMapping(value = {""})
     public ModelAndView index(HttpSession session, SessionService sessionService) {
         //check if user key is valid else rediret to login page
@@ -41,16 +41,23 @@ public class AdminController
 
         if (sessionService.isAdminInSession(session) == false || sessionService.isSessionValid(session) == false) {
             ModelAndView modelAndView = new ModelAndView("redirect:/login");
+=======
+    @GetMapping(value = {"/admin"})
+    public ModelAndView index(HttpSession session, SessionService sessionService, ModelAndView model)
+    {
+        if (sessionService.isAdminInSession(session) == false || sessionService.isSessionValid(session) == false)
+        {
+            ModelAndView modelAndView = new ModelAndView("redirect:/logout");
+>>>>>>> bef197c67d096e218f542be865ec4058b5b49408
             return modelAndView;
         }
+
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("admin");
         Map<Integer, String> listOfProducts = new HashMap<Integer,String>();
         List<IProductModel> mockProducts = new ArrayList<>();
 
-
-//        String keyword = null;
         ArrayList<IProductModel> products = productModel.getProducts(productDB);
         if(products != null) {
             modelAndView.addObject("products", products);
@@ -62,7 +69,7 @@ public class AdminController
     @ResponseBody
     public String updateProductData(@RequestParam Map<String,String> allParams) throws SQLException {
         System.out.println("product Update Request Received");
-        IProductModel productModel = new ProductModel();
+        IProductModel productModel = productModelFactory.createProductModel();
         ConnectionManager connectionManager = ConnectionManager.getInstance();
         connectionManager.begin();
         allParams.forEach((keyName,value) -> {
@@ -82,9 +89,10 @@ public class AdminController
 
     @PostMapping(value = {"/submit_product_creation_data"})
     @ResponseBody
-    public String updateProductCteationData(@RequestParam Map<String,String> allParams) throws SQLException {
+    public String updateProductCteationData(@RequestParam Map<String,String> allParams) throws SQLException
+    {
         System.out.println("product Create Request Received");
-        IProductModel productModel = new ProductModel();
+        IProductModel productModel = productModelFactory.createProductModel();
         ConnectionManager connectionManager = ConnectionManager.getInstance();
         connectionManager.begin();
         productModel.setProductName(allParams.get("product-name"));
@@ -93,7 +101,7 @@ public class AdminController
         productModel.setProductPrice(Integer.parseInt(allParams.get("product-price")));
         productModel.setProductImage(allParams.get("product-image"));
         productModel.setEnabled((allParams.get("product-enabled") != null));
-        productModel.saveProduct(productModel, productDB);
+        productModel.saveProduct(productModel,productDB);
         connectionManager.commit();
         return "success";
     }
