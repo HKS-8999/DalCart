@@ -3,10 +3,8 @@ package dalcart.app.models;
 import dalcart.app.Repository.IProductPersistence;
 import dalcart.app.repository.ProductDBMock;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 import java.util.ArrayList;
-
-import static org.junit.Assert.assertTrue;
-
 
 public class ProductModelTest
 {
@@ -16,84 +14,89 @@ public class ProductModelTest
         ArrayList<ProductModelMock> product_detail;
         IProductPersistence product = new ProductDBMock();
         product_detail = product.getProductDetails();
-        assertTrue(product_detail.size() > 0);
+        Assertions.assertEquals(2,product_detail.size());
     }
 
     @Test
     public void getProductsFailureTest()
     {
-        ArrayList<ProductModelMock> product_detail = new ArrayList<>();
-        IProductPersistence product = new ProductDBMock();
-//        product_detail = product.getProductDetails();
-        assertTrue(product_detail.get(0) == null);
+        ArrayList<ProductModelMock> product_detail;
+        ProductDBMock product = new ProductDBMock();
+        product_detail = product.getNullList();
+        Assertions.assertEquals(null,product_detail);
     }
 
     @Test
     public void getProductsToDisplayWithSearchKeywordSuccessTest()
     {
-        ArrayList<ProductModelMock> product_detail = new ArrayList<>();
+        ArrayList<ProductModelMock> product_detail;
         IProductPersistence product = new ProductDBMock();
         product_detail = product.getProductDetailsForDisplay("book");
-        assertTrue(product_detail.size() > 0);
+        Assertions.assertEquals(1, product_detail.size());
     }
 
     @Test
     public void getProductsToDisplayWithSearchKeywordFailureTest()
     {
-        ArrayList<ProductModelMock> product_detail = new ArrayList<>();
-        IProductPersistence product = new ProductDBMock();
-        assertTrue(product_detail.get(0) == null);
+        ArrayList<ProductModelMock> product_detail;
+        ProductDBMock product = new ProductDBMock();
+        product_detail = product.getNullList();
+        Assertions.assertEquals(null,product_detail);
     }
 
     @Test
     public void getProductsToDisplayWithoutSearchKeywordSuccessTest()
     {
-
+        ArrayList<ProductModelMock> product_detail;
+        ProductDBMock product = new ProductDBMock();
+        product_detail = product.getProductDetailsForDisplay();
+        Assertions.assertEquals(2,product_detail.size());
     }
 
     @Test
     public void getProductsToDisplayWithoutSearchKeywordFailureTest()
     {
-
+        ArrayList<ProductModelMock> product_detail;
+        ProductDBMock product = new ProductDBMock();
+        product_detail = product.getNullList();
+        Assertions.assertEquals(null,product_detail);
     }
 
     @Test
     public void getProductsToDisplayWithNullSearchKeywordSuccessTest()
     {
-
+        ArrayList<ProductModelMock> product_detail;
+        ProductDBMock product = new ProductDBMock();
+        product_detail = product.getProductDetailsForDisplay(null);
+        Assertions.assertEquals(2,product_detail.size());
     }
 
     @Test
     public void getProductsToDisplayWithNullSearchKeywordFailureTest()
     {
-
+        ArrayList<ProductModelMock> product_detail;
+        ProductDBMock product = new ProductDBMock();
+        product_detail = product.getNullList();
+        Assertions.assertEquals(null,product_detail);
     }
 
     @Test
     public void getProductsToDisplayWithEmptySearchKeywordSuccessTest()
     {
-
+        ArrayList<ProductModelMock> product_detail;
+        ProductDBMock product = new ProductDBMock();
+        product_detail = product.getProductDetailsForDisplay("");
+        Assertions.assertEquals(2,product_detail.size());
     }
 
     @Test
     public void getProductsToDisplayWithEmptySearchKeywordFailureTest()
     {
-
+        ArrayList<ProductModelMock> product_detail;
+        ProductDBMock product = new ProductDBMock();
+        product_detail = product.getNullList();
+        Assertions.assertEquals(null,product_detail);
     }
-
-
-//    @Test
-//    public void getProductsToDisplayFailureTest()
-//    {
-//        ArrayList<ProductModelMock> product_detail;
-//        IProductPersistence product = new ProductDBMock();
-//        product_detail = product.getProductDetails();
-//        product_detail.get(0).setEnabled(false);
-//        boolean enabled = product_detail.get(0).getEnabled();
-//        assertTrue(product_detail.size() == 0 && enabled == false);
-//    }
-
-    //To do: search key word test cases remaining
 
     @Test
     public void getProductByIdSuccessTest()

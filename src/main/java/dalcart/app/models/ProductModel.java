@@ -14,6 +14,28 @@ public class ProductModel implements IProductModel
     private Boolean enabled;
     private String productImage;
 
+    public ProductModel(String productName,
+                        Integer productId,
+                        String productDescription,
+                        Integer productPrice,
+                        Integer productQuantity,
+                        Boolean enabled,
+                        String productImage)
+    {
+        this.productName = productName;
+        this.productId = productId;
+        this.productDescription = productDescription;
+        this.productPrice = productPrice;
+        this.productQuantity = productQuantity;
+        this.enabled = enabled;
+        this.productImage = productImage;
+    }
+
+    public ProductModel()
+    {
+
+    }
+
     @Override
     public String getProductName() {
         return productName;

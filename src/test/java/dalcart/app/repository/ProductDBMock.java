@@ -1,5 +1,7 @@
 package dalcart.app.repository;
 
+import dalcart.app.Factories.IProductModelFactory;
+import dalcart.app.Factories.ProductModelFactory;
 import dalcart.app.Repository.IProductPersistence;
 import dalcart.app.models.IProductModel;
 import dalcart.app.models.ProductModelMock;
@@ -11,7 +13,7 @@ public class ProductDBMock implements IProductPersistence
 {
 
     @Override
-    public ArrayList getProductDetails()
+    public ArrayList<ProductModelMock> getProductDetails()
     {
         ArrayList<ProductModelMock> product_detail = new ArrayList<>();
         ProductModelMock product = new ProductModelMock();
@@ -20,8 +22,24 @@ public class ProductDBMock implements IProductPersistence
         return product_detail;
     }
 
+    public ArrayList<ProductModelMock> getNullList()
+    {
+        return null;
+    }
+
+    public ArrayList<ProductModelMock> getProductDetailsForDisplay()
+    {
+        ArrayList<ProductModelMock> product_detail = new ArrayList<>();
+        ProductModelMock product = new ProductModelMock();
+        if(product.getEnabled())
+        {
+            product_detail.add(product);
+            product_detail.add(product);
+        }
+        return product_detail;
+    }
     @Override
-    public ArrayList getProductDetailsForDisplay(String keyword)
+    public ArrayList<ProductModelMock> getProductDetailsForDisplay(String keyword)
     {
         ArrayList<ProductModelMock> product_detail = new ArrayList<>();
         ProductModelMock product = new ProductModelMock();
@@ -41,6 +59,9 @@ public class ProductDBMock implements IProductPersistence
     @Override
     public IProductModel getProductById(Integer productId)
     {
+//        IProductModelFactory productModelFactory = new ProductModelFactory();
+//        if()
+//        IProductModel productModel = productModelFactory.createProductModel("Tshirts",2,"Pure cotton Tshirts for summer",12,30,true, "tshirt.jpg");
         return null;
     }
 
