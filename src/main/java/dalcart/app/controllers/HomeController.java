@@ -1,14 +1,11 @@
 package dalcart.app.controllers;
 
-import dalcart.app.Factories.IProductModelFactory;
-import dalcart.app.Factories.IProductPersistenceFactory;
-import dalcart.app.Factories.ProductModelFactory;
-import dalcart.app.Factories.ProductPersistenceFactory;
+import dalcart.app.Factories.*;
 import dalcart.app.Repository.IProductPersistence;
-import dalcart.app.Repository.ProductDB;
+import dalcart.app.Repository.IUserPersistence;
 import dalcart.app.items.HeaderSetter;
 import dalcart.app.models.IProductModel;
-import dalcart.app.models.ProductModel;
+import dalcart.app.models.IUser;
 import dalcart.app.models.SessionService;
 
 import org.springframework.stereotype.Controller;
@@ -49,8 +46,8 @@ public class HomeController
             return modelAndView;
         }
 
-        ArrayList<IProductModel> lstprodcts = productModel.getProductsToDisplay(keyword,productDB);
-        model.addObject("listproducts",lstprodcts);
+        ArrayList<IProductModel> listOfProducts = productModel.getProductsToDisplay(keyword,productDB);
+        model.addObject("listproducts",listOfProducts);
         String message = HeaderSetter.messageToDisplay();
         model.addObject("header", message);
         model.setViewName("home");
@@ -76,7 +73,14 @@ public class HomeController
         try
         {
             Integer userId = (Integer) session.getAttribute("user");
-            productModel.addProductToCart(allParams,  productDB, userId);
+            IUserPersistanceFactory iUserPersistanceFactory = new UserPersistanceFactory();
+            IUserPersistence userPersistence = iUserPersistanceFactory.createIUserPersistance();
+            IUser user = userPersistence.loadUserAttributesByUserId(userId);
+            Integer productId = Integer.valueOf(allParams.get("id"));
+            IProductModel[] products = new IProductModel[1];
+            products[0] = productModel.getProductById(productId,productDB);
+            OrderController orderController = new OrderController();
+            orderController.addToOrder(user, products);
         }
         catch (Exception e)
         {

@@ -57,18 +57,16 @@ public class CheckoutController
         return model;
     }
 
+
     @PostMapping("/increaseQuantityOfProduct")
     public ModelAndView increaseProductQuantity(@RequestParam Map<String,String> allParams, ModelAndView model, HttpSession session, SessionService sessionService)
     {
-
         Integer userId = (Integer) session.getAttribute("user");
         IOrderModel order = db.findOrderInCartByUserId(userId);
-        Integer orderId =order.getOrderId();
-        Boolean b = o.increaseProductQuantity(Integer.valueOf(allParams.get("id")),Integer.valueOf(allParams.get("quantity")), orderId);
-        if(b == false)
-        {
-            model.addObject("message","Product is not available in this quantity.");
-        }
+        Integer orderId = order.getOrderId();
+        Boolean b = o.increaseProductQuantity(Integer.valueOf(allParams.get("id")), Integer.valueOf(allParams.get("quantity")), orderId);
+        System.out.println(Integer.valueOf(allParams.get("id")));
+        System.out.println(Integer.valueOf(allParams.get("quantity")));
         return model;
     }
 
@@ -79,11 +77,10 @@ public class CheckoutController
         Integer userId = (Integer) session.getAttribute("user");
         IOrderModel order = db.findOrderInCartByUserId(userId);
         Integer orderId =order.getOrderId();
+        System.out.println(orderId);
+        System.out.println(Integer.valueOf(allParams.get("id")));
+        System.out.println(Integer.valueOf(allParams.get("quantity")));
         Boolean b = o.decreaseProductQuantity(Integer.valueOf(allParams.get("id")),Integer.valueOf(allParams.get("quantity")), orderId);
-        if(b == false)
-        {
-            model.addObject("message","Product quantity is 1.");
-        }
         return model;
     }
 
@@ -100,7 +97,6 @@ public class CheckoutController
             IOrderModel order = db.findOrderInCartByUserId(userId);
             Integer orderId =order.getOrderId();
             db.removeProductFromCart(orderId,Integer.valueOf(allParams.get("id")));
-//            productModel.addProductToCart(allParams,  productDB, userId);
         }
         catch (Exception e)
         {

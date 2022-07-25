@@ -35,10 +35,8 @@ public class AdminController
     IProductModel productModel = productModelFactory.createProductModel();
 
     @GetMapping(value = {""})
-    public ModelAndView index(HttpSession session, SessionService sessionService) {
-        //check if user key is valid else rediret to login page
-
-
+    public ModelAndView index(HttpSession session, SessionService sessionService)
+    {
         if (sessionService.isAdminInSession(session) == false && sessionService.isSessionValid(session) == false) {
             ModelAndView modelAndView = new ModelAndView("redirect:/login");
             return modelAndView;
@@ -49,8 +47,6 @@ public class AdminController
         Map<Integer, String> listOfProducts = new HashMap<Integer,String>();
         List<IProductModel> mockProducts = new ArrayList<>();
 
-
-//        String keyword = null;
         ArrayList<IProductModel> products = productModel.getProducts(productDB);
         if(products != null) {
             modelAndView.addObject("products", products);
@@ -62,7 +58,7 @@ public class AdminController
     @ResponseBody
     public String updateProductData(@RequestParam Map<String,String> allParams) throws SQLException {
         System.out.println("product Update Request Received");
-        IProductModel productModel = new ProductModel();
+        IProductModel productModel = productModelFactory.createProductModel();
         ConnectionManager connectionManager = ConnectionManager.getInstance();
         connectionManager.begin();
         allParams.forEach((keyName,value) -> {
@@ -82,9 +78,10 @@ public class AdminController
 
     @PostMapping(value = {"/submit_product_creation_data"})
     @ResponseBody
-    public String updateProductCteationData(@RequestParam Map<String,String> allParams) throws SQLException {
+    public String updateProductCteationData(@RequestParam Map<String,String> allParams) throws SQLException
+    {
         System.out.println("product Create Request Received");
-        IProductModel productModel = new ProductModel();
+        IProductModel productModel = productModelFactory.createProductModel();
         ConnectionManager connectionManager = ConnectionManager.getInstance();
         connectionManager.begin();
         productModel.setProductName(allParams.get("product-name"));
@@ -93,7 +90,7 @@ public class AdminController
         productModel.setProductPrice(Integer.parseInt(allParams.get("product-price")));
         productModel.setProductImage(allParams.get("product-image"));
         productModel.setEnabled((allParams.get("product-enabled") != null));
-        productModel.saveProduct(productModel, productDB);
+        productModel.saveProduct(productModel,productDB);
         connectionManager.commit();
         return "success";
     }
