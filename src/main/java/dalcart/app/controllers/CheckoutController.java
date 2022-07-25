@@ -54,11 +54,11 @@ public class CheckoutController
     @PostMapping("/increaseQuantityOfProduct")
     public ModelAndView increaseProductQuantity(@RequestParam Map<String,String> allParams, ModelAndView model, HttpSession session, SessionService sessionService)
     {
-        if (sessionService.isUserInSession(session) == false || sessionService.isSessionValid(session) == false)
-        {
-            ModelAndView modelAndView = new ModelAndView("redirect:/logout");
-            return modelAndView;
-        }
+//        if (sessionService.isUserInSession(session) == false || sessionService.isSessionValid(session) == false)
+//        {
+//            ModelAndView modelAndView = new ModelAndView("redirect:/logout");
+//            return modelAndView;
+//        }
         Integer userId = (Integer) session.getAttribute("user");
         IOrderModel order = db.findOrderInCartByUserId(userId);
         Integer orderId = order.getOrderId();
@@ -71,11 +71,11 @@ public class CheckoutController
     @PostMapping("/decreaseQuantityOfProduct")
     public ModelAndView decreaseProductQuantity(@RequestParam Map<String,String> allParams, ModelAndView model, HttpSession session, SessionService sessionService)
     {
-        if(sessionService.isUserInSession(session) == false || sessionService.isSessionValid(session) == false)
-        {
-            ModelAndView modelAndView = new ModelAndView("redirect:/logout");
-            return modelAndView;
-        }
+//        if(sessionService.isUserInSession(session) == false || sessionService.isSessionValid(session) == false)
+//        {
+//            ModelAndView modelAndView = new ModelAndView("redirect:/logout");
+//            return modelAndView;
+//        }
         Integer userId = (Integer) session.getAttribute("user");
         IOrderModel order = db.findOrderInCartByUserId(userId);
         Integer orderId =order.getOrderId();
@@ -89,11 +89,11 @@ public class CheckoutController
     @PostMapping("/removeFromCart")
     public ModelAndView removeFromCart(@RequestParam Map<String,String> allParams, ModelAndView model, HttpSession session, SessionService sessionService)
     {
-        if (sessionService.isUserInSession(session) == false || sessionService.isSessionValid(session) == false)
-        {
-            ModelAndView modelAndView = new ModelAndView("redirect:/logout");
-            return modelAndView;
-        }
+//        if (sessionService.isUserInSession(session) == false || sessionService.isSessionValid(session) == false)
+//        {
+//            ModelAndView modelAndView = new ModelAndView("redirect:/logout");
+//            return modelAndView;
+//        }
         try
         {
             Integer userId = (Integer) session.getAttribute("user");
