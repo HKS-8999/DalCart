@@ -11,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,7 +24,7 @@ public class LoginController
     IUserFactory newUserFactory;
     IValidateFactory validateFactory;
 
-    @RequestMapping("/login")
+    @GetMapping("/login")
     public ModelAndView loginPage(HttpServletRequest request)
     {
         Logger logger = LogManager.getLogger(this.getClass());
@@ -43,7 +42,7 @@ public class LoginController
     }
 
     @PostMapping("/login")
-    public ModelAndView submitForm(@ModelAttribute User user, HttpServletRequest request)
+    public ModelAndView login(@ModelAttribute User user, HttpServletRequest request)
     {
         HttpSession session = request.getSession();
         ModelAndView modelAndView = new ModelAndView();
@@ -77,10 +76,10 @@ public class LoginController
                 }
                 else
                 {
-                    return new ModelAndView("invalidUsernameandPassword");
+                    return new ModelAndView("redirect:/invalidUsernameandPassword");
                 }
             }
-            return new ModelAndView("invalidUsernameandPassword");
+            return new ModelAndView("redirect:/invalidUsernameandPassword");
         }
         catch (Exception e)
         {
@@ -91,7 +90,7 @@ public class LoginController
     }
 
     @GetMapping("/logout")
-    public String destroySession(HttpServletRequest request)
+    public String logout(HttpServletRequest request)
     {
         request.getSession().invalidate();
         return "redirect:/home";

@@ -27,24 +27,23 @@ public class HomeController
     IProductModel productModel = productModelFactory.createProductModel();
     IProductPersistenceFactory productPersistenceFactory = new ProductPersistenceFactory();
     IProductPersistence productDB = productPersistenceFactory.createIProductPersistence();
-
-    @GetMapping("")
-    public ModelAndView homepage (ModelAndView model, @RequestParam(name = "search", required = false) String keyword, HttpSession session, SessionService sessionService) throws IOException
-    {
-
-        if (sessionService.isUserInSession(session) == false && sessionService.isSessionValid(session) == false) {
-            ModelAndView modelAndView = new ModelAndView("redirect:/login");
-            return modelAndView;
-        }
-
-        ModelAndView modelAndView = new ModelAndView("redirect:/home");
-        return modelAndView;
-    }
+  //  @GetMapping("")
+//    public ModelAndView homepage (ModelAndView model, @RequestParam(name = "search", required = false) String keyword, HttpSession session, SessionService sessionService) throws IOException
+//    {
+//
+//        if (sessionService.isUserInSession(session) == false || sessionService.isSessionValid(session) == false) {
+//            ModelAndView modelAndView = new ModelAndView("redirect:/login");
+//            return modelAndView;
+//        }
+//
+//        ModelAndView modelAndView = new ModelAndView("redirect:/home");
+//        return modelAndView;
+//    }
 
     @GetMapping("/home")
     public ModelAndView viewProducts (ModelAndView model, @RequestParam(name = "search", required = false) String keyword, HttpSession session, SessionService sessionService) throws IOException
     {
-        if (sessionService.isUserInSession(session) == false && sessionService.isSessionValid(session) == false) {
+        if (sessionService.isUserInSession(session) == false || sessionService.isSessionValid(session) == false) {
             ModelAndView modelAndView = new ModelAndView("redirect:/login");
             return modelAndView;
         }

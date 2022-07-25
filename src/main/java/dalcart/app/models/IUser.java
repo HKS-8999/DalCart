@@ -2,7 +2,6 @@ package dalcart.app.models;
 
 import dalcart.app.Repository.IUserPersistence;
 
-
 public abstract class IUser {
 
     protected String email;

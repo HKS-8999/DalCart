@@ -39,7 +39,7 @@ public class AdminController
         //check if user key is valid else rediret to login page
 
 
-        if (sessionService.isAdminInSession(session) == false && sessionService.isSessionValid(session) == false) {
+        if (sessionService.isAdminInSession(session) == false || sessionService.isSessionValid(session) == false) {
             ModelAndView modelAndView = new ModelAndView("redirect:/login");
             return modelAndView;
         }

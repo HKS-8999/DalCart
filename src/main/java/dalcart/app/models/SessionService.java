@@ -1,10 +1,12 @@
 package dalcart.app.models;
 
+import com.fasterxml.jackson.databind.util.ArrayIterator;
 import dalcart.app.Repository.IUserPersistence;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
 import java.util.Enumeration;
+import java.util.Iterator;
 
 @Service
 public class SessionService implements ISession {
