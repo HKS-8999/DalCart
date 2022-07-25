@@ -84,5 +84,4 @@ public abstract class IUser {
     public abstract void loadUserAttributes(IUserPersistence userPersistence);
 
     public abstract boolean isAdmin(String designation);
-    public abstract Security.RESULT hasAccess(Security security, IUser user);
 }

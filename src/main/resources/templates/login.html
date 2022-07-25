@@ -1,26 +1,49 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" >
+
+<link rel="stylesheet" type="text/css" href="/stylesheets/login.css" />
+
+<!-- Include JS File Here -->
 <head>
-    <meta charset="UTF-8">
+    <meta charset = "UTF-8">
     <title>Login Page</title>
 </head>
 <body>
     <div class = "login">
-        <h1>DalCart</h1>
+        <h1> DalCart </h1>
         <hr>
-        <h2>Login</h2>
+        <h2> Login </h2>
+        </div>
+    <div class = "container">
+        <form action = "#" th:action = "@{/login}" th:object = "${user}" method = "POST">
 
-        <form action="#" th:action="@{/login}" th:object="${user}" method="POST">
+            <label> Email: </label>
+            <input type = "text" id = "email" name = "email"
+                   pattern = "(^(?=.{1,64}@)[A-Za-z0-9_-]+(\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*(\.[A-Za-z]{2,})$)"
+                   title = "Please enter valid Email"
+                   required/>
+            <br/>
 
-            <label>Email: </label>
-            <input type = "text" name="email" /><br/>
+            <label> Password: </label>
+            <input type = "password" id="pass" name="password"
+                   pattern = "(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                   title = "Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
+                   required/>
+            <br/>
+            <div id="message">
+                <h3>Password must contain the following:</h3>
+                <p id="letter" class="invalid">A <b>lowercase</b> letter</p>
+                <p id="capital" class="invalid">A <b>capital (uppercase)</b> letter</p>
+                <p id="number" class="invalid">A <b>number</b></p>
+                <p id="length" class="invalid">Minimum <b>8 characters</b></p>
+            </div>
 
-            <label>Password: </label>
-            <input type = "password" name="password" /><br/>
-
-            <button type = "submit">Submit</button>
+            <input type = "submit" value = "Submit" >
         </form>
+    </div>
+    <div id = "signup">
         <a th:href = "@{/signup}">New here? Sign up</a>
     </div>
+
 </body>
 </html>

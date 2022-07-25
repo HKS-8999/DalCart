@@ -1,16 +1,14 @@
 package dalcart.app.Repository;
 
-import dalcart.app.database.ConnectionManager;
+import dalcart.app.controllers.order_states.*;
 import dalcart.app.items.*;
 import dalcart.app.models.IOrderModel;
 import dalcart.app.models.IProductModel;
 import dalcart.app.models.OrderModel;
-import dalcart.app.utils.OrderUtils;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.UUID;
 
 @Repository
 public
@@ -18,6 +16,7 @@ class OrderDB  {
 
     Connection connection;
     static PreparedStatement preparedStatement;
+    static Statement statement;
 
     public static OrderState getStateByName(String orderState){
         String state = orderState.toLowerCase();
@@ -106,5 +105,48 @@ class OrderDB  {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public IOrderModel findOrderInCartByUserId(int userId)
+    {
+        try {
+
+            String query = "select * from orders where user_id = " + userId + " and state = 'cart';";
+            statement = ConnectionManager.getInstance().getConnection().createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+            IOrderModel order = new OrderModel();
+            boolean resultSetNotEmpty = false;
+            while (resultSet.next()) {
+                resultSetNotEmpty = true;
+                order.setOrderId(resultSet.getInt(1));
+                order.setUserId(resultSet.getInt(2));
+                order.setState(getStateByName(resultSet.getString(3)));
+            }
+            if (resultSetNotEmpty) {
+                return order;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    public static boolean removeProductFromCart(Integer orderId, Integer productId){
+        try {
+
+            String query = "delete from order_products where order_id = ? and product_id = ?";
+            preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(query);
+            preparedStatement.setInt(1,orderId);
+            preparedStatement.setInt(2,productId);
+            preparedStatement.executeUpdate();
+
+            query = "delete from orders where id in (select ord.id from orders as ord left join order_products as ordp on ord.id = ordp.order_id where ordp.order_id is null)";
+            preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(query);
+            preparedStatement.executeUpdate();
+
+        }catch (Exception e){
+            return false;
+        }
+        return true;
     }
 }

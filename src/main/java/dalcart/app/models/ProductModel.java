@@ -1,7 +1,8 @@
 package dalcart.app.models;
 
-import dalcart.app.Repository.ProductDB;
+import dalcart.app.Repository.IProductPersistence;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class ProductModel implements IProductModel
@@ -13,8 +14,6 @@ public class ProductModel implements IProductModel
     private Integer productQuantity;
     private Boolean enabled;
     private String productImage;
-//    public Product product;
-    ProductDB productDB = new ProductDB();
 
     @Override
     public String getProductName() {
@@ -87,7 +86,7 @@ public class ProductModel implements IProductModel
     }
 
 
-    public ArrayList getProducts()
+    public ArrayList<IProductModel> getProducts(IProductPersistence productDB)
     {
 //        productDB = new ProductDB();
         ArrayList<IProductModel> productDetail;
@@ -95,40 +94,56 @@ public class ProductModel implements IProductModel
         return productDetail;
     }
 
-    public ArrayList getProductsToDisplay(String searchWord)
+    public ArrayList<IProductModel> getProductsToDisplay(String searchWord, IProductPersistence productDB)
     {
         ArrayList<IProductModel> productDetail;
         productDetail = productDB.getProductDetailsForDisplay(searchWord);
         return productDetail;
     }
 
-    public void addProductToCart(Map<String,String> parameters)
+    public IProductPersistence.StorageResult addProductToCart(Map<String,String> parameters, IProductPersistence productDB, Integer userId)
     {
-        productDB.addProductToCart(parameters);
+        IProductPersistence.StorageResult result;
+        result = productDB.addProductToCart(parameters, userId);
+        return result;
     }
 
-    public IProductModel getProductById(Integer productId)
+    public IProductModel getProductById(Integer productId, IProductPersistence productDB)
     {
-        IProductModel iproduct;
-        iproduct = productDB.getProductById(productId);
-        return iproduct;
+        IProductModel iProduct;
+        iProduct = productDB.getProductById(productId);
+        return iProduct;
     }
 
-    public void saveProduct(IProductModel product)
+    public IProductPersistence.StorageResult saveProduct(IProductModel product, IProductPersistence productDB)
     {
-        productDB.saveProduct(product);
+        IProductPersistence.StorageResult result;
+        result = productDB.saveProduct(product);
+        return result;
     }
 
-    public void updateProduct(Integer productId, Integer productQuantity, Boolean productState)
+    public IProductPersistence.StorageResult updateProduct(Integer productId, Integer productQuantity, Boolean productState, IProductPersistence productDB)
     {
-        productDB.updateProduct(productId, productQuantity, productState);
+        IProductPersistence.StorageResult result;
+        result = productDB.updateProduct(productId, productQuantity, productState);
+        return result;
     }
 
-    public Integer getLastProductId()
+    public Integer getLastProductId(IProductPersistence productDB)
     {
         Integer id;
         id = productDB.getLastProductId();
         return id;
+    }
+
+    public Integer getProductQuantity(IProductPersistence productDB, Integer productQuantity)
+    {
+        return productDB.getProductQuantity(productQuantity);
+    }
+
+    public Integer getTotalOfProducts(IProductPersistence productDB, HashMap<Integer, Integer> products)
+    {
+        return productDB.getTotalOfProducts(products);
     }
 
 }

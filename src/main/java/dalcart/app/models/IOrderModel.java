@@ -1,6 +1,7 @@
 package dalcart.app.models;
 
-import dalcart.app.items.OrderState;
+
+import dalcart.app.controllers.order_states.OrderState;
 
 public interface IOrderModel extends Model {
     public void setOrderId(Integer orderId);

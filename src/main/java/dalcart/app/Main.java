@@ -35,32 +35,14 @@ import java.lang.*;
 @SpringBootApplication
 public class Main {
 
-  // @Value("${spring.datasource.url}")
-  // private String dbUrl;
-
-  // @Value("${spring.datasource.username}")
-  // private String username;
-
-  // @Value("${spring.datasource.password}")
-  // private String password;
-
-  // @Autowired
-  // private DataSource dataSource;
-
-  public static void main(String[] args) {
-      SpringApplication.run(Main.class, args);
-  }
+    public static void main(String[] args) {
+        SpringApplication.run(Main.class, args);
+    }
 
   @RequestMapping("/")
   String index() {
     return "index";
   }
-
-
-  // @RequestMapping("/get_product_name")
-  // String admin() {
-  //     return "admin";
-  // }
 
   @GetMapping("/get_product_name")
   @ResponseBody
@@ -72,9 +54,6 @@ public class Main {
     map.put("key", "value");
     map.put("foo", "bar");
     map.put("aa", "bb");
-    //return "{\"product\":\"iphone\"}";
-   // String json = new ObjectMapper().writeValueAsString(map);
-    //return json;
     String json = "";
     ObjectMapper objectMapper = new ObjectMapper();
     try {
@@ -83,24 +62,6 @@ public class Main {
     } catch (Exception e) {
         e.printStackTrace();
     }
-
     return json;
-
-
-    //return "{\"name\":\"product\"}";
-    }
-
-  // @Bean
-  // public DataSource dataSource() throws SQLException {
-  //   if (dbUrl == null || dbUrl.isEmpty()) {
-  //     return new HikariDataSource();
-  //   } else {
-  //     HikariConfig config = new HikariConfig();
-  //     config.setJdbcUrl(dbUrl);
-  //     config.setUsername(username);
-  //     config.setPassword(password);
-  //     return new HikariDataSource(config);
-  //   }
-  // }
-
+   }
 }

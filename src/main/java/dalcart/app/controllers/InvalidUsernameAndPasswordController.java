@@ -9,11 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class InvalidUsernameAndPasswordController {
-
     @PostMapping("/invalidUsernameAndPassword")
     public ModelAndView backToLogin(){
-        System.out.println("dsa");
         return new ModelAndView("login");
     }
-
 }

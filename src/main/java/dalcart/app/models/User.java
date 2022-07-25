@@ -1,7 +1,7 @@
 package dalcart.app.models;
 
 import dalcart.app.Repository.IUserPersistence;
-
+import org.springframework.stereotype.Service;
 public class User extends IUser {
 
     @Override
@@ -15,14 +15,12 @@ public class User extends IUser {
         this.setMobileNo(user.getMobileNo());
         this.setDesignation(user.getDesignation());
     }
-
+    @Override
     public IUserPersistence.Result createNewUser(IUser user, IUserPersistence userPersistence) throws Exception {
-        this.userID = userPersistence.save(user);
-        return IUserPersistence.Result.SUCCESS;
-    }
-
-    public Security.RESULT hasAccess(Security security, IUser user) {
-        return security.authenticateUser(user);
+        if(userPersistence.save(user)){
+            return IUserPersistence.Result.SUCCESS;
+        }
+        return IUserPersistence.Result.STORAGE_FAILURE;
     }
 
     public boolean isAdmin(String designation){
