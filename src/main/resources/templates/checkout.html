@@ -1,71 +1,145 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'index')}">
-<link rel="stylesheet" type="text/css" href="/stylesheets/home.css" />
-<head>
-    <meta charset="UTF-8">
-    <title>Checkout</title>
-</head>
+<link rel="stylesheet" type="text/css" href="/stylesheets/checkout.css" />
 <body>
-    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
-    <script th:src="@{/webjars/jquery-ui/jquery-ui.min.js}"></script>
-    <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/jquery-ui/jquery-ui.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 
-    <div style="background: cornflowerblue; font-family: 'Arial Rounded MT Bold'; font-size: xx-large; text-align: center;">
-        <h1><u>Dal-Cart</u></h1>
-    </div>
+<div style="background: cornflowerblue; font-family: 'Arial Rounded MT Bold'; font-size: xx-large; text-align: center;">
+    <h1><u>Dal-Cart</u></h1>
+</div>
 
-    <div class="topnav" style="padding-bottom: 50px; padding-left: 100px">
-        <a href = "/home"><button class="btn btn-primary" type = "submit" id = "btn2">Go to home</button></a>
-    </div>
-    <div class = container admin-container>
-        <form action="" >
-            <div class="row">
-                <div class="container ">
-                    <div class="row">
-                        <div class="col-lg-12 center text-center admin-title">
-                            My Cart
-                        </div>
-                    </div>
-
-                    <div>
-                    <h1><span th:text="${message}"></span></h1>
-                    </div>
-
-                    <div class="row product-list-header">
-                        <div class="col-lg-2 text-center product-list-header-item">
-                            Product Name
-                        </div>
-                        <div class="col-lg-2 text-center product-list-header-item">
-                            Product Price
-                        </div>
-                        <div class="col-lg-2 text-center product-list-header-item">
-                            Product Quantity
-                        </div>
-                        <div class="col-lg-2 text-center product-list-header-item">
-                            Increase Quantity
-                        </div>
-                        <div class="col-lg-2 text-center product-list-header-item">
-                            Decrease Quantity
-                        </div>
-                        <div class="col-lg-2 text-center product-list-header-item">
-                            Remove from cart
-                        </div>
-                    </div>
-                    <div class="row product-list-row text-center product-row" th:each="product: ${products}">
-                        <div class="col-lg-2 flex" th:text="${product.productName}"></div>
-                        <div class="col-lg-2 flex" th:text="${product.productPrice}" ></div>
-                        <div class="col-lg-2 flex" th:text="${quantity.get(product.productId)}" ></div>
-                        <div class="col-lg-2 flex"><button th:value="${quantity.get(product.productId)}" th:id = "${product.productId}" type = "submit" onclick="increase(this.id,this.value)">+</button></div>
-                        <div class="col-lg-2 flex"><button th:value="${quantity.get(product.productId)}" th:id = "${product.productId}" type = "submit" onclick="decrease(this.id,this.value)">-</button></div>
-                        <div class="col-lg-2 flex"><button th:id = "${product.productId}" type = "submit" onclick="removeFromCart(this.id)">Remove</button></div>
+<div class="topnav" style="padding-bottom: 50px; padding-left: 100px">
+    <a href = "/home"><button class="btn btn-primary" type = "submit" id = "btn2">Go to home</button></a>
+</div>
+<div class = container admin-container>
+    <form action="" >
+        <div class="row">
+            <div class="container ">
+                <div class="row">
+                    <div class="col-lg-12 center text-center admin-title">
+                        My Cart
                     </div>
                 </div>
+
+                <div>
+                    <h1><span th:text="${message}"></span></h1>
+                </div>
+
+                <div class="row product-list-header">
+                    <div class="col-lg-2 text-center product-list-header-item">
+                        Product Name
+                    </div>
+                    <div class="col-lg-2 text-center product-list-header-item">
+                        Product Price
+                    </div>
+                    <div class="col-lg-2 text-center product-list-header-item">
+                        Product Quantity
+                    </div>
+                    <div class="col-lg-2 text-center product-list-header-item">
+                        Increase Quantity
+                    </div>
+                    <div class="col-lg-2 text-center product-list-header-item">
+                        Decrease Quantity
+                    </div>
+                    <div class="col-lg-2 text-center product-list-header-item">
+                        Remove from cart
+                    </div>
+                </div>
+                <div class="row product-list-row text-center product-row" th:each="product: ${products}">
+                    <div class="col-lg-2 flex" th:text="${product.productName}"></div>
+                    <div class="col-lg-2 flex" th:text="${product.productPrice}" ></div>
+                    <div class="col-lg-2 flex" th:text="${quantity.get(product.productId)}" ></div>
+                    <div class="col-lg-2 flex"><button th:value="${quantity.get(product.productId)}" th:id = "${product.productId}" type = "submit" onclick="increase(this.id,this.value)">+</button></div>
+                    <div class="col-lg-2 flex"><button th:value="${quantity.get(product.productId)}" th:id = "${product.productId}" type = "submit" onclick="decrease(this.id,this.value)">-</button></div>
+                    <div class="col-lg-2 flex"><button th:id = "${product.productId}" type = "submit" onclick="removeFromCart(this.id)">Remove</button></div>
+                </div>
             </div>
-        </form>
+        </div>
+    </form>
+</div>
+<div style="padding-left: 650px">
+    <h2>Total : <span th:text="${total}"></span></h2>
+</div>
+
+<hr style="width:100%;text-align:center;margin-left:0">
+
+<div class="container">
+    <div class="row d-flex align-items-center justify-content-center address-header-div">
+        <span class="address-header-text">Delivery Address</span>
     </div>
-    <div style="padding-left: 650px">
-        <h2>Total : <span th:text="${total}"> CAD</span></h2>
-    </div>
+    <form class="submit-order">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="checkout">Full Name</label>
+                    <input type="text" class="form-control" id="fullname"  placeholder="Full Name" name="fullname" required>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="checkout">Email</label>
+                    <input type="text" class="form-control" id="email" placeholder="Email" name="email" required>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="checkout">Address</label>
+                    <input type="text" class="form-control" id="address" name="address" placeholder="Enter Your Address">
+                    </input>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="checkout">Mobile Number</label>
+                    <input type="number" class="form-control" id="phone" placeholder="Mobile Number" name="phone" required>
+                </div>
+            </div>
+        </div>
+
+        <hr style="width:100%;text-align:center;margin-left:0">
+
+        <div class="row d-flex align-items-center justify-content-center address-header-div">
+            <span class="address-header-text">Payment Details</span>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="checkout">Address</label>
+                    <input type="number" class="form-control" id="cardnumber" name="cardnumber" placeholder="Card">
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="checkout">CVV</label>
+                    <input type="number" class="form-control" id="cvv" placeholder="CVV" name="cvv" required>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="checkout">Name on Card</label>
+                    <input type="text" class="form-control" id="nameoncard" name="nameonccard" placeholder="Name on Card">
+                    </input>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="checkout">Expiry</label>
+                    <input type="text" class="form-control" id="expiry" placeholder="Expiry" name="expiry" required>
+                </div>
+            </div>
+        </div>
+        <div class="row place-order-button">
+            <button type="submit" class="btn btn-primary">Place Order</button>
+        </div>
+    </form>
+</div>
+
 
 <script type="text/javascript">
 
@@ -77,12 +151,6 @@
             data: {
                 id: event,
                 quantity: data
-            },
-            success: function(result) {
-                alert('increased');
-            },
-            error: function(result) {
-                alert('error');
             }
         });
     }
@@ -110,7 +178,25 @@
         });
     }
 
-</script>
+    $(".submit-order" ).on( "submit", function(e) {
+        e.preventDefault();
+        //alert("product created");
+        var dataString = $(this).serialize();
+        //location.reload();
+        $.ajax({
+            type: "POST",
+            url: "/order/submit_order",
+            data: dataString,
+            success: function () {
+                $(this).css("display","none");
+                window.location = "/thankyou"
+            },
+            error: function (request, status, error) {
+                alert("Order Cannot Be Placed, Please Try Again After Sometime");
+            }
+        });
+    });
 
+</script>
 </body>
 </html>

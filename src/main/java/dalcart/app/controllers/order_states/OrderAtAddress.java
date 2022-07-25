@@ -1,13 +1,14 @@
-package dalcart.app.items;
+package dalcart.app.controllers.order_states;
 
 import dalcart.app.models.IOrderModel;
-import dalcart.app.utils.OrderUtils;
 
 public class OrderAtAddress implements OrderState{
     @Override
-    public void completeState(IOrderModel order) {
+    public boolean completeState(IOrderModel order) {
+        //checkhere if the order address is invalid
         order.setState(this.getNextState());
         order.save();
+        return true;
     }
 
     @Override
@@ -23,5 +24,9 @@ public class OrderAtAddress implements OrderState{
     @Override
     public String getStateName() {
         return "address";
+    }
+
+    public boolean isComplete(){
+        return false;
     }
 }

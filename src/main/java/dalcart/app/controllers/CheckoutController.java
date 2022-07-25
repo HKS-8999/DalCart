@@ -6,18 +6,15 @@ import dalcart.app.Factories.ProductModelFactory;
 import dalcart.app.Factories.ProductPersistenceFactory;
 import dalcart.app.Repository.IProductPersistence;
 import dalcart.app.Repository.OrderDB;
-import dalcart.app.Repository.OrderProducts;
+import dalcart.app.Repository.OrderProductsDB;
 import dalcart.app.models.IOrderModel;
 import dalcart.app.models.IProductModel;
-import dalcart.app.models.SecurityService;
-import org.springframework.http.HttpStatus;
+import dalcart.app.models.SessionService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
@@ -32,12 +29,12 @@ public class CheckoutController
     IProductModel productModel = productModelFactory.createProductModel();
     IProductPersistenceFactory productPersistenceFactory = new ProductPersistenceFactory();
     IProductPersistence productDB = productPersistenceFactory.createIProductPersistence();
-    OrderProducts o = new OrderProducts();
+    OrderProductsDB o = new OrderProductsDB();
     OrderDB db = new OrderDB();
     @GetMapping("/cart")
-    public ModelAndView listgetproducts (ModelAndView model, HttpSession session) throws IOException
+    public ModelAndView listgetproducts (ModelAndView model, HttpSession session, SessionService sessionService) throws IOException
     {
-        if (SecurityService.isSessionValid(session) == false)
+        if (sessionService.isSessionValid(session) == false)
         {
             ModelAndView modelAndView = new ModelAndView("redirect:/login");
             return modelAndView;
@@ -60,14 +57,10 @@ public class CheckoutController
         return model;
     }
 
-    @PostMapping("increaseQuantityOfProduct")
-    public ModelAndView increaseProductQuantity(@RequestParam Map<String,String> allParams, ModelAndView model, HttpSession session)
+
+    @PostMapping("/increaseQuantityOfProduct")
+    public ModelAndView increaseProductQuantity(@RequestParam Map<String,String> allParams, ModelAndView model, HttpSession session, SessionService sessionService)
     {
-        if (SecurityService.isSessionValid(session) == false)
-        {
-            ModelAndView modelAndView = new ModelAndView("redirect:/login");
-            return modelAndView;
-        }
         Integer userId = (Integer) session.getAttribute("user");
         IOrderModel order = db.findOrderInCartByUserId(userId);
         Integer orderId = order.getOrderId();
@@ -78,13 +71,9 @@ public class CheckoutController
     }
 
     @PostMapping("/decreaseQuantityOfProduct")
-    public ModelAndView decreaseProductQuantity(@RequestParam Map<String,String> allParams, ModelAndView model, HttpSession session)
+    public ModelAndView decreaseProductQuantity(@RequestParam Map<String,String> allParams, ModelAndView model, HttpSession session, SessionService sessionService)
     {
-        if(SecurityService.isSessionValid(session) == false)
-        {
-            ModelAndView modelAndView = new ModelAndView("redirect:/login");
-            return modelAndView;
-        }
+
         Integer userId = (Integer) session.getAttribute("user");
         IOrderModel order = db.findOrderInCartByUserId(userId);
         Integer orderId =order.getOrderId();
@@ -96,9 +85,9 @@ public class CheckoutController
     }
 
     @PostMapping("/removeFromCart")
-    public ModelAndView removeFromCart(@RequestParam Map<String,String> allParams, ModelAndView model, HttpSession session)
+    public ModelAndView removeFromCart(@RequestParam Map<String,String> allParams, ModelAndView model, HttpSession session, SessionService sessionService)
     {
-        if (SecurityService.isSessionValid(session) == false) {
+        if (sessionService.isSessionValid(session) == false) {
             ModelAndView modelAndView = new ModelAndView("redirect:/login");
             return modelAndView;
         }
@@ -108,7 +97,6 @@ public class CheckoutController
             IOrderModel order = db.findOrderInCartByUserId(userId);
             Integer orderId =order.getOrderId();
             db.removeProductFromCart(orderId,Integer.valueOf(allParams.get("id")));
-//            productModel.addProductToCart(allParams,  productDB, userId);
         }
         catch (Exception e)
         {

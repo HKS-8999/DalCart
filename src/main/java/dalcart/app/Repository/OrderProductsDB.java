@@ -10,14 +10,16 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.List;
 
 
 @Repository
-public class OrderProducts  {
+public class OrderProductsDB {
 
     static PreparedStatement preparedStatement;
     static Statement statement;
@@ -61,6 +63,26 @@ public class OrderProducts  {
             return false;
         }
         return true;
+    }
+
+    public static List<Integer> getProductIdsByOrderId(int orderId)
+    {
+        List<Integer> productIds = new ArrayList<>();
+        String query = "select product_id from order_products where order_id = " + orderId + ";";
+        try
+        {
+            preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(query);
+            resultSet = preparedStatement.executeQuery(query);
+            while(resultSet.next())
+            {
+                productIds.add(resultSet.getInt(1));
+            }
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        return productIds;
     }
 
     public HashMap<Integer, Integer> getProductsOfUser(Integer userId)

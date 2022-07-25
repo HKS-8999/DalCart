@@ -4,6 +4,7 @@ import dalcart.app.Factories.*;
 import dalcart.app.Repository.IUserPersistence;
 import dalcart.app.models.*;
 
+import dalcart.app.models.Security.Security;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -29,7 +30,7 @@ public class LoginController
     {
         Logger logger = LogManager.getLogger(this.getClass());
         HttpSession session = request.getSession();
-        if(SecurityService.isSessionValid(session) == false)
+        if(SessionService.isSessionValid(session) == false)
         {
             ModelAndView modelAndView = new ModelAndView();
             modelAndView.setViewName("login");
@@ -53,14 +54,14 @@ public class LoginController
             securityFactory = new SecurityFactory();
             validateFactory = new ValidateFactory();
             IUserPersistence iUserPersistence = userPersistanceFactory.createIUserPersistance();
-            ISecurity security = securityFactory.createSecurity(iUserPersistence);
+            ISecurePassword securePassword = securityFactory.createSecurePassword();
             IValidate validate = validateFactory.createValidations();
-            ISecurePassword securePassword = new SecurePassword();
+            IAuthenticate authentication = securityFactory.createSecurity(iUserPersistence,user);
             if(validate.isPasswordValid(user) && validate.isUserNameValid(user))
             {
-
                 securePassword.encrypt(user);
-                if (security.authenticateUser(user).equals(ISecurity.RESULT.AUTHORIZED))
+
+                if (authentication.authenticate(user).equals(Security.RESULT.AUTHORIZED))
                 {
                     user.loadUserAttributes(iUserPersistence);
                     if (user.isAdmin(user.getDesignation()))

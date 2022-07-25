@@ -6,7 +6,8 @@ import dalcart.app.Repository.IUserPersistence;
 import dalcart.app.items.HeaderSetter;
 import dalcart.app.models.IProductModel;
 import dalcart.app.models.IUser;
-import dalcart.app.models.SecurityService;
+import dalcart.app.models.SessionService;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -25,9 +26,10 @@ public class HomeController
     IProductPersistence productDB = productPersistenceFactory.createIProductPersistence();
 
     @GetMapping("")
-    public ModelAndView homepage (HttpSession session) throws IOException
+    public ModelAndView homepage (ModelAndView model, @RequestParam(name = "search", required = false) String keyword, HttpSession session, SessionService sessionService) throws IOException
     {
-        if (SecurityService.isSessionValid(session) == false) {
+
+        if (sessionService.isUserInSession(session) == false && sessionService.isSessionValid(session) == false) {
             ModelAndView modelAndView = new ModelAndView("redirect:/login");
             return modelAndView;
         }
@@ -37,10 +39,9 @@ public class HomeController
     }
 
     @GetMapping("/home")
-    public ModelAndView viewProducts (ModelAndView model, @RequestParam(name = "search", required = false) String keyword, HttpSession session) throws IOException
+    public ModelAndView viewProducts (ModelAndView model, @RequestParam(name = "search", required = false) String keyword, HttpSession session, SessionService sessionService) throws IOException
     {
-        if (SecurityService.isSessionValid(session) == false)
-        {
+        if (sessionService.isUserInSession(session) == false && sessionService.isSessionValid(session) == false) {
             ModelAndView modelAndView = new ModelAndView("redirect:/login");
             return modelAndView;
         }
@@ -49,20 +50,23 @@ public class HomeController
         model.addObject("listproducts",listOfProducts);
         String message = HeaderSetter.messageToDisplay();
         model.addObject("header", message);
-
-        if(listOfProducts.size() == 0)
-        {
-            model.addObject("nothingToShow","No Products to Display.");
-        }
-
         model.setViewName("home");
         return model;
     }
 
+    @PostMapping("/home")
+    public ModelAndView addProductIntoCart(@RequestParam Map<String, String> allParams, ModelAndView model) {
+        try {
+          //  productModel.addProductToCart(allParams);
+        } catch (Exception e) {
+
+        }
+        return model;
+    }
     @PostMapping("/addToCart")
     public ModelAndView addProductIntoCart(@RequestParam Map<String,String> allParams, ModelAndView model, HttpSession session)
     {
-        if (SecurityService.isSessionValid(session) == false) {
+        if (SessionService.isSessionValid(session) == false) {
             ModelAndView modelAndView = new ModelAndView("redirect:/login");
             return modelAndView;
         }
@@ -84,5 +88,4 @@ public class HomeController
         }
         return model;
     }
-
 }

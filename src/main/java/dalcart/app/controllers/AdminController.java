@@ -10,7 +10,7 @@ import dalcart.app.models.IProductModel;
 import dalcart.app.Repository.ConnectionManager;
 import dalcart.app.models.ProductModel;
 
-import dalcart.app.models.SecurityService;
+import dalcart.app.models.SessionService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -35,12 +35,10 @@ public class AdminController
     IProductModel productModel = productModelFactory.createProductModel();
 
     @GetMapping(value = {""})
-    public ModelAndView index(HttpSession session) {
-        //check if user key is valid else rediret to login page
-        //|| ISecurity.isUserRoleAdmin() == false
-        if(SecurityService.isSessionValid(session) == false ){
-            ModelAndView modelAndView =  new ModelAndView("redirect:/login");
-            modelAndView.addObject("modelAttribute" , modelAndView);
+    public ModelAndView index(HttpSession session, SessionService sessionService)
+    {
+        if (sessionService.isAdminInSession(session) == false && sessionService.isSessionValid(session) == false) {
+            ModelAndView modelAndView = new ModelAndView("redirect:/login");
             return modelAndView;
         }
 
@@ -49,7 +47,6 @@ public class AdminController
         Map<Integer, String> listOfProducts = new HashMap<Integer,String>();
         List<IProductModel> mockProducts = new ArrayList<>();
 
-//        String keyword = null;
         ArrayList<IProductModel> products = productModel.getProducts(productDB);
         if(products != null) {
             modelAndView.addObject("products", products);
@@ -57,12 +54,10 @@ public class AdminController
         return modelAndView;
     }
 
-
     @PostMapping(value = {"/submit_product_data"})
     @ResponseBody
     public String updateProductData(@RequestParam Map<String,String> allParams) throws SQLException {
         System.out.println("product Update Request Received");
-//        IProductModel productModel = new ProductModel();
         IProductModel productModel = productModelFactory.createProductModel();
         ConnectionManager connectionManager = ConnectionManager.getInstance();
         connectionManager.begin();
@@ -83,9 +78,9 @@ public class AdminController
 
     @PostMapping(value = {"/submit_product_creation_data"})
     @ResponseBody
-    public String updateProductCteationData(@RequestParam Map<String,String> allParams) throws SQLException {
+    public String updateProductCteationData(@RequestParam Map<String,String> allParams) throws SQLException
+    {
         System.out.println("product Create Request Received");
-//        IProductModel productModel = new ProductModel();
         IProductModel productModel = productModelFactory.createProductModel();
         ConnectionManager connectionManager = ConnectionManager.getInstance();
         connectionManager.begin();
@@ -99,6 +94,4 @@ public class AdminController
         connectionManager.commit();
         return "success";
     }
-
-
 }
