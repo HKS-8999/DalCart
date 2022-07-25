@@ -103,6 +103,7 @@ public class UserDB implements IUserPersistence {
                 user.setDesignation(designation);
             }
             return user;
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

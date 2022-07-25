@@ -7,10 +7,11 @@ import dalcart.app.models.*;
 import dalcart.app.models.Security.Security;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.GetMapping;
+
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,7 +22,6 @@ public class LoginController
 {
     IUserPersistanceFactory userPersistanceFactory;
     ISecurityFactory securityFactory;
-
     IValidateFactory validateFactory;
 
     @GetMapping("/login")
@@ -39,7 +39,6 @@ public class LoginController
         {
             return new ModelAndView("redirect:/home");
         }
-
     }
 
     @PostMapping("/login")
@@ -58,8 +57,6 @@ public class LoginController
         IValidate validate = validateFactory.createValidations();
         IAuthenticate authentication = securityFactory.createSecurity(iUserPersistence,user);
 
-        System.out.println(user.getEmail());
-        System.out.println(user.getPassword());
         if(validate.isPasswordValid(user) && validate.isUserNameValid(user))
         {
             securePassword.encrypt(user);

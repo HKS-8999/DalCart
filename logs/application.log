@@ -19530,3 +19530,9 @@ java.util.NoSuchElementException: null
 2022-07-25 16:48:06,948 INFO o.s.w.s.DispatcherServlet [RMI TCP Connection(4)-134.190.129.62] Completed initialization in 27 ms
 2022-07-25 16:48:10,148 WARN o.s.w.s.m.s.DefaultHandlerExceptionResolver [http-nio-8080-exec-1] Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'GET' not supported]
 2022-07-25 16:48:31,225 INFO o.s.s.c.ThreadPoolTaskExecutor [SpringContextShutdownHook] Shutting down ExecutorService 'applicationTaskExecutor'
+2022-07-25 17:48:57,343 INFO o.s.w.c.ContextLoader [restartedMain] Root WebApplicationContext: initialization completed in 2400 ms
+2022-07-25 17:48:58,084 INFO o.s.s.c.ThreadPoolTaskExecutor [restartedMain] Initializing ExecutorService 'applicationTaskExecutor'
+2022-07-25 17:48:59,220 INFO o.s.s.a.ScheduledAnnotationBeanPostProcessor [restartedMain] No TaskScheduler/ScheduledExecutorService bean found for scheduled processing
+2022-07-25 17:48:59,838 INFO o.s.w.s.DispatcherServlet [RMI TCP Connection(2)-134.190.129.62] Initializing Servlet 'dispatcherServlet'
+2022-07-25 17:48:59,852 INFO o.s.w.s.DispatcherServlet [RMI TCP Connection(2)-134.190.129.62] Completed initialization in 14 ms
+2022-07-25 17:52:35,680 INFO o.s.s.c.ThreadPoolTaskExecutor [SpringContextShutdownHook] Shutting down ExecutorService 'applicationTaskExecutor'

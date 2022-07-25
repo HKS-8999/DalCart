@@ -10,5 +10,5 @@ public interface IDeliveryInformationPersistence
         STORAGE_SUCCESS
     }
 
-    public StorageResult saveDeliveryInformation(DeliveryInformationModel deliveryInformationModel);
+    public StorageResult saveDeliveryInformation(DeliveryInformationModel deliveryInformationModel, Integer orderId);
 }

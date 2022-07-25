@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
@@ -42,6 +43,10 @@ public class CheckoutController
             Integer id = val.getKey();
             allProducts.add(productModel.getProductById(id, productDB));
         }
+        if(allProducts.size() == 0)
+        {
+            model.addObject("message", "Nothing in the cart");
+        }
         Integer total = productModel.getTotalOfProducts(productDB,productIds);
         model.addObject("products",allProducts);
         model.addObject("quantity",productIds);
@@ -54,11 +59,6 @@ public class CheckoutController
     @PostMapping("/increaseQuantityOfProduct")
     public ModelAndView increaseProductQuantity(@RequestParam Map<String,String> allParams, ModelAndView model, HttpSession session, SessionService sessionService)
     {
-        if (sessionService.isUserInSession(session) == false || sessionService.isSessionValid(session) == false)
-        {
-            ModelAndView modelAndView = new ModelAndView("redirect:/logout");
-            return modelAndView;
-        }
         Integer userId = (Integer) session.getAttribute("user");
         IOrderModel order = db.findOrderInCartByUserId(userId);
         Integer orderId = order.getOrderId();
@@ -71,11 +71,6 @@ public class CheckoutController
     @PostMapping("/decreaseQuantityOfProduct")
     public ModelAndView decreaseProductQuantity(@RequestParam Map<String,String> allParams, ModelAndView model, HttpSession session, SessionService sessionService)
     {
-        if(sessionService.isUserInSession(session) == false || sessionService.isSessionValid(session) == false)
-        {
-            ModelAndView modelAndView = new ModelAndView("redirect:/logout");
-            return modelAndView;
-        }
         Integer userId = (Integer) session.getAttribute("user");
         IOrderModel order = db.findOrderInCartByUserId(userId);
         Integer orderId =order.getOrderId();
@@ -89,11 +84,6 @@ public class CheckoutController
     @PostMapping("/removeFromCart")
     public ModelAndView removeFromCart(@RequestParam Map<String,String> allParams, ModelAndView model, HttpSession session, SessionService sessionService)
     {
-        if (sessionService.isUserInSession(session) == false || sessionService.isSessionValid(session) == false)
-        {
-            ModelAndView modelAndView = new ModelAndView("redirect:/logout");
-            return modelAndView;
-        }
         try
         {
             Integer userId = (Integer) session.getAttribute("user");
@@ -109,13 +99,8 @@ public class CheckoutController
     }
 
     @PostMapping("/validateAndPlaceOrder")
-    public ModelAndView validateAndPlaceOrder(@RequestParam Map<String,String> allParams, ModelAndView model, HttpSession session, SessionService sessionService)
+    public ModelAndView validateAndPlaceOrder(@RequestParam Map<String,String> allParams, ModelAndView model, HttpSession session, SessionService sessionService, RedirectAttributes atts)
     {
-        if (sessionService.isUserInSession(session) == false || sessionService.isSessionValid(session) == false)
-        {
-            ModelAndView modelAndView = new ModelAndView("redirect:/logout");
-            return modelAndView;
-        }
         try
         {
             IDeliveryAddressPersistenceFactory deliveryInformationPersistenceFactory = new DeliveryInformationAddressPersistenceFactory();
@@ -124,33 +109,59 @@ public class CheckoutController
             String email = allParams.get("email");
             String address = allParams.get("address");
             String mobileNumber = allParams.get("phone");
+            Integer userId = (Integer) session.getAttribute("user");
+            IOrderModel order = db.findOrderInCartByUserId(userId);
+            Integer orderId =order.getOrderId();
             IDeliveryInformationModelFactory deliveryInformationModelFactory = new DeliveryInformationModelFactory();
             DeliveryInformationModel deliveryInformationModel = deliveryInformationModelFactory.createDeliveryInformation(name, email, address, mobileNumber);
-//            DeliveryInformationValidator validations = new DeliveryInformationValidator();
-            deliveryInformationModel.addDeliveryAddress(deliveryInformationModel, deliveryInformationPersistence);
-//            if(validations.isFullNameValid(deliveryInformationModel))
-//            {
-//                if(validations.isEmailAddressValid(deliveryInformationModel))
-//                {
-//                    if(validations.isMobileNumberValid(deliveryInformationModel))
-//                    {
-//                        if(validations.isAddressValid(deliveryInformationModel))
-//                        {
-//                            deliveryInformationModel.addDeliveryAddress(deliveryInformationModel, deliveryInformationPersistence);
-//                        }
-//                        else
-//                        {
-//
-//                        }
-//                    }
-//                }
-//            }
+            DeliveryInformationValidator validations = new DeliveryInformationValidator();
+//            deliveryInformationModel.addDeliveryAddress(deliveryInformationModel, deliveryInformationPersistence, orderId);
+            if(validations.isFullNameValid(deliveryInformationModel))
+            {
+                System.out.println("True");
+                if(validations.isEmailAddressValid(deliveryInformationModel))
+                {
+                    System.out.println("True");
+                    if(validations.isMobileNumberValid(deliveryInformationModel))
+                    {
+                        System.out.println("True");
+                        if(validations.isAddressValid(deliveryInformationModel))
+                        {
+                            System.out.println("True");
+                            deliveryInformationModel.addDeliveryAddress(deliveryInformationModel, deliveryInformationPersistence, orderId);
+                            return new ModelAndView("redirect:/thankyou");
+                        }
+                        else
+                        {
+                            atts.addFlashAttribute("invalidAddress","Invalid Address !!");
+                            model.addObject("Error",atts);
+                            return model;
+                        }
+                    }
+                    else
+                    {
+                        atts.addFlashAttribute("invalidMobileNumber","Invalid Mobile Number !!");
+                        model.addObject("Error",atts);
+                        return model;
+                    }
+                }
+                else
+                {
+                    atts.addFlashAttribute("invalidEmail","Invalid Email Address !!");
+                    model.addObject("Error",atts);
+                    return model;
+                }
+            }
+            else
+            {
+                atts.addFlashAttribute("invalidName","Invalid Full Name !!");
+                model.addObject("Error",atts);
+                return model;
+            }
         }
         catch (Exception e)
         {
             throw new RuntimeException(e);
         }
-        return model;
     }
-
 }

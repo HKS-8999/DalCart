@@ -2,22 +2,21 @@ package dalcart.app.models;
 
 import dalcart.app.Factories.*;
 import dalcart.app.Repository.IUserPersistence;
-import dalcart.app.models.IUser;
-import dalcart.app.repository.MockUserPersistance;
+import dalcart.app.repository.UserPersistenceMock;
 import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-public class TestUser {
+public class UserTest {
     IUserFactory userFactory = new UserFactory();
     @Test
     public void loadUserByEmailValidTest(){
         String email = "harsh@gmail.com";
         IUser user = userFactory.createUser();
         user.setEmail(email);
-        IUserPersistence userPersistence = new MockUserPersistance();
+        IUserPersistence userPersistence = new UserPersistenceMock();
         user.loadUserAttributes(userPersistence);
         assertEquals(email, user.getEmail());
     }
@@ -27,7 +26,7 @@ public class TestUser {
         String email = "harsh1@gmail.com";
         IUser user = userFactory.createUser();
         user.setEmail(email);
-        IUserPersistence userPersistence = new MockUserPersistance();
+        IUserPersistence userPersistence = new UserPersistenceMock();
         user.loadUserAttributes(userPersistence);
         assertEquals(null, user.getEmail());
     }
@@ -38,7 +37,7 @@ public class TestUser {
         IUserFactory iUserFactory = new UserFactory();
         IUser user =  iUserFactory.createUser();
         user.setUserID(userId);
-        IUserPersistence userPersistence = new MockUserPersistance();
+        IUserPersistence userPersistence = new UserPersistenceMock();
         assertEquals(IUserPersistence.Result.SUCCESS, user.createNewUser(user, userPersistence));
     }
 
@@ -48,7 +47,27 @@ public class TestUser {
         IUserFactory iUserFactory = new UserFactory();
         IUser user =  iUserFactory.createUser();
         user.setUserID(userId);
-        IUserPersistence userPersistence = new MockUserPersistance();
+        IUserPersistence userPersistence = new UserPersistenceMock();
         assertEquals(IUserPersistence.Result.STORAGE_FAILURE, user.createNewUser(user, userPersistence));
+    }
+
+    @Test
+    public void loadUserByIdValidTest(){
+        int id = 1;
+        IUser user = userFactory.createUser();
+        user.setUserID(id);
+        IUserPersistence userPersistence = new UserPersistenceMock();
+        user = userPersistence.loadUserAttributesByUserId(id);
+        assertEquals("harsh", user.getFirstName());
+    }
+
+    @Test
+    public void loadUserByIdInvalidTest(){
+        int id = 2;
+        IUser user = userFactory.createUser();
+        user.setUserID(id);
+        IUserPersistence userPersistence = new UserPersistenceMock();
+        user = userPersistence.loadUserAttributesByUserId(id);
+        assertEquals(null, user.getFirstName());
     }
 }

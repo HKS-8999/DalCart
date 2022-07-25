@@ -5,7 +5,7 @@ import dalcart.app.Factories.UserFactory;
 import dalcart.app.Repository.IUserPersistence;
 import dalcart.app.models.IUser;
 
-public class MockUserPersistance implements IUserPersistence {
+public class UserPersistenceMock implements IUserPersistence {
     @Override
     public IUser loadUserAttributesbyUsername(String email) {
         IUserFactory userFactory = new UserFactory();
@@ -20,7 +20,7 @@ public class MockUserPersistance implements IUserPersistence {
 
     @Override
     public boolean save(IUser u) {
-        if(u.getUserId() == 1){
+        if(u.getUserID() == 1){
             return true;
         }
         return false;
@@ -28,6 +28,12 @@ public class MockUserPersistance implements IUserPersistence {
 
     @Override
     public IUser loadUserAttributesByUserId(int userId) {
-        return null;
+        IUserFactory userFactory = new UserFactory();
+        if(userId == 1){
+            IUser user = userFactory.createUser();
+            user.setFirstName("harsh");
+            return user;
+        }
+        return userFactory.createUser();
     }
 }
