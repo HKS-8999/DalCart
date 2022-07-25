@@ -1,0 +1,56 @@
+body
+{
+    margin: 0;
+}
+
+#container
+{
+    width: 45%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 200px;
+}
+
+#heading
+{
+    text-align: center;
+    background-color: bisque;
+    padding: 1px;
+    border: 1px solid black;
+}
+
+#box
+{
+    display: grid;
+    grid-template-columns: 50% 50%;
+    margin-top: 20px;
+}
+
+#info
+{
+    display: grid;
+    grid-template-columns: 50% 50%;
+    row-gap: 5px;
+    margin-top: 10px;
+}
+
+#sub
+{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+input[type = 'button']
+{
+    background-color: yellow;
+    width: 80%;
+    height: 30px;
+}
+
+#buttonbox
+{
+    display: grid;
+    grid-template-columns: 50% 50%;
+    margin-top: 20px;
+    margin-left: 120px;
+}
