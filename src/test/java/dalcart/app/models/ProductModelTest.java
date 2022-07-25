@@ -14,7 +14,7 @@ public class ProductModelTest
         ArrayList<ProductModelMock> product_detail;
         IProductPersistence product = new ProductDBMock();
         product_detail = product.getProductDetails();
-        Assertions.assertEquals(2,product_detail.size());
+        Assertions.assertEquals(2, product_detail.size());
     }
 
     @Test
@@ -23,7 +23,7 @@ public class ProductModelTest
         ArrayList<ProductModelMock> product_detail;
         ProductDBMock product = new ProductDBMock();
         product_detail = product.getNullList();
-        Assertions.assertEquals(null,product_detail);
+        Assertions.assertEquals(null, product_detail);
     }
 
     @Test
@@ -41,7 +41,7 @@ public class ProductModelTest
         ArrayList<ProductModelMock> product_detail;
         ProductDBMock product = new ProductDBMock();
         product_detail = product.getNullList();
-        Assertions.assertEquals(null,product_detail);
+        Assertions.assertEquals(null, product_detail);
     }
 
     @Test
@@ -50,7 +50,7 @@ public class ProductModelTest
         ArrayList<ProductModelMock> product_detail;
         ProductDBMock product = new ProductDBMock();
         product_detail = product.getProductDetailsForDisplay();
-        Assertions.assertEquals(2,product_detail.size());
+        Assertions.assertEquals(2, product_detail.size());
     }
 
     @Test
@@ -59,7 +59,7 @@ public class ProductModelTest
         ArrayList<ProductModelMock> product_detail;
         ProductDBMock product = new ProductDBMock();
         product_detail = product.getNullList();
-        Assertions.assertEquals(null,product_detail);
+        Assertions.assertEquals(null, product_detail);
     }
 
     @Test
@@ -67,8 +67,8 @@ public class ProductModelTest
     {
         ArrayList<ProductModelMock> product_detail;
         ProductDBMock product = new ProductDBMock();
-        product_detail = product.getProductDetailsForDisplay(null);
-        Assertions.assertEquals(2,product_detail.size());
+        product_detail = product.getProductDetailsForDisplayWithNullKeyword();
+        Assertions.assertEquals(2, product_detail.size());
     }
 
     @Test
@@ -77,7 +77,7 @@ public class ProductModelTest
         ArrayList<ProductModelMock> product_detail;
         ProductDBMock product = new ProductDBMock();
         product_detail = product.getNullList();
-        Assertions.assertEquals(null,product_detail);
+        Assertions.assertEquals(null, product_detail);
     }
 
     @Test
@@ -86,7 +86,7 @@ public class ProductModelTest
         ArrayList<ProductModelMock> product_detail;
         ProductDBMock product = new ProductDBMock();
         product_detail = product.getProductDetailsForDisplay("");
-        Assertions.assertEquals(2,product_detail.size());
+        Assertions.assertEquals(2, product_detail.size());
     }
 
     @Test
@@ -95,25 +95,43 @@ public class ProductModelTest
         ArrayList<ProductModelMock> product_detail;
         ProductDBMock product = new ProductDBMock();
         product_detail = product.getNullList();
-        Assertions.assertEquals(null,product_detail);
+        Assertions.assertEquals(null, product_detail);
     }
 
     @Test
     public void getProductByIdSuccessTest()
     {
-
+        IProductModel gotProduct;
+        ProductDBMock product = new ProductDBMock();
+        gotProduct = product.getProductById(2);
+        Assertions.assertNotNull(gotProduct);
     }
 
     @Test
     public void getProductByIdFailureTest()
     {
+        IProductModel gotProduct;
+        ProductDBMock product = new ProductDBMock();
+        gotProduct = product.getProductById(1);
+        Assertions.assertEquals(null, gotProduct);
+    }
 
+    @Test
+    public void getProductByIdProductNotPresentInDBFailureTest()
+    {
+        IProductModel gotProduct;
+        ProductDBMock product = new ProductDBMock();
+        gotProduct = product.getNullProduct(1);
+        Assertions.assertEquals(null, gotProduct);
     }
 
     @Test
     public void saveProductSuccessTest()
     {
-
+        Integer lastId;
+        ProductDBMock product = new ProductDBMock();
+        lastId = product.getLastProductId();
+        Assertions.assertEquals(1, lastId);
     }
 
     @Test

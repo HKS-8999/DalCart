@@ -41,28 +41,29 @@ public class HomeController
     @GetMapping("/home")
     public ModelAndView viewProducts (ModelAndView model, @RequestParam(name = "search", required = false) String keyword, HttpSession session, SessionService sessionService) throws IOException
     {
-        if (sessionService.isUserInSession(session) == false && sessionService.isSessionValid(session) == false) {
-            ModelAndView modelAndView = new ModelAndView("redirect:/login");
+        if (sessionService.isUserInSession(session) == false || sessionService.isSessionValid(session) == false)
+        {
+            ModelAndView modelAndView = new ModelAndView("redirect:/logout");
             return modelAndView;
         }
 
-        ArrayList<IProductModel> listOfProducts = productModel.getProductsToDisplay(keyword,productDB);
-        model.addObject("listproducts",listOfProducts);
-        String message = HeaderSetter.messageToDisplay();
-        model.addObject("header", message);
-        model.setViewName("home");
-        return model;
+            ArrayList<IProductModel> listOfProducts = productModel.getProductsToDisplay(keyword, productDB);
+            model.addObject("listproducts", listOfProducts);
+            String message = HeaderSetter.messageToDisplay();
+            model.addObject("header", message);
+            model.setViewName("home");
+            return model;
     }
 
-    @PostMapping("/home")
-    public ModelAndView addProductIntoCart(@RequestParam Map<String, String> allParams, ModelAndView model) {
-        try {
-          //  productModel.addProductToCart(allParams);
-        } catch (Exception e) {
-
-        }
-        return model;
-    }
+//    @PostMapping("/home")
+//    public ModelAndView addProductIntoCart(@RequestParam Map<String, String> allParams, ModelAndView model) {
+//        try {
+//          //  productModel.addProductToCart(allParams);
+//        } catch (Exception e) {
+//
+//        }
+//        return model;
+//    }
     @PostMapping("/addToCart")
     public ModelAndView addProductIntoCart(@RequestParam Map<String,String> allParams, ModelAndView model, HttpSession session)
     {

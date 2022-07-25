@@ -36,11 +36,15 @@ public class SessionService implements ISession {
     }
 
     public boolean isUserInSession(HttpSession session) {
-        Enumeration<String> names = session.getAttributeNames();
-        while(names.hasMoreElements()){
-            if (names.nextElement().equals(userRole)) {
-                return true;
+        try {
+            Enumeration<String> names = session.getAttributeNames();
+            while (names.hasMoreElements()) {
+                if (names.nextElement().equals(userRole)) {
+                    return true;
+                }
             }
+        } catch (Exception e){
+            e.printStackTrace();
         }
         return false;
     }

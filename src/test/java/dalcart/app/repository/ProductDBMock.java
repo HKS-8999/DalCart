@@ -44,32 +44,54 @@ public class ProductDBMock implements IProductPersistence
         ArrayList<ProductModelMock> product_detail = new ArrayList<>();
         ProductModelMock product = new ProductModelMock();
         String productName = product.getProductName().toLowerCase();
-        if(productName.contains(keyword) && product.getEnabled())
-        {
-            product_detail.add(product);
-        }
-        if((keyword == null || keyword == "") && product.getEnabled())
+        if(keyword == "" && product.getEnabled())
         {
             product_detail.add(product);
             product_detail.add(product);
         }
+        else if(productName.contains(keyword) && product.getEnabled())
+        {
+            product_detail.add(product);
+        }
+
+        return product_detail;
+    }
+
+    public ArrayList<ProductModelMock> getProductDetailsForDisplayWithNullKeyword()
+    {
+        ArrayList<ProductModelMock> product_detail = new ArrayList<>();
+        ProductModelMock product = new ProductModelMock();
+        product_detail.add(product);
+        product_detail.add(product);
         return product_detail;
     }
 
     @Override
     public IProductModel getProductById(Integer productId)
     {
-//        IProductModelFactory productModelFactory = new ProductModelFactory();
-//        if()
-//        IProductModel productModel = productModelFactory.createProductModel("Tshirts",2,"Pure cotton Tshirts for summer",12,30,true, "tshirt.jpg");
+        IProductModelFactory productModelFactory = new ProductModelFactory();
+        if(productId == 2)
+        {
+            IProductModel productModel = productModelFactory.createProductModel("Tshirts",2,"Pure cotton Tshirts for summer",12,30,true, "tshirt.jpg");
+            return productModel;
+        }
+        return null;
+    }
+
+    public IProductModel getNullProduct(Integer productId)
+    {
         return null;
     }
 
     @Override
     public Integer getLastProductId()
     {
-        return null;
+        ProductModelMock product = new ProductModelMock();
+        Integer lastId = product.getProductId();
+        return lastId;
     }
+
+
 
     @Override
     public StorageResult saveProduct(IProductModel product)

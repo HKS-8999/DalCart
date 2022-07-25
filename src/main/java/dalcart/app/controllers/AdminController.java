@@ -8,7 +8,6 @@ import dalcart.app.Repository.IProductPersistence;
 import dalcart.app.models.IProductModel;
 
 import dalcart.app.Repository.ConnectionManager;
-import dalcart.app.models.ProductModel;
 
 import dalcart.app.models.SessionService;
 import org.springframework.stereotype.Controller;
@@ -24,7 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping(value = {"/admin"})
+//@RequestMapping(value = {"/admin"})
 @Component
 public class AdminController
 {
@@ -34,13 +33,15 @@ public class AdminController
     IProductPersistence productDB = productPersistenceFactory.createIProductPersistence();
     IProductModel productModel = productModelFactory.createProductModel();
 
-    @GetMapping(value = {""})
-    public ModelAndView index(HttpSession session, SessionService sessionService)
+    @GetMapping(value = {"/admin"})
+    public ModelAndView index(HttpSession session, SessionService sessionService, ModelAndView model)
     {
-        if (sessionService.isAdminInSession(session) == false && sessionService.isSessionValid(session) == false) {
-            ModelAndView modelAndView = new ModelAndView("redirect:/login");
+        if (sessionService.isAdminInSession(session) == false || sessionService.isSessionValid(session) == false)
+        {
+            ModelAndView modelAndView = new ModelAndView("redirect:/logout");
             return modelAndView;
         }
+
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("admin");

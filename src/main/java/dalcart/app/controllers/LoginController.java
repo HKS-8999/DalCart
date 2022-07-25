@@ -25,7 +25,7 @@ public class LoginController
     IUserFactory newUserFactory;
     IValidateFactory validateFactory;
 
-    @RequestMapping("/login")
+    @GetMapping("/login")
     public ModelAndView loginPage(HttpServletRequest request)
     {
         Logger logger = LogManager.getLogger(this.getClass());
@@ -40,6 +40,7 @@ public class LoginController
         {
             return new ModelAndView("redirect:/home");
         }
+
     }
 
     @PostMapping("/login")
@@ -94,6 +95,6 @@ public class LoginController
     public String destroySession(HttpServletRequest request)
     {
         request.getSession().invalidate();
-        return "redirect:/home";
+        return "redirect:/login";
     }
 }

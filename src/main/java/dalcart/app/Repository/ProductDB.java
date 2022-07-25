@@ -1,9 +1,13 @@
 package dalcart.app.Repository;
 
-import dalcart.app.Factories.*;
+import dalcart.app.Factories.IProductModelFactory;
+import dalcart.app.Factories.ProductModelFactory;
 import dalcart.app.models.IProductModel;
 import org.springframework.stereotype.Repository;
-import java.sql.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
