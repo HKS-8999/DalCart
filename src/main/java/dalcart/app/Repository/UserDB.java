@@ -102,7 +102,6 @@ public class UserDB implements IUserPersistence {
                 user.setEmail(emailID);
                 user.setDesignation(designation);
             }
-
             return user;
         } catch (SQLException e) {
             throw new RuntimeException(e);

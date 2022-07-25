@@ -21,7 +21,7 @@ public class LoginController
 {
     IUserPersistanceFactory userPersistanceFactory;
     ISecurityFactory securityFactory;
-    IUserFactory newUserFactory;
+
     IValidateFactory validateFactory;
 
     @GetMapping("/login")
@@ -45,49 +45,43 @@ public class LoginController
     @PostMapping("/login")
     public ModelAndView login(@ModelAttribute User user, HttpServletRequest request)
     {
+        System.out.println(user.getEmail());
+        System.out.println(user.getPassword());
         HttpSession session = request.getSession();
         ModelAndView modelAndView = new ModelAndView();
-        try
-        {
-            userPersistanceFactory = new UserPersistanceFactory();
-            newUserFactory = new UserFactory();
-            securityFactory = new SecurityFactory();
-            validateFactory = new ValidateFactory();
-            IUserPersistence iUserPersistence = userPersistanceFactory.createIUserPersistance();
-            ISecurePassword securePassword = securityFactory.createSecurePassword();
-            IValidate validate = validateFactory.createValidations();
-            IAuthenticate authentication = securityFactory.createSecurity(iUserPersistence,user);
-            if(validate.isPasswordValid(user) && validate.isUserNameValid(user))
-            {
-                securePassword.encrypt(user);
 
-                if (authentication.authenticate(user).equals(Security.RESULT.AUTHORIZED))
+        userPersistanceFactory = new UserPersistanceFactory();
+        securityFactory = new SecurityFactory();
+        validateFactory = new ValidateFactory();
+        IUserPersistence iUserPersistence = userPersistanceFactory.createIUserPersistance();
+        ISecurePassword securePassword = securityFactory.createSecurePassword();
+        IValidate validate = validateFactory.createValidations();
+        IAuthenticate authentication = securityFactory.createSecurity(iUserPersistence,user);
+
+        System.out.println(user.getEmail());
+        System.out.println(user.getPassword());
+        if(validate.isPasswordValid(user) && validate.isUserNameValid(user))
+        {
+            securePassword.encrypt(user);
+            if (authentication.authenticate(user).equals(Security.RESULT.AUTHORIZED))
+            {
+                if (user.isAdmin(user.getDesignation()))
                 {
-                    user.loadUserAttributes(iUserPersistence);
-                    if (user.isAdmin(user.getDesignation()))
-                    {
-                        session.setAttribute("admin", user.getUserID());
-                        return new ModelAndView("redirect:/admin");
-                    }
-                    else
-                    {
-                        session.setAttribute("user", user.getUserID());
-                        return new ModelAndView("redirect:/home");
-                    }
+                    session.setAttribute("admin", user.getUserID());
+                    return new ModelAndView("redirect:/admin");
                 }
                 else
                 {
-                    return new ModelAndView("redirect:/invalidUsernameandPassword");
+                    session.setAttribute("user", user.getUserID());
+                    return new ModelAndView("redirect:/home");
                 }
             }
-            return new ModelAndView("redirect:/invalidUsernameandPassword");
+            else
+            {
+                return new ModelAndView("invalidUsernameandPassword");
+            }
         }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-        modelAndView.setViewName("login");
-        return modelAndView;
+        return new ModelAndView("invalidUsernameandPassword");
     }
 
     @GetMapping("/logout")

@@ -1,4 +1,4 @@
-package mocks;
+package dalcart.app.repository;
 
 import dalcart.app.Factories.IUserFactory;
 import dalcart.app.Factories.UserFactory;
@@ -19,8 +19,11 @@ public class MockUserPersistance implements IUserPersistence {
     }
 
     @Override
-    public boolean save(IUser u) throws Exception {
-        return true;
+    public boolean save(IUser u) {
+        if(u.getUserId() == 1){
+            return true;
+        }
+        return false;
     }
 
     @Override

@@ -33,22 +33,12 @@ public class AdminController
     IProductPersistence productDB = productPersistenceFactory.createIProductPersistence();
     IProductModel productModel = productModelFactory.createProductModel();
 
-<<<<<<< HEAD
-    @GetMapping(value = {""})
-    public ModelAndView index(HttpSession session, SessionService sessionService) {
-        //check if user key is valid else rediret to login page
-
-
-        if (sessionService.isAdminInSession(session) == false || sessionService.isSessionValid(session) == false) {
-            ModelAndView modelAndView = new ModelAndView("redirect:/login");
-=======
     @GetMapping(value = {"/admin"})
     public ModelAndView index(HttpSession session, SessionService sessionService, ModelAndView model)
     {
         if (sessionService.isAdminInSession(session) == false || sessionService.isSessionValid(session) == false)
         {
             ModelAndView modelAndView = new ModelAndView("redirect:/logout");
->>>>>>> bef197c67d096e218f542be865ec4058b5b49408
             return modelAndView;
         }
 

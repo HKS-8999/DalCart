@@ -78,7 +78,7 @@ public abstract class IUser {
         this.userID = userID;
     }
 
-    public abstract IUserPersistence.Result createNewUser(IUser user, IUserPersistence userPersistence) throws Exception;
+    public abstract IUserPersistence.Result createNewUser(IUser user, IUserPersistence userPersistence);
 
     public abstract void loadUserAttributes(IUserPersistence userPersistence);
 

@@ -17,7 +17,10 @@ public class ValidateUserAttributes implements IValidate
 
     public boolean isPasswordValid(IUser user)
     {
-        if(user.getPassword().trim().length() >= 8)
+        if(user.getPassword() == null){
+            return false;
+        }
+        else if(user.getPassword().trim().length() >= 8)
         {
             for (char ch : user.getPassword().trim().toCharArray())
             {

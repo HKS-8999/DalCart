@@ -13,7 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.sql.SQLException;
 
 @Controller
-public class UserController
+public class SignUpController
 {
     IUserFactory userFactory;
     IUserPersistanceFactory userPersistence;
