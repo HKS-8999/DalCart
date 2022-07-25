@@ -21,6 +21,18 @@ public class ProductModelMock
         this.productImage = "images/book.jpg";
     }
 
+    public ProductModelMock(String productName, int productId, String productDescription, Integer productPrice,
+                            Integer productQuantity, Boolean enabled, String productImage)
+    {
+        this.productName = productName;
+        this.productId = productId;
+        this.productDescription = productDescription;
+        this.productPrice = productPrice;
+        this.productQuantity = productQuantity;
+        this.enabled = enabled;
+        this.productImage = productImage;
+    }
+
     public String getProductName()
     {
         return productName;

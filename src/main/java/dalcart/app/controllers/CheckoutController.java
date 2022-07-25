@@ -1,15 +1,8 @@
 package dalcart.app.controllers;
 
-import dalcart.app.Factories.IProductModelFactory;
-import dalcart.app.Factories.IProductPersistenceFactory;
-import dalcart.app.Factories.ProductModelFactory;
-import dalcart.app.Factories.ProductPersistenceFactory;
-import dalcart.app.Repository.IProductPersistence;
-import dalcart.app.Repository.OrderDB;
-import dalcart.app.Repository.OrderProductsDB;
-import dalcart.app.models.IOrderModel;
-import dalcart.app.models.IProductModel;
-import dalcart.app.models.SessionService;
+import dalcart.app.Factories.*;
+import dalcart.app.Repository.*;
+import dalcart.app.models.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,9 +27,9 @@ public class CheckoutController
     @GetMapping("/cart")
     public ModelAndView listgetproducts (ModelAndView model, HttpSession session, SessionService sessionService) throws IOException
     {
-        if (sessionService.isSessionValid(session) == false)
+        if (sessionService.isUserInSession(session) == false || sessionService.isSessionValid(session) == false)
         {
-            ModelAndView modelAndView = new ModelAndView("redirect:/login");
+            ModelAndView modelAndView = new ModelAndView("redirect:/logout");
             return modelAndView;
         }
 
@@ -61,6 +54,11 @@ public class CheckoutController
     @PostMapping("/increaseQuantityOfProduct")
     public ModelAndView increaseProductQuantity(@RequestParam Map<String,String> allParams, ModelAndView model, HttpSession session, SessionService sessionService)
     {
+        if (sessionService.isUserInSession(session) == false || sessionService.isSessionValid(session) == false)
+        {
+            ModelAndView modelAndView = new ModelAndView("redirect:/logout");
+            return modelAndView;
+        }
         Integer userId = (Integer) session.getAttribute("user");
         IOrderModel order = db.findOrderInCartByUserId(userId);
         Integer orderId = order.getOrderId();
@@ -73,7 +71,11 @@ public class CheckoutController
     @PostMapping("/decreaseQuantityOfProduct")
     public ModelAndView decreaseProductQuantity(@RequestParam Map<String,String> allParams, ModelAndView model, HttpSession session, SessionService sessionService)
     {
-
+        if(sessionService.isUserInSession(session) == false || sessionService.isSessionValid(session) == false)
+        {
+            ModelAndView modelAndView = new ModelAndView("redirect:/logout");
+            return modelAndView;
+        }
         Integer userId = (Integer) session.getAttribute("user");
         IOrderModel order = db.findOrderInCartByUserId(userId);
         Integer orderId =order.getOrderId();
@@ -87,8 +89,9 @@ public class CheckoutController
     @PostMapping("/removeFromCart")
     public ModelAndView removeFromCart(@RequestParam Map<String,String> allParams, ModelAndView model, HttpSession session, SessionService sessionService)
     {
-        if (sessionService.isSessionValid(session) == false) {
-            ModelAndView modelAndView = new ModelAndView("redirect:/login");
+        if (sessionService.isUserInSession(session) == false || sessionService.isSessionValid(session) == false)
+        {
+            ModelAndView modelAndView = new ModelAndView("redirect:/logout");
             return modelAndView;
         }
         try
@@ -97,6 +100,51 @@ public class CheckoutController
             IOrderModel order = db.findOrderInCartByUserId(userId);
             Integer orderId =order.getOrderId();
             db.removeProductFromCart(orderId,Integer.valueOf(allParams.get("id")));
+        }
+        catch (Exception e)
+        {
+            throw new RuntimeException(e);
+        }
+        return model;
+    }
+
+    @PostMapping("/validateAndPlaceOrder")
+    public ModelAndView validateAndPlaceOrder(@RequestParam Map<String,String> allParams, ModelAndView model, HttpSession session, SessionService sessionService)
+    {
+        if (sessionService.isUserInSession(session) == false || sessionService.isSessionValid(session) == false)
+        {
+            ModelAndView modelAndView = new ModelAndView("redirect:/logout");
+            return modelAndView;
+        }
+        try
+        {
+            IDeliveryAddressPersistenceFactory deliveryInformationPersistenceFactory = new DeliveryInformationAddressPersistenceFactory();
+            IDeliveryInformationPersistence deliveryInformationPersistence =  deliveryInformationPersistenceFactory.createIDeliveryInformationPersistence();
+            String name = allParams.get("fullname");
+            String email = allParams.get("email");
+            String address = allParams.get("address");
+            String mobileNumber = allParams.get("phone");
+            IDeliveryInformationModelFactory deliveryInformationModelFactory = new DeliveryInformationModelFactory();
+            DeliveryInformationModel deliveryInformationModel = deliveryInformationModelFactory.createDeliveryInformation(name, email, address, mobileNumber);
+//            DeliveryInformationValidator validations = new DeliveryInformationValidator();
+            deliveryInformationModel.addDeliveryAddress(deliveryInformationModel, deliveryInformationPersistence);
+//            if(validations.isFullNameValid(deliveryInformationModel))
+//            {
+//                if(validations.isEmailAddressValid(deliveryInformationModel))
+//                {
+//                    if(validations.isMobileNumberValid(deliveryInformationModel))
+//                    {
+//                        if(validations.isAddressValid(deliveryInformationModel))
+//                        {
+//                            deliveryInformationModel.addDeliveryAddress(deliveryInformationModel, deliveryInformationPersistence);
+//                        }
+//                        else
+//                        {
+//
+//                        }
+//                    }
+//                }
+//            }
         }
         catch (Exception e)
         {

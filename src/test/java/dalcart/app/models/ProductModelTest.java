@@ -5,6 +5,7 @@ import dalcart.app.repository.ProductDBMock;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ProductModelTest
 {
@@ -128,6 +129,40 @@ public class ProductModelTest
     @Test
     public void saveProductSuccessTest()
     {
+        IProductModel productModel = new ProductModel("Pen", 3, "Blue, Black and red pen", 2, 120, true, "pen.jpg");
+        ProductDBMock product = new ProductDBMock();
+        IProductPersistence.StorageResult result = product.saveProduct(productModel);
+        Assertions.assertEquals(IProductPersistence.StorageResult.STORAGE_SUCCESS, result);
+    }
+
+    @Test
+    public void saveProductFailureTest()
+    {
+        IProductModel productModel = new ProductModel();
+        ProductDBMock product = new ProductDBMock();
+        IProductPersistence.StorageResult result = product.NotSaveProduct(productModel);
+        Assertions.assertEquals(IProductPersistence.StorageResult.STORAGE_FAILURE, result);
+    }
+
+    @Test
+    public void updateProductSuccessTest()
+    {
+        ProductDBMock product = new ProductDBMock();
+        IProductPersistence.StorageResult result = product.updateProduct(1, 5, false);
+        Assertions.assertEquals(IProductPersistence.StorageResult.STORAGE_SUCCESS, result);
+    }
+
+    @Test
+    public void updateProductFailureTest()
+    {
+        ProductDBMock product = new ProductDBMock();
+        IProductPersistence.StorageResult result = product.NoUpdateProduct(1, 10, false);
+        Assertions.assertEquals(IProductPersistence.StorageResult.STORAGE_FAILURE, result);
+    }
+
+    @Test
+    public void getLastProductIdSuccessTest()
+    {
         Integer lastId;
         ProductDBMock product = new ProductDBMock();
         lastId = product.getLastProductId();
@@ -135,56 +170,53 @@ public class ProductModelTest
     }
 
     @Test
-    public void saveProductFailureTest()
-    {
-
-    }
-
-    @Test
-    public void updateProductSuccessTest()
-    {
-
-    }
-
-    @Test
-    public void updateProductFailureTest()
-    {
-
-    }
-
-    @Test
-    public void getLastProductIdSuccessTest()
-    {
-
-    }
-
-    @Test
     public void getLastProductIdFailureTest()
     {
-
+        Integer lastId;
+        ProductDBMock product = new ProductDBMock();
+        lastId = product.getNullProductId();
+        Assertions.assertEquals(null, lastId);
     }
 
     @Test
     public void getProductQuantitySuccessTest()
     {
-
+        Integer productQuantity;
+        ProductDBMock product = new ProductDBMock();
+        productQuantity = product.getProductQuantity(2);
+        Assertions.assertEquals(35, productQuantity);
     }
 
     @Test
     public void getProductQuantityFailureTest()
     {
-
+        Integer productQuantity;
+        ProductDBMock product = new ProductDBMock();
+        productQuantity = product.getProductQuantity(5);
+        Assertions.assertEquals(null, productQuantity);
     }
 
     @Test
     public void getTotalOfProductsSuccessTest()
     {
-
+        HashMap<Integer, Integer> products = new HashMap<>();
+        Integer total;
+        products.put(1, 10);
+        products.put(2, 20);
+        ProductDBMock product = new ProductDBMock();
+        total = product.getTotalOfProducts(products);
+        Assertions.assertEquals(30, total);
     }
 
     @Test
     public void getTotalOfProductsFailureTest()
     {
-
+        HashMap<Integer, Integer> products = new HashMap<>();
+        Integer total;
+        products.put(1, 10);
+        products.put(2, 20);
+        ProductDBMock product = new ProductDBMock();
+        total = product.getWrongTotalOfProducts(products);
+        Assertions.assertEquals(25, total);
     }
 }

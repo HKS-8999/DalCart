@@ -8,6 +8,8 @@ import dalcart.app.models.ProductModelMock;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 public class ProductDBMock implements IProductPersistence
 {
@@ -91,29 +93,92 @@ public class ProductDBMock implements IProductPersistence
         return lastId;
     }
 
-
+    public Integer getNullProductId()
+    {
+        return null;
+    }
 
     @Override
     public StorageResult saveProduct(IProductModel product)
     {
-        return null;
+        ArrayList<IProductModel> products = new ArrayList<>();
+        Integer previousLength = products.size();
+        products.add(product);
+        Integer updatedLength = products.size();
+        if(updatedLength == (previousLength + 1))
+        {
+            return StorageResult.STORAGE_SUCCESS;
+        }
+        return StorageResult.STORAGE_FAILURE;
+    }
+
+    public StorageResult NotSaveProduct(IProductModel product)
+    {
+        ArrayList<IProductModel> products = new ArrayList<>();
+        Integer previousLength = products.size();
+//        products.add(product);
+        Integer updatedLength = products.size();
+        if(updatedLength == (previousLength + 1))
+        {
+            return StorageResult.STORAGE_SUCCESS;
+        }
+        return StorageResult.STORAGE_FAILURE;
     }
 
     @Override
     public StorageResult updateProduct(Integer productId, Integer productQuantity, Boolean productState)
     {
-        return null;
+        ProductModelMock product = new ProductModelMock();
+        product.setProductQuantity(productQuantity);
+        product.setEnabled(productState);
+        if(product.getProductQuantity() == productQuantity && product.getEnabled() == productState)
+        {
+            return StorageResult.STORAGE_SUCCESS;
+        }
+        return StorageResult.STORAGE_FAILURE;
+    }
+
+    public StorageResult NoUpdateProduct(Integer productId, Integer productQuantity, Boolean productState)
+    {
+        ProductModelMock product = new ProductModelMock();
+        if(product.getProductQuantity() == productQuantity && product.getEnabled() == productState)
+        {
+            return StorageResult.STORAGE_SUCCESS;
+        }
+        return StorageResult.STORAGE_FAILURE;
     }
 
     @Override
     public Integer getProductQuantity(Integer productId)
     {
+        Integer productQuantity;
+        ProductModelMock product = new ProductModelMock("Bottles", 2, "Steel bottles are available", 10, 35, true, "bottle.jpg");
+        if(productId == product.getProductId())
+        {
+            productQuantity = product.getProductQuantity();
+            return productQuantity;
+        }
         return null;
     }
 
     @Override
     public Integer getTotalOfProducts(HashMap<Integer, Integer> products)
     {
-        return null;
+        Integer total = 0;
+        for(Map.Entry<Integer, Integer> p : products.entrySet())
+        {
+            total += p.getValue();
+        }
+        return total;
+    }
+
+    public Integer getWrongTotalOfProducts(HashMap<Integer, Integer> products)
+    {
+        Integer total = 0;
+        for(Map.Entry<Integer, Integer> p : products.entrySet())
+        {
+            total = 25;
+        }
+        return total;
     }
 }

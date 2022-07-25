@@ -55,20 +55,12 @@ public class HomeController
             return model;
     }
 
-//    @PostMapping("/home")
-//    public ModelAndView addProductIntoCart(@RequestParam Map<String, String> allParams, ModelAndView model) {
-//        try {
-//          //  productModel.addProductToCart(allParams);
-//        } catch (Exception e) {
-//
-//        }
-//        return model;
-//    }
     @PostMapping("/addToCart")
-    public ModelAndView addProductIntoCart(@RequestParam Map<String,String> allParams, ModelAndView model, HttpSession session)
+    public ModelAndView addProductIntoCart(@RequestParam Map<String,String> allParams, ModelAndView model, HttpSession session, SessionService sessionService)
     {
-        if (SessionService.isSessionValid(session) == false) {
-            ModelAndView modelAndView = new ModelAndView("redirect:/login");
+        if (sessionService.isUserInSession(session) == false || sessionService.isSessionValid(session) == false)
+        {
+            ModelAndView modelAndView = new ModelAndView("redirect:/logout");
             return modelAndView;
         }
         try
