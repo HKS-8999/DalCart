@@ -1,11 +1,11 @@
 package dalcart.app.controllers;
 
-import dalcart.app.Factories.IProductModelFactory;
-import dalcart.app.Factories.IProductPersistenceFactory;
-import dalcart.app.Factories.ProductModelFactory;
-import dalcart.app.Factories.ProductPersistenceFactory;
-import dalcart.app.Repository.ConnectionManager;
-import dalcart.app.Repository.IProductPersistence;
+import dalcart.app.models.Factories.IProductModelFactory;
+import dalcart.app.models.Factories.IProductPersistenceFactory;
+import dalcart.app.models.Factories.ProductModelFactory;
+import dalcart.app.models.Factories.ProductPersistenceFactory;
+import dalcart.app.models.Repository.ConnectionManager;
+import dalcart.app.models.Repository.IProductPersistence;
 import dalcart.app.models.IProductModel;
 import dalcart.app.models.SessionService;
 import org.springframework.stereotype.Controller;

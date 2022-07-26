@@ -1,8 +1,8 @@
 package dalcart.app.repository;
 
-import dalcart.app.Factories.IProductModelFactory;
-import dalcart.app.Factories.ProductModelFactory;
-import dalcart.app.Repository.IProductPersistence;
+import dalcart.app.models.Factories.IProductModelFactory;
+import dalcart.app.models.Factories.ProductModelFactory;
+import dalcart.app.models.Repository.IProductPersistence;
 import dalcart.app.models.IProductModel;
 
 import java.util.ArrayList;

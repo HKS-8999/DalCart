@@ -1,6 +1,6 @@
 package dalcart.app.models;
 
-import dalcart.app.Repository.IPaymentPersistence;
+import dalcart.app.models.Repository.IPaymentPersistence;
 
 public class PaymentModel {
     private String cardNumber;

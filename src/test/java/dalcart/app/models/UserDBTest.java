@@ -1,7 +1,8 @@
 package dalcart.app.models;
 
-import dalcart.app.Factories.*;
-import dalcart.app.Repository.IUserPersistence;
+import dalcart.app.models.Factories.IUserFactory;
+import dalcart.app.models.Factories.UserFactory;
+import dalcart.app.models.Repository.IUserPersistence;
 import dalcart.app.repository.UserPersistenceMock;
 import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;

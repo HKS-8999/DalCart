@@ -1,8 +1,8 @@
 package dalcart.app.controllers;
 
-import dalcart.app.Factories.*;
-import dalcart.app.Repository.*;
 import dalcart.app.models.*;
+import dalcart.app.models.Factories.*;
+import dalcart.app.models.Repository.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;

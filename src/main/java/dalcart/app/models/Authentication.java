@@ -1,10 +1,10 @@
 package dalcart.app.models;
 
-import dalcart.app.Repository.IUserPersistence;
-import dalcart.app.models.Security.EmailAndPasswordAuthenticate;
-import dalcart.app.models.Security.EmailAuthenticate;
-import dalcart.app.models.Security.PasswordAuthenticate;
-import dalcart.app.models.Security.Security;
+import dalcart.app.models.Repository.IUserPersistence;
+import dalcart.app.models.SecurityChain.EmailAndPasswordAuthenticate;
+import dalcart.app.models.SecurityChain.EmailAuthenticate;
+import dalcart.app.models.SecurityChain.PasswordAuthenticate;
+import dalcart.app.models.SecurityChain.Security;
 
 public class Authentication implements IAuthenticate {
     Security handler;

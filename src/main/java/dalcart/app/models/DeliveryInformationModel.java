@@ -1,12 +1,16 @@
 package dalcart.app.models;
 
-import dalcart.app.Repository.IDeliveryInformationPersistence;
+import dalcart.app.models.Repository.IDeliveryInformationPersistence;
 
 public class DeliveryInformationModel {
     private String name;
     private String email;
     private String address;
     private String mobileNumber;
+
+    public DeliveryInformationModel(){
+
+    }
 
     public DeliveryInformationModel(String name, String email, String address, String mobileNumber) {
         this.name = name;

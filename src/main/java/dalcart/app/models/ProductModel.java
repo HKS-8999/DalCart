@@ -1,6 +1,6 @@
 package dalcart.app.models;
 
-import dalcart.app.Repository.IProductPersistence;
+import dalcart.app.models.Repository.IProductPersistence;
 
 import java.util.ArrayList;
 import java.util.HashMap;

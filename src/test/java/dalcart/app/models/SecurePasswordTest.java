@@ -1,7 +1,7 @@
 package dalcart.app.models;
 
-import dalcart.app.Factories.IUserFactory;
-import dalcart.app.Factories.UserFactory;
+import dalcart.app.models.Factories.IUserFactory;
+import dalcart.app.models.Factories.UserFactory;
 import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
