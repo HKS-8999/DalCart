@@ -11,9 +11,10 @@ public class EmailAndPasswordAuthenticate extends Security {
 
     private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
     @Override
-    protected RESULT authenticateProtocol(IUser user) {
-        boolean isPasswordCorrect = bCryptPasswordEncoder.matches(super.password,user.getPassword());
-        System.out.println(isPasswordCorrect);
+    protected RESULT authenticateProtocol(IUser user)
+    {
+        user.loadUserAttributes(userPersistence);
+        boolean isPasswordCorrect = bCryptPasswordEncoder.matches(super.password, user.getPassword());
         if (user.getEmail().equals(super.email)  && isPasswordCorrect)
         {
             return RESULT.AUTHORIZED;

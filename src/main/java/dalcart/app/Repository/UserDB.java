@@ -1,5 +1,7 @@
 package dalcart.app.Repository;
 
+import dalcart.app.Factories.IUserFactory;
+import dalcart.app.Factories.UserFactory;
 import dalcart.app.models.IUser;
 import dalcart.app.models.User;
 import org.springframework.stereotype.Repository;
@@ -79,12 +81,10 @@ public class UserDB implements IUserPersistence {
     public IUser loadUserAttributesbyUsername(String email) {
         String query = "select * from user where email = ?;";
         try {
-            String result = null;
-            IUser user = new User();
-
+            IUserFactory userFactory = new UserFactory();
+            IUser user = userFactory.createUser();
             preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(query);
             preparedStatement.setString(1, email);
-            System.out.println(preparedStatement);
             resultset = preparedStatement.executeQuery();
             while (resultset.next()) {
                 int userID = resultset.getInt("id");
@@ -102,8 +102,8 @@ public class UserDB implements IUserPersistence {
                 user.setEmail(emailID);
                 user.setDesignation(designation);
             }
-
             return user;
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

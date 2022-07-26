@@ -27,6 +27,7 @@ public class CheckoutController
     @GetMapping("/cart")
     public ModelAndView listgetproducts (ModelAndView model, HttpSession session, SessionService sessionService) throws IOException
     {
+
         if (sessionService.isUserInSession(session) == false || sessionService.isSessionValid(session) == false)
         {
             ModelAndView modelAndView = new ModelAndView("redirect:/logout");
@@ -130,7 +131,11 @@ public class CheckoutController
             String address = allParams.get("address");
             String mobileNumber = allParams.get("phone");
             Integer userId = (Integer) session.getAttribute("user");
+
+            OrderDB db = new OrderDB();
+
             IOrderModel order = db.findOrderInCartByUserId(userId);
+
             Integer orderId =order.getOrderId();
             IDeliveryInformationModelFactory deliveryInformationModelFactory = new DeliveryInformationModelFactory();
             DeliveryInformationModel deliveryInformationModel = deliveryInformationModelFactory.createDeliveryInformation(name, email, address, mobileNumber);
@@ -180,6 +185,5 @@ public class CheckoutController
             throw new RuntimeException(e);
         }
     }
-
 
 }

@@ -10,7 +10,8 @@ public class PasswordAuthenticate extends Security {
 
     @Override
     protected RESULT authenticateProtocol(IUser user) {
-        if (super.password == null || super.password.trim().isEmpty() || user.getPassword() == null || user.getPassword().trim().isEmpty()) {
+        user.loadUserAttributes(userPersistence);
+        if (super.password == null || user.getPassword() == null || super.password.trim().isEmpty() || user.getPassword().trim().isEmpty()) {
             return RESULT.PASSWORD_INVALID;
         }
         return super.passToNext(user);

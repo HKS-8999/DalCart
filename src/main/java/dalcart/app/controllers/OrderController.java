@@ -22,7 +22,6 @@ import java.sql.SQLException;
 import java.util.Map;
 @Controller
 @RequestMapping(value = {"/order"})
-@Component
 public class OrderController
 {
     public void addToOrder(IUser user, IProductModel[] products) throws SQLException
@@ -51,7 +50,8 @@ public class OrderController
             System.out.println("Order ID: " + orderId);
             IProductPersistenceFactory productPersistenceFactory = new ProductPersistenceFactory();
             IProductPersistence productDB = productPersistenceFactory.createIProductPersistence();
-            for (IProductModel product : products) {
+            for (IProductModel product : products)
+            {
                 System.out.println("Product ID:" + product.getProductId());
                 //product.updateProduct(product.getProductId(),product.getProductQuantity()-1,product.getEnabled(), productDB);
                 OrderProductsDB.saveOrderProduct(orderId, product.getProductId());
@@ -61,13 +61,12 @@ public class OrderController
     }
 
     @PostMapping("/submit_order")
-    @ResponseBody
     public String submitOrder(@RequestParam Map<String,String> allParams, ModelAndView model, HttpSession session, SessionService sessionService, RedirectAttributes atts) throws SQLException {
         //process the order at cart stage
         //process the order at address stage
         //process the order at payment stage
         UserDB userdb = new UserDB();
-        Integer userId = (Integer) session.getAttribute("user");
+        int userId = (int) session.getAttribute("user");
         IOrderModel currentOrder = OrderModel.getOrderByUserId(userId);
 //        CheckoutController checkoutController = new CheckoutController();
 //        if(checkoutController.validateAndPlaceOrder(allParams, model, session, sessionService, atts))

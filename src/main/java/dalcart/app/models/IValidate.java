@@ -5,6 +5,8 @@ public interface IValidate {
     public boolean isPasswordValid(IUser user);
 
     public boolean isMobileNumberValid(IUser user);
-    public boolean isFirstNameAndLastNameValid(IUser user);
+    public boolean isFirstNameValid(IUser user);
+    public boolean isLastNameValid(IUser user);
+
 
 }
