@@ -68,6 +68,7 @@ public class OrderController
         //process the order at cart stage
         //process the order at address stage
         //process the order at payment stage
+        System.out.println("Inside.....");
         UserDB userdb = new UserDB();
         OrderState orderAtPayment = new OrderAtPayment();
         OrderState orderComplete = new OrderAtComplete();
@@ -78,6 +79,7 @@ public class OrderController
         OrderDB db = new OrderDB();
         IOrderModel order = db.findOrderInCartByUserId(userId);
         Integer orderId =order.getOrderId();
+        System.out.println(orderId);
 
         CheckoutController checkoutController = new CheckoutController();
         db.changeStateOfOrder("address", orderId);
