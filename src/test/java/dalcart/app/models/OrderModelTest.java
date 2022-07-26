@@ -1,7 +1,6 @@
 package dalcart.app.models;
 
 import dalcart.app.Repository.OrderDB;
-import dalcart.app.repository.OrderDBMock;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
@@ -17,7 +16,6 @@ public class OrderModelTest {
         order.setOrderId(999);
         Assertions.assertEquals(999, order.getOrderId());
     }
-
     @Test
     public void getOrderByUserIdTest() {
         IOrderModel retrivedOrder = OrderDB.findByUserId(-1);
@@ -27,5 +25,4 @@ public class OrderModelTest {
         retrivedOrder = OrderDB.findByUserId(0);
         Assertions.assertEquals(null, retrivedOrder);
     }
-
 }

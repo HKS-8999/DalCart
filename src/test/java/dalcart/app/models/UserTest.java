@@ -4,32 +4,30 @@ import dalcart.app.Factories.IUserFactory;
 import dalcart.app.Factories.UserFactory;
 import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 @SpringBootTest
-public class UserTest
-{
+public class UserTest {
     IUserFactory userFactory = new UserFactory();
+
     @Test
-    public void setUserIdSuccessTest()
-    {
+    public void setUserIdSuccessTest() {
         IUser user = userFactory.createUser();
         user.setUserID(2);
         assertEquals(2, user.getUserID());
     }
 
     @Test
-    public void setUserIdFailureTest()
-    {
+    public void setUserIdFailureTest() {
         IUser user = userFactory.createUser();
         user.setUserID(2);
         assertNotEquals(3, user.getUserID());
     }
 
     @Test
-    public void getUserIdSuccessTest()
-    {
+    public void getUserIdSuccessTest() {
         IUser user = userFactory.createUser();
         user.setUserID(2);
         user.setUserID(3);
@@ -37,8 +35,7 @@ public class UserTest
     }
 
     @Test
-    public void getUserIdFailureTest()
-    {
+    public void getUserIdFailureTest() {
         IUser user = userFactory.createUser();
         user.setUserID(3);
         user.setUserID(2);
@@ -46,24 +43,21 @@ public class UserTest
     }
 
     @Test
-    public void setEmailSuccessTest()
-    {
+    public void setEmailSuccessTest() {
         IUser user = userFactory.createUser();
         user.setEmail("test@dal.ca");
         assertEquals("test@dal.ca", user.getEmail());
     }
 
     @Test
-    public void setEmailFailureTest()
-    {
+    public void setEmailFailureTest() {
         IUser user = userFactory.createUser();
         user.setEmail("test@dal.ca");
         assertNotEquals("test1@dal.ca", user.getEmail());
     }
 
     @Test
-    public void getEmailValidTest()
-    {
+    public void getEmailValidTest() {
         IUser user = userFactory.createUser();
         user.setEmail("test@dal.ca");
         user.setEmail("test1@dal.ca");
@@ -71,8 +65,7 @@ public class UserTest
     }
 
     @Test
-    public void getEmailInvalidTest()
-    {
+    public void getEmailInvalidTest() {
         IUser user = userFactory.createUser();
         user.setEmail("test@dal.ca");
         user.setEmail("test1@dal.ca");
@@ -80,24 +73,21 @@ public class UserTest
     }
 
     @Test
-    public void setFirstNameSuccessTest()
-    {
+    public void setFirstNameSuccessTest() {
         IUser user = userFactory.createUser();
         user.setFirstName("Harsh");
         assertEquals("Harsh", user.getFirstName());
     }
 
     @Test
-    public void setFirstNameFailureTest()
-    {
+    public void setFirstNameFailureTest() {
         IUser user = userFactory.createUser();
         user.setFirstName("Harsh");
         assertNotEquals("Ram", user.getFirstName());
     }
 
     @Test
-    public void getFirstNameSuccessTest()
-    {
+    public void getFirstNameSuccessTest() {
         IUser user = userFactory.createUser();
         user.setFirstName("Harsh");
         user.setFirstName("Ram");
@@ -105,8 +95,7 @@ public class UserTest
     }
 
     @Test
-    public void getFirstNameFailureTest()
-    {
+    public void getFirstNameFailureTest() {
         IUser user = userFactory.createUser();
         user.setFirstName("Harsh");
         user.setFirstName("Ram");
@@ -114,24 +103,21 @@ public class UserTest
     }
 
     @Test
-    public void setLastNameSuccessTest()
-    {
+    public void setLastNameSuccessTest() {
         IUser user = userFactory.createUser();
         user.setLastName("Shah");
         assertEquals("Shah", user.getLastName());
     }
 
     @Test
-    public void setLastNameFailureTest()
-    {
+    public void setLastNameFailureTest() {
         IUser user = userFactory.createUser();
         user.setLastName("Shah");
         assertNotEquals("Patel", user.getLastName());
     }
 
     @Test
-    public void getLastNameSuccessTest()
-    {
+    public void getLastNameSuccessTest() {
         IUser user = userFactory.createUser();
         user.setLastName("Shah");
         user.setLastName("Patel");
@@ -139,8 +125,7 @@ public class UserTest
     }
 
     @Test
-    public void getLastNameFailureTest()
-    {
+    public void getLastNameFailureTest() {
         IUser user = userFactory.createUser();
         user.setLastName("Shah");
         user.setLastName("Patel");
@@ -148,24 +133,21 @@ public class UserTest
     }
 
     @Test
-    public void setPasswordSuccessTest()
-    {
+    public void setPasswordSuccessTest() {
         IUser user = userFactory.createUser();
         user.setPassword("Test12345");
         assertEquals("Test12345", user.getPassword());
     }
 
     @Test
-    public void setPasswordFailureTest()
-    {
+    public void setPasswordFailureTest() {
         IUser user = userFactory.createUser();
         user.setPassword("Test12345");
         assertNotEquals("Test123456", user.getPassword());
     }
 
     @Test
-    public void getPasswordSuccessTest()
-    {
+    public void getPasswordSuccessTest() {
         IUser user = userFactory.createUser();
         user.setPassword("Test12345");
         user.setPassword("Test123456");
@@ -173,8 +155,7 @@ public class UserTest
     }
 
     @Test
-    public void getPasswordFailureTest()
-    {
+    public void getPasswordFailureTest() {
         IUser user = userFactory.createUser();
         user.setPassword("Test12345");
         user.setPassword("Test123456");
@@ -182,24 +163,21 @@ public class UserTest
     }
 
     @Test
-    public void setMobileNoSuccessTest()
-    {
+    public void setMobileNoSuccessTest() {
         IUser user = userFactory.createUser();
         user.setMobileNo("7227098999");
         assertEquals("7227098999", user.getMobileNo());
     }
 
     @Test
-    public void setMobileNoFailureTest()
-    {
+    public void setMobileNoFailureTest() {
         IUser user = userFactory.createUser();
         user.setMobileNo("7227098999");
         assertNotEquals("07227098999", user.getMobileNo());
     }
 
     @Test
-    public void getMobileNoSuccessTest()
-    {
+    public void getMobileNoSuccessTest() {
         IUser user = userFactory.createUser();
         user.setMobileNo("7227098999");
         user.setMobileNo("07227098999");
@@ -207,8 +185,7 @@ public class UserTest
     }
 
     @Test
-    public void getMobileNoFailureTest()
-    {
+    public void getMobileNoFailureTest() {
         IUser user = userFactory.createUser();
         user.setMobileNo("7227098999");
         user.setMobileNo("07227098999");
@@ -216,24 +193,21 @@ public class UserTest
     }
 
     @Test
-    public void setDesignationSuccessTest()
-    {
+    public void setDesignationSuccessTest() {
         IUser user = userFactory.createUser();
         user.setDesignation("admin");
         assertEquals("admin", user.getDesignation());
     }
 
     @Test
-    public void setDesignationFailureTest()
-    {
+    public void setDesignationFailureTest() {
         IUser user = userFactory.createUser();
         user.setDesignation("admin");
         assertNotEquals("user", user.getDesignation());
     }
 
     @Test
-    public void getDesignationSuccessTest()
-    {
+    public void getDesignationSuccessTest() {
         IUser user = userFactory.createUser();
         user.setDesignation("admin");
         user.setDesignation("user");
@@ -241,8 +215,7 @@ public class UserTest
     }
 
     @Test
-    public void getDesignationFailureTest()
-    {
+    public void getDesignationFailureTest() {
         IUser user = userFactory.createUser();
         user.setDesignation("admin");
         user.setDesignation("user");

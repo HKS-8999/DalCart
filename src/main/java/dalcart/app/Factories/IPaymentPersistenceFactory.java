@@ -4,5 +4,5 @@ import dalcart.app.Repository.IPaymentPersistence;
 
 public interface IPaymentPersistenceFactory
 {
-    public IPaymentPersistence createIPaymentPersistence();
+    IPaymentPersistence createIPaymentPersistence();
 }

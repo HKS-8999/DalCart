@@ -11,12 +11,11 @@ import java.sql.*;
 @Repository
 public class UserDB implements IUserPersistence {
     private static final String DEFAULT_ROLE = "user";
-    ResultSet resultset;
+    private ResultSet resultset;
 
-    PreparedStatement preparedStatement;
+    private PreparedStatement preparedStatement;
 
     public UserDB() {
-
     }
     @Override
     public boolean save(IUser u) throws Exception

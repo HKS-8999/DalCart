@@ -16,10 +16,10 @@ import java.util.Map;
 @Repository
 public class ProductDB implements IProductPersistence
 {
-    Statement statement;
-    ResultSet resultSet;
-    PreparedStatement preparedStatement;
-    String tableName = "products";
+    private Statement statement;
+    private ResultSet resultSet;
+    private PreparedStatement preparedStatement;
+    private String tableName = "products";
     public ProductDB()
     {
     }

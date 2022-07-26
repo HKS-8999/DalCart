@@ -13,12 +13,12 @@ public class UserDBTest {
     IUserFactory userFactory = new UserFactory();
     @Test
     public void loadUserByEmailValidTest(){
-        String email = "harsh@gmail.com";
+        String email = "harsh@dal.ca";
         IUser user = userFactory.createUser();
         user.setEmail(email);
         IUserPersistence userPersistence = new UserPersistenceMock();
         user.loadUserAttributes(userPersistence);
-        assertEquals(email, user.getEmail());
+        assertEquals(1, user.getUserID());
     }
 
     @Test

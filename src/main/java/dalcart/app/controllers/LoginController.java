@@ -4,10 +4,14 @@ import dalcart.app.Factories.*;
 import dalcart.app.Repository.IUserPersistence;
 import dalcart.app.models.*;
 import dalcart.app.models.Security.Security;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
+
 import org.springframework.web.bind.annotation.PostMapping;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
+
+import org.springframework.web.bind.annotation.GetMapping;
+
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,9 +36,8 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public ModelAndView login(@ModelAttribute User user, HttpServletRequest request) {
-        System.out.println(user.getEmail());
-        System.out.println(user.getPassword());
+    public ModelAndView login(@ModelAttribute User user, HttpServletRequest request)
+    {
         HttpSession session = request.getSession();
         userPersistanceFactory = new UserPersistanceFactory();
         securityFactory = new SecurityFactory();
@@ -43,7 +46,6 @@ public class LoginController {
         ISecurePassword securePassword = securityFactory.createSecurePassword();
         IValidate validate = validateFactory.createValidations();
         IAuthenticate authentication = securityFactory.createSecurity(iUserPersistence, user);
-
         if (validate.isPasswordValid(user) && validate.isUserNameValid(user)) {
             securePassword.encrypt(user);
             if (authentication.authenticate(user).equals(Security.RESULT.AUTHORIZED)) {
@@ -54,7 +56,9 @@ public class LoginController {
                     session.setAttribute("user", user.getUserID());
                     return new ModelAndView("redirect:/home");
                 }
-            } else {
+            }
+            else
+            {
                 return new ModelAndView("invalidUsernameandPassword");
             }
         }
@@ -62,8 +66,8 @@ public class LoginController {
     }
 
     @GetMapping("/logout")
-    public String logout(HttpServletRequest request) {
+    public ModelAndView logout(HttpServletRequest request) {
         request.getSession().invalidate();
-        return "redirect:/login";
+        return new ModelAndView("redirect:/login");
     }
 }

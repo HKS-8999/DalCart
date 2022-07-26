@@ -9,6 +9,5 @@ public interface IDeliveryInformationPersistence
         STORAGE_FAILURE,
         STORAGE_SUCCESS
     }
-
-    public StorageResult saveDeliveryInformation(DeliveryInformationModel deliveryInformationModel, Integer orderId);
+    StorageResult saveDeliveryInformation(DeliveryInformationModel deliveryInformationModel, Integer orderId);
 }

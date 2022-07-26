@@ -5,14 +5,15 @@ import dalcart.app.Factories.UserFactory;
 import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 @SpringBootTest
 public class SecurePasswordTest {
     IUserFactory iUserFactory = new UserFactory();
+
     @Test
-    public void encryptSuccessTest(){
+    public void encryptSuccessTest() {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         ISecurePassword securePassword = new SecurePassword();
         IUser user = iUserFactory.createUser();
@@ -24,7 +25,7 @@ public class SecurePasswordTest {
     }
 
     @Test
-    public void encryptFailureTest(){
+    public void encryptFailureTest() {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         IUser user = iUserFactory.createUser();
         String password = "Test12345";

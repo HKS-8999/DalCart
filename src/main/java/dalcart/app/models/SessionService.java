@@ -1,12 +1,10 @@
 package dalcart.app.models;
 
-import com.fasterxml.jackson.databind.util.ArrayIterator;
 import dalcart.app.Repository.IUserPersistence;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
 import java.util.Enumeration;
-import java.util.Iterator;
 
 @Service
 public class SessionService implements ISession {
@@ -29,7 +27,7 @@ public class SessionService implements ISession {
 
     public boolean isAdminInSession(HttpSession session) {
         Enumeration<String> names = session.getAttributeNames();
-        while(names.hasMoreElements()){
+        while (names.hasMoreElements()) {
             if (names.nextElement().equals(adminRole)) {
                 return true;
             }
@@ -45,7 +43,7 @@ public class SessionService implements ISession {
                     return true;
                 }
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return false;

@@ -5,7 +5,6 @@ import dalcart.app.Repository.IDeliveryInformationPersistence;
 
 public class DeliveryInformationAddressPersistenceFactory implements IDeliveryAddressPersistenceFactory
 {
-
     @Override
     public IDeliveryInformationPersistence createIDeliveryInformationPersistence()
     {

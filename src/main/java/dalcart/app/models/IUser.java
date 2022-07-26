@@ -50,12 +50,12 @@ public abstract class IUser {
         this.mobileNo = mobileNo;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getEmail() {
         return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getDesignation() {
@@ -66,11 +66,11 @@ public abstract class IUser {
         this.designation = designation;
     }
 
-    public Integer getUserID(){
+    public Integer getUserID() {
         return this.userID;
     }
 
-    public void setUserID(int userID){
+    public void setUserID(int userID) {
         this.userID = userID;
     }
 

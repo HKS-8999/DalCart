@@ -14,7 +14,6 @@ import java.util.ArrayList;
 public
 class OrderDB  {
 
-    Connection connection;
     static PreparedStatement preparedStatement;
     static Statement statement;
     static String tableName = "orders";
@@ -30,7 +29,6 @@ class OrderDB  {
         }else if(state.equals("complete")){
             return (new OrderAtComplete());
         }
-        //if there is no state we should consider that it is in cart state
         return (new OrderAtCart());
     }
 
@@ -93,9 +91,7 @@ class OrderDB  {
 
     public static IOrderModel findByUserId(int userId){
         if(userId > 0) {
-            //ArrayList<IProductModel> product_detail = new ArrayList<>();
             try {
-
                 String query = "select * from orders where user_id = " + userId + " and state != 'complete' order by created_at desc limit 1";
                 Statement statement = ConnectionManager.getInstance().getConnection().createStatement();
                 ResultSet resultSet = statement.executeQuery(query);
@@ -110,7 +106,6 @@ class OrderDB  {
                 if (resultSetNotEmpty) {
                     return order;
                 }
-
             } catch (SQLException e) {
                 e.printStackTrace();
             }

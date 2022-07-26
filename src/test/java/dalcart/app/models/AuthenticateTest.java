@@ -1,7 +1,9 @@
 package dalcart.app.models;
 
-import dalcart.app.Factories.*;
-import dalcart.app.Repository.IUserPersistence;
+import dalcart.app.Factories.ISecurityFactory;
+import dalcart.app.Factories.IUserFactory;
+import dalcart.app.Factories.SecurityFactory;
+import dalcart.app.Factories.UserFactory;
 import dalcart.app.models.Security.Security;
 import dalcart.app.repository.UserPersistenceMock;
 import org.junit.Test;
@@ -14,7 +16,7 @@ import static org.junit.Assert.assertNotEquals;
 public class AuthenticateTest {
 
     @Test
-    public void authenticateSuccessTest(){
+    public void authenticateSuccessTest() {
         IUserFactory userFactory = new UserFactory();
         IUser user = userFactory.createUser();
         ISecurityFactory securityFactory = new SecurityFactory();
@@ -26,7 +28,7 @@ public class AuthenticateTest {
     }
 
     @Test
-    public void authenticateNullUsernameFailureTest(){
+    public void authenticateNullUsernameFailureTest() {
         IUserFactory userFactory = new UserFactory();
         IUser user = userFactory.createUser();
         ISecurityFactory securityFactory = new SecurityFactory();
@@ -38,7 +40,7 @@ public class AuthenticateTest {
     }
 
     @Test
-    public void authenticateEmptyUsernameFailureTest(){
+    public void authenticateEmptyUsernameFailureTest() {
         IUserFactory userFactory = new UserFactory();
         IUser user = userFactory.createUser();
         ISecurityFactory securityFactory = new SecurityFactory();
@@ -50,7 +52,7 @@ public class AuthenticateTest {
     }
 
     @Test
-    public void authenticateInvalidUsernameFailureTest(){
+    public void authenticateInvalidUsernameFailureTest() {
         IUserFactory userFactory = new UserFactory();
         IUser user = userFactory.createUser();
         ISecurityFactory securityFactory = new SecurityFactory();
@@ -62,7 +64,7 @@ public class AuthenticateTest {
     }
 
     @Test
-    public void authenticateInvalidPasswordFailureTest(){
+    public void authenticateInvalidPasswordFailureTest() {
         IUserFactory userFactory = new UserFactory();
         IUser user = userFactory.createUser();
         ISecurityFactory securityFactory = new SecurityFactory();
@@ -74,7 +76,7 @@ public class AuthenticateTest {
     }
 
     @Test
-    public void authenticateNullPasswordFailureTest(){
+    public void authenticateNullPasswordFailureTest() {
         IUserFactory userFactory = new UserFactory();
         IUser user = userFactory.createUser();
         ISecurityFactory securityFactory = new SecurityFactory();
@@ -86,7 +88,7 @@ public class AuthenticateTest {
     }
 
     @Test
-    public void authenticateEmptyPasswordFailureTest(){
+    public void authenticateEmptyPasswordFailureTest() {
         IUserFactory userFactory = new UserFactory();
         IUser user = userFactory.createUser();
         ISecurityFactory securityFactory = new SecurityFactory();
@@ -98,7 +100,7 @@ public class AuthenticateTest {
     }
 
     @Test
-    public void authenticateInvalidUsernamePasswordFailureTest(){
+    public void authenticateInvalidUsernamePasswordFailureTest() {
         IUserFactory userFactory = new UserFactory();
         IUser user = userFactory.createUser();
         ISecurityFactory securityFactory = new SecurityFactory();

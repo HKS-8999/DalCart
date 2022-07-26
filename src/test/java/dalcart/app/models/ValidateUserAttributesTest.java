@@ -5,17 +5,16 @@ import dalcart.app.Factories.UserFactory;
 import dalcart.app.Factories.ValidateFactory;
 import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-public class ValidateUserAttributesTest
-{
+public class ValidateUserAttributesTest {
     IUserFactory iUserFactory = new UserFactory();
     ValidateFactory validateFactory = new ValidateFactory();
 
     @Test
-    public void isUserNameValidSuccessTest()
-    {
+    public void isUserNameValidSuccessTest() {
         IValidate validateUserAttributes = validateFactory.createValidations();
         IUser user = iUserFactory.createUser();
         user.setEmail("harshs893@dal.ca");
@@ -23,7 +22,7 @@ public class ValidateUserAttributesTest
     }
 
     @Test
-    public void nullUserNameValidFailureTest(){
+    public void nullUserNameValidFailureTest() {
         IValidate validate = validateFactory.createValidations();
         IUser user = iUserFactory.createUser();
         user.setEmail(null);
@@ -31,7 +30,7 @@ public class ValidateUserAttributesTest
     }
 
     @Test
-    public void emptyUserNameValidFailureTest(){
+    public void emptyUserNameValidFailureTest() {
         IValidate validate = validateFactory.createValidations();
         IUser user = iUserFactory.createUser();
         user.setEmail("");
@@ -39,7 +38,7 @@ public class ValidateUserAttributesTest
     }
 
     @Test
-    public void isUserNameValidFailureTest(){
+    public void isUserNameValidFailureTest() {
         IValidate validate = validateFactory.createValidations();
         IUser user = iUserFactory.createUser();
         user.setEmail("harsh");
@@ -47,28 +46,31 @@ public class ValidateUserAttributesTest
     }
 
     @Test
-    public void isPasswordValidSuccessTest(){
+    public void isPasswordValidSuccessTest() {
         IValidate validate = validateFactory.createValidations();
         IUser user = iUserFactory.createUser();
         user.setPassword("Test12345");
         assertEquals(true, validate.isPasswordValid(user));
     }
+
     @Test
-    public void isNullPasswordValidFailureTest(){
+    public void isNullPasswordValidFailureTest() {
         IValidate validate = validateFactory.createValidations();
         IUser user = iUserFactory.createUser();
         user.setPassword(null);
         assertEquals(false, validate.isPasswordValid(user));
     }
+
     @Test
-    public void isEmptyPasswordValidFailureTest(){
+    public void isEmptyPasswordValidFailureTest() {
         IValidate validate = validateFactory.createValidations();
         IUser user = iUserFactory.createUser();
         user.setPassword("");
         assertEquals(false, validate.isPasswordValid(user));
     }
+
     @Test
-    public void isPasswordValidFailureTest(){
+    public void isPasswordValidFailureTest() {
         IValidate validate = validateFactory.createValidations();
         IUser user = iUserFactory.createUser();
         user.setPassword("pass");
@@ -76,14 +78,15 @@ public class ValidateUserAttributesTest
     }
 
     @Test
-    public void isMobileNumberValidSuccessTest(){
+    public void isMobileNumberValidSuccessTest() {
         IValidate validate = validateFactory.createValidations();
         IUser user = iUserFactory.createUser();
         user.setMobileNo("1234567890");
         assertEquals(true, validate.isMobileNumberValid(user));
     }
+
     @Test
-    public void isMobileNumberValidFailureTest(){
+    public void isMobileNumberValidFailureTest() {
         IValidate validate = validateFactory.createValidations();
         IUser user = iUserFactory.createUser();
         user.setMobileNo("1234567");
@@ -91,8 +94,7 @@ public class ValidateUserAttributesTest
     }
 
     @Test
-    public void isFirstNameValidSuccessTest()
-    {
+    public void isFirstNameValidSuccessTest() {
         IValidate validate = validateFactory.createValidations();
         IUser user = iUserFactory.createUser();
         user.setFirstName("Harsh");
@@ -100,25 +102,25 @@ public class ValidateUserAttributesTest
         assertEquals(true, validate.isFirstNameValid(user));
 
     }
+
     @Test
-    public void isEmptyFirstNameValidFailureTest()
-    {
+    public void isEmptyFirstNameValidFailureTest() {
         IValidate validate = validateFactory.createValidations();
         IUser user = iUserFactory.createUser();
         user.setFirstName("");
         assertEquals(false, validate.isFirstNameValid(user));
     }
+
     @Test
-    public void isNullFirstNameValidFailureTest()
-    {
+    public void isNullFirstNameValidFailureTest() {
         IValidate validate = validateFactory.createValidations();
         IUser user = iUserFactory.createUser();
         user.setFirstName(null);
         assertEquals(false, validate.isFirstNameValid(user));
     }
+
     @Test
-    public void isFirstNameValidFailureTest()
-    {
+    public void isFirstNameValidFailureTest() {
         IValidate validate = validateFactory.createValidations();
         IUser user = iUserFactory.createUser();
         user.setFirstName("   ");
@@ -126,8 +128,7 @@ public class ValidateUserAttributesTest
     }
 
     @Test
-    public void isLastNameValidSuccessTest()
-    {
+    public void isLastNameValidSuccessTest() {
         IValidate validate = validateFactory.createValidations();
         IUser user = iUserFactory.createUser();
         user.setLastName("Shah");
@@ -135,25 +136,25 @@ public class ValidateUserAttributesTest
         assertEquals(true, validate.isLastNameValid(user));
 
     }
+
     @Test
-    public void isEmptyLastNameValidFailureTest()
-    {
+    public void isEmptyLastNameValidFailureTest() {
         IValidate validate = validateFactory.createValidations();
         IUser user = iUserFactory.createUser();
         user.setLastName("");
         assertEquals(false, validate.isLastNameValid(user));
     }
+
     @Test
-    public void isNullLastNameValidFailureTest()
-    {
+    public void isNullLastNameValidFailureTest() {
         IValidate validate = validateFactory.createValidations();
         IUser user = iUserFactory.createUser();
         user.setLastName(null);
         assertEquals(false, validate.isLastNameValid(user));
     }
+
     @Test
-    public void isLastNameValidFailureTest()
-    {
+    public void isLastNameValidFailureTest() {
         IValidate validate = validateFactory.createValidations();
         IUser user = iUserFactory.createUser();
         user.setLastName("   ");

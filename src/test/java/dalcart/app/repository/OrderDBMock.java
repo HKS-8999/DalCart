@@ -29,7 +29,6 @@ public class OrderDBMock  {
         }else if(state.equals("complete")){
             return (new OrderAtComplete());
         }
-        //if there is no state we should consider that it is in cart state
         return (new OrderAtCart());
     }
 
