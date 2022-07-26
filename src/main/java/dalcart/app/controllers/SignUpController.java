@@ -31,7 +31,8 @@ public class SignUpController
     public ModelAndView submitForm(@ModelAttribute User newUser)
     {
         ModelAndView modelAndView = new ModelAndView();
-        try {
+        try
+        {
             userFactory = new UserFactory();
             IUser user;
             userPersistence = new UserPersistanceFactory();
@@ -41,13 +42,16 @@ public class SignUpController
             securityFactory = new SecurityFactory();
             ISecurePassword securePassword = securityFactory.createSecurePassword();
 
-            if(validate.isUserNameValid(newUser) && validate.isFirstNameAndLastNameValid(newUser) && validate.isMobileNumberValid(newUser) && validate.isPasswordValid(newUser)) {
+            if(validate.isUserNameValid(newUser) && validate.isFirstNameValid(newUser) && validate.isLastNameValid(newUser) && validate.isMobileNumberValid(newUser) && validate.isPasswordValid(newUser))
+            {
                 user = securePassword.encrypt(newUser);
                 IUserPersistence.Result result = user.createNewUser(newUser, iUserPersistence);
-                if (result.equals(IUserPersistence.Result.SUCCESS)){
+                if (result.equals(IUserPersistence.Result.SUCCESS))
+                {
                     modelAndView.setViewName("redirect:/login");
                 }
-                else{
+                else
+                {
                     throw new SQLException();
                 }
             }
@@ -60,7 +64,6 @@ public class SignUpController
         {
             throw new RuntimeException(e);
         }
-
         return modelAndView;
     }
 }

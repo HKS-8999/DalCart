@@ -47,9 +47,6 @@ public class Main {
   @GetMapping("/get_product_name")
   @ResponseBody
   String db(@RequestParam String id, @RequestParam String userid, @RequestParam String email) {
-    System.out.println(id);
-    System.out.println(userid);
-    System.out.println(email);
    HashMap<String, String> map = new HashMap<>();
     map.put("key", "value");
     map.put("foo", "bar");

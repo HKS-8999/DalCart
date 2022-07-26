@@ -1,5 +1,7 @@
 package dalcart.app.models;
 
+import dalcart.app.Factories.IUserFactory;
+import dalcart.app.Factories.UserFactory;
 import dalcart.app.Repository.IUserPersistence;
 import dalcart.app.models.Security.EmailAndPasswordAuthenticate;
 import dalcart.app.models.Security.EmailAuthenticate;
@@ -20,7 +22,7 @@ public class Authentication implements IAuthenticate {
     private void buildChain(IUser user) {
         handler = new EmailAuthenticate(userPersistence,user);
         handler.setNextHandler(new PasswordAuthenticate(userPersistence,user));
-        handler.setNextHandler(new EmailAndPasswordAuthenticate(userPersistence,user));
+        handler.setNextHandler(new EmailAndPasswordAuthenticate(userPersistence, user));
     }
     public Security.RESULT authenticate(IUser user) {
         return handler.authenticate(user);

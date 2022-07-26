@@ -13,7 +13,6 @@ public abstract class Security {
         this.userPersistence = userPersistence;
         this.email = user.getEmail();
         this.password = user.getPassword();
-        user.loadUserAttributes(userPersistence);
     }
 
     public enum RESULT {
@@ -24,7 +23,12 @@ public abstract class Security {
     }
 
     public void setNextHandler(Security nextHandler) {
-        this.nextHandler = nextHandler;
+        if(this.nextHandler == null) {
+            this.nextHandler = nextHandler;
+            return;
+        }
+
+        this.nextHandler.setNextHandler(nextHandler);
     }
     public RESULT authenticate(IUser user) {
         return authenticateProtocol(user);
