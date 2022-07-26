@@ -4,35 +4,38 @@ import dalcart.app.Factories.IProductModelFactory;
 import dalcart.app.Factories.ProductModelFactory;
 import dalcart.app.Repository.IProductPersistence;
 import dalcart.app.models.IProductModel;
-import dalcart.app.models.ProductModelMock;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 public class ProductDBMock implements IProductPersistence
 {
 
     @Override
-    public ArrayList<ProductModelMock> getProductDetails()
+    public ArrayList<IProductModel> getProductDetails()
     {
-        ArrayList<ProductModelMock> product_detail = new ArrayList<>();
-        ProductModelMock product = new ProductModelMock();
+        ArrayList<IProductModel> product_detail = new ArrayList<>();
+        IProductModelFactory factory = new ProductModelFactory();
+        IProductModel product = factory.createProductModel("Book",1,"A4 sized books are available", 5, 25, true, "book.jpg");
+//        ProductModelMock product = new ProductModelMock();
         product_detail.add(product);
         product_detail.add(product);
         return product_detail;
     }
 
-    public ArrayList<ProductModelMock> getNullList()
+    public ArrayList<IProductModel> getNullList()
     {
         return null;
     }
 
-    public ArrayList<ProductModelMock> getProductDetailsForDisplay()
+    public ArrayList<IProductModel> getProductDetailsForDisplay()
     {
-        ArrayList<ProductModelMock> product_detail = new ArrayList<>();
-        ProductModelMock product = new ProductModelMock();
+        ArrayList<IProductModel> product_detail = new ArrayList<>();
+        IProductModelFactory factory = new ProductModelFactory();
+        IProductModel product = factory.createProductModel("Book",1,"A4 sized books are available", 5, 25, true, "book.jpg");
+
+//        ProductModelMock product = new ProductModelMock();
         if(product.getEnabled())
         {
             product_detail.add(product);
@@ -41,10 +44,13 @@ public class ProductDBMock implements IProductPersistence
         return product_detail;
     }
     @Override
-    public ArrayList<ProductModelMock> getProductDetailsForDisplay(String keyword)
+    public ArrayList<IProductModel> getProductDetailsForDisplay(String keyword)
     {
-        ArrayList<ProductModelMock> product_detail = new ArrayList<>();
-        ProductModelMock product = new ProductModelMock();
+        ArrayList<IProductModel> product_detail = new ArrayList<>();
+        IProductModelFactory factory = new ProductModelFactory();
+        IProductModel product = factory.createProductModel("Book",1,"A4 sized books are available", 5, 25, true, "book.jpg");
+
+//        ProductModelMock product = new ProductModelMock();
         String productName = product.getProductName().toLowerCase();
         if(keyword == "" && product.getEnabled())
         {
@@ -59,10 +65,13 @@ public class ProductDBMock implements IProductPersistence
         return product_detail;
     }
 
-    public ArrayList<ProductModelMock> getProductDetailsForDisplayWithNullKeyword()
+    public ArrayList<IProductModel> getProductDetailsForDisplayWithNullKeyword()
     {
-        ArrayList<ProductModelMock> product_detail = new ArrayList<>();
-        ProductModelMock product = new ProductModelMock();
+        ArrayList<IProductModel> product_detail = new ArrayList<>();
+        IProductModelFactory factory = new ProductModelFactory();
+        IProductModel product = factory.createProductModel("Book",1,"A4 sized books are available", 5, 25, true, "book.jpg");
+
+//        ProductModelMock product = new ProductModelMock();
         product_detail.add(product);
         product_detail.add(product);
         return product_detail;
@@ -88,7 +97,10 @@ public class ProductDBMock implements IProductPersistence
     @Override
     public Integer getLastProductId()
     {
-        ProductModelMock product = new ProductModelMock();
+//        ProductModelMock product = new ProductModelMock();
+        IProductModelFactory factory = new ProductModelFactory();
+        IProductModel product = factory.createProductModel("Book",1,"A4 sized books are available", 5, 25, true, "book.jpg");
+
         Integer lastId = product.getProductId();
         return lastId;
     }
@@ -128,7 +140,10 @@ public class ProductDBMock implements IProductPersistence
     @Override
     public StorageResult updateProduct(Integer productId, Integer productQuantity, Boolean productState)
     {
-        ProductModelMock product = new ProductModelMock();
+        IProductModelFactory factory = new ProductModelFactory();
+        IProductModel product = factory.createProductModel("Book",1,"A4 sized books are available", 5, 25, true, "book.jpg");
+
+//        ProductModelMock product = new ProductModelMock();
         product.setProductQuantity(productQuantity);
         product.setEnabled(productState);
         if(product.getProductQuantity() == productQuantity && product.getEnabled() == productState)
@@ -140,7 +155,10 @@ public class ProductDBMock implements IProductPersistence
 
     public StorageResult NoUpdateProduct(Integer productId, Integer productQuantity, Boolean productState)
     {
-        ProductModelMock product = new ProductModelMock();
+//        ProductModelMock product = new ProductModelMock();
+        IProductModelFactory factory = new ProductModelFactory();
+        IProductModel product = factory.createProductModel("Book",1,"A4 sized books are available", 5, 25, true, "book.jpg");
+
         if(product.getProductQuantity() == productQuantity && product.getEnabled() == productState)
         {
             return StorageResult.STORAGE_SUCCESS;
@@ -152,7 +170,10 @@ public class ProductDBMock implements IProductPersistence
     public Integer getProductQuantity(Integer productId)
     {
         Integer productQuantity;
-        ProductModelMock product = new ProductModelMock("Bottles", 2, "Steel bottles are available", 10, 35, true, "bottle.jpg");
+//        ProductModelMock product = new ProductModelMock("Bottles", 2, "Steel bottles are available", 10, 35, true, "bottle.jpg");
+        IProductModelFactory factory = new ProductModelFactory();
+        IProductModel product = factory.createProductModel("Book",1,"A4 sized books are available", 5, 25, true, "book.jpg");
+
         if(productId == product.getProductId())
         {
             productQuantity = product.getProductQuantity();
@@ -180,5 +201,27 @@ public class ProductDBMock implements IProductPersistence
             total = 25;
         }
         return total;
+    }
+
+    public Boolean deleteProduct(Integer productId)
+    {
+        ArrayList<IProductModel> product_detail = new ArrayList<>();
+        IProductModelFactory factory = new ProductModelFactory();
+        IProductModel product = factory.createProductModel("Book",1,"A4 sized books are available", 5, 25, true, "book.jpg");
+        product_detail.add(product);
+        if(product.getProductId() == productId)
+        {
+            product_detail.remove(product);
+        }
+        if(product_detail.size() == 0)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public Boolean decreaseProductQuantity(HashMap<Integer, Integer> products) {
+        return null;
     }
 }

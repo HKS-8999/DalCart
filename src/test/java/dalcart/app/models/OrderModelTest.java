@@ -12,7 +12,7 @@ public class OrderModelTest {
     @Test
     public void getOrderSuccessTest()
     {
-        ArrayList<ProductModelMock> product_detail;
+        ArrayList<IProductModel> product_detail;
         IOrderModel order = new OrderModelMock();
         order.setOrderId(999);
         Assertions.assertEquals(999, order.getOrderId());
