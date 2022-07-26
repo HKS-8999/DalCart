@@ -55,7 +55,7 @@ public class AdminController
         return modelAndView;
     }
 
-    @PostMapping(value = {"/submit_product_data"})
+    @PostMapping(value = {"/admin/submit_product_data"})
     @ResponseBody
     public String updateProductData(@RequestParam Map<String,String> allParams) throws SQLException {
         System.out.println("product Update Request Received");
@@ -77,7 +77,7 @@ public class AdminController
         return "success";
     }
 
-    @PostMapping(value = {"/submit_product_creation_data"})
+    @PostMapping(value = {"/admin/submit_product_creation_data"})
     @ResponseBody
     public String updateProductCteationData(@RequestParam Map<String,String> allParams) throws SQLException
     {

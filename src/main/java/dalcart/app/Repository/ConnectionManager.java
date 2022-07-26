@@ -16,8 +16,13 @@ public class ConnectionManager  {
             Properties properties = new Properties();
             properties.load(input);
             Class.forName("com.mysql.cj.jdbc.Driver");
+
+            String database_url      = System.getenv("SPRING_DATASOURCE_URL");
+            String database_username = System.getenv("SPRING_DATASOURCE_USERNAME");
+            String database_password = System.getenv("SPRING_DATASOURCE_PASSWORD");
+
             if(this.connection == null || this.connection.isClosed()) {
-                this.connection = DriverManager.getConnection(properties.getProperty("spring.datasource.url"), properties.getProperty("spring.datasource.username"), properties.getProperty("spring.datasource.password"));
+                this.connection = DriverManager.getConnection(database_url, database_username, database_password);
                 System.out.println("Connection Success");
             }else{
                 System.out.println("Connection already alive");
