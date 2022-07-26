@@ -6,11 +6,9 @@ import org.junit.jupiter.api.Assertions;
 
 import java.util.HashMap;
 
-public class CartTest
-{
+public class CartTest {
     @Test
-    public void getProductsOfUserSuccessTest()
-    {
+    public void getProductsOfUserSuccessTest() {
         HashMap<Integer, Integer> products = new HashMap<>();
         OrderProductsDBMock orderProductsDBMock = new OrderProductsDBMock();
         products = orderProductsDBMock.getProductsOfUser(1);
@@ -18,8 +16,7 @@ public class CartTest
     }
 
     @Test
-    public void getProductsOfUserFailureTest()
-    {
+    public void getProductsOfUserFailureTest() {
         HashMap<Integer, Integer> products = new HashMap<>();
         OrderProductsDBMock orderProductsDBMock = new OrderProductsDBMock();
         products = orderProductsDBMock.getProductsOfUser(2);
@@ -27,74 +24,64 @@ public class CartTest
     }
 
     @Test
-    public void addProductToCartSuccessTest()
-    {
+    public void addProductToCartSuccessTest() {
         OrderProductsDBMock orderProductsDBMock = new OrderProductsDBMock();
         Integer i = orderProductsDBMock.addProductToCart(2, 1);
         Assertions.assertEquals(1, i);
     }
 
     @Test
-    public void addProductToCartFailureTest()
-    {
+    public void addProductToCartFailureTest() {
         OrderProductsDBMock orderProductsDBMock = new OrderProductsDBMock();
         Integer i = orderProductsDBMock.addProductToCart(3, 1);
         Assertions.assertEquals(0, i);
     }
 
     @Test
-    public void addProductToCartAlreadyInCartSuccessTest()
-    {
+    public void addProductToCartAlreadyInCartSuccessTest() {
         OrderProductsDBMock orderProductsDBMock = new OrderProductsDBMock();
         Integer i = orderProductsDBMock.addProductToCartAlreadyInCart(2, 1);
         Assertions.assertEquals(2, i);
     }
 
     @Test
-    public void addProductToCartAlreadyInCartFailureTest()
-    {
+    public void addProductToCartAlreadyInCartFailureTest() {
         OrderProductsDBMock orderProductsDBMock = new OrderProductsDBMock();
         Integer i = orderProductsDBMock.addProductToCartAlreadyInCart(3, 1);
         Assertions.assertEquals(1, i);
     }
 
     @Test
-    public void increaseQuantityOfProductInCartSuccessTest()
-    {
+    public void increaseQuantityOfProductInCartSuccessTest() {
         OrderProductsDBMock orderProductsDBMock = new OrderProductsDBMock();
         boolean b = orderProductsDBMock.increaseProductQuantity(5, 2, 190);
         Assertions.assertEquals(true, b);
     }
 
     @Test
-    public void increaseQuantityOfProductInCartFailureTest()
-    {
+    public void increaseQuantityOfProductInCartFailureTest() {
         OrderProductsDBMock orderProductsDBMock = new OrderProductsDBMock();
         boolean b = orderProductsDBMock.increaseProductQuantity(6, 2, 190);
         Assertions.assertEquals(false, b);
     }
 
     @Test
-    public void decreaseQuantityOfProductInCartSuccessTest()
-    {
+    public void decreaseQuantityOfProductInCartSuccessTest() {
 
     }
 
     @Test
-    public void decreaseQuantityOfProductInCartFailureTest()
-    {
+    public void decreaseQuantityOfProductInCartFailureTest() {
 
     }
 
     @Test
-    public void removeItemFromCartSuccessTest()
-    {
+    public void removeItemFromCartSuccessTest() {
 
     }
 
     @Test
-    public void removeItemFromCartFailureTest()
-    {
+    public void removeItemFromCartFailureTest() {
 
     }
 }

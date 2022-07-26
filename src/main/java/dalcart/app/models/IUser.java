@@ -1,7 +1,6 @@
 package dalcart.app.models;
 
-import dalcart.app.Repository.IUserPersistence;
-
+import dalcart.app.models.Repository.IUserPersistence;
 
 public abstract class IUser {
 
@@ -18,10 +17,6 @@ public abstract class IUser {
     protected String designation;
 
     protected int userID;
-
-    public int getUserId(){return userID;}
-
-    public void setUserId(int userID){ this.userID = userID; }
 
     public String getPassword() {
         return password;
@@ -55,12 +50,12 @@ public abstract class IUser {
         this.mobileNo = mobileNo;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getEmail() {
         return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getDesignation() {
@@ -71,15 +66,15 @@ public abstract class IUser {
         this.designation = designation;
     }
 
-    public Integer getUserID(){
+    public Integer getUserID() {
         return this.userID;
     }
 
-    public void setUserID(int userID){
+    public void setUserID(int userID) {
         this.userID = userID;
     }
 
-    public abstract IUserPersistence.Result createNewUser(IUser user, IUserPersistence userPersistence) throws Exception;
+    public abstract IUserPersistence.Result createNewUser(IUser user, IUserPersistence userPersistence);
 
     public abstract void loadUserAttributes(IUserPersistence userPersistence);
 

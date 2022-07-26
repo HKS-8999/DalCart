@@ -1,9 +1,9 @@
 package dalcart.app.controllers.order_states;
 
-import dalcart.app.Factories.IProductPersistenceFactory;
-import dalcart.app.Factories.ProductPersistenceFactory;
-import dalcart.app.Repository.IProductPersistence;
-import dalcart.app.Repository.OrderProductsDB;
+import dalcart.app.models.Factories.IProductPersistenceFactory;
+import dalcart.app.models.Factories.ProductPersistenceFactory;
+import dalcart.app.models.Repository.IProductPersistence;
+import dalcart.app.models.Repository.OrderProductsDB;
 import dalcart.app.models.IOrderModel;
 import dalcart.app.models.IProductModel;
 

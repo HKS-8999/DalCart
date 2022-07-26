@@ -1,11 +1,11 @@
 package dalcart.app.models;
 
-import dalcart.app.Repository.IProductPersistence;
+import dalcart.app.models.Repository.IProductPersistence;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ProductModel implements IProductModel
-{
+public class ProductModel implements IProductModel {
     private String productName;
     private Integer productId;
     private String productDescription;
@@ -20,8 +20,7 @@ public class ProductModel implements IProductModel
                         Integer productPrice,
                         Integer productQuantity,
                         Boolean enabled,
-                        String productImage)
-    {
+                        String productImage) {
         this.productName = productName;
         this.productId = productId;
         this.productDescription = productDescription;
@@ -31,8 +30,7 @@ public class ProductModel implements IProductModel
         this.productImage = productImage;
     }
 
-    public ProductModel()
-    {
+    public ProductModel() {
 
     }
 
@@ -107,65 +105,51 @@ public class ProductModel implements IProductModel
     }
 
 
-    public ArrayList<IProductModel> getProducts(IProductPersistence productDB)
-    {
+    public ArrayList<IProductModel> getProducts(IProductPersistence productDB) {
         ArrayList<IProductModel> productDetail;
         productDetail = productDB.getProductDetails();
         return productDetail;
     }
 
-    public ArrayList<IProductModel> getProductsToDisplay(String searchWord, IProductPersistence productDB)
-    {
+    public ArrayList<IProductModel> getProductsToDisplay(String searchWord, IProductPersistence productDB) {
         ArrayList<IProductModel> productDetail;
         productDetail = productDB.getProductDetailsForDisplay(searchWord);
         return productDetail;
     }
 
-    public IProductModel getProductById(Integer productId, IProductPersistence productDB)
-    {
+    public IProductModel getProductById(Integer productId, IProductPersistence productDB) {
         IProductModel iProduct;
         iProduct = productDB.getProductById(productId);
         return iProduct;
     }
 
-    public IProductPersistence.StorageResult saveProduct(IProductModel product, IProductPersistence productDB)
-    {
+    public IProductPersistence.StorageResult saveProduct(IProductModel product, IProductPersistence productDB) {
         IProductPersistence.StorageResult result;
         result = productDB.saveProduct(product);
         return result;
     }
 
-    public IProductPersistence.StorageResult updateProduct(Integer productId, Integer productQuantity, Boolean productState, IProductPersistence productDB)
-    {
+    public IProductPersistence.StorageResult updateProduct(Integer productId, Integer productQuantity, Boolean productState, IProductPersistence productDB) {
         IProductPersistence.StorageResult result;
         result = productDB.updateProduct(productId, productQuantity, productState);
         return result;
     }
 
-    public Integer getLastProductId(IProductPersistence productDB)
-    {
+    public Integer getLastProductId(IProductPersistence productDB) {
         Integer id;
         id = productDB.getLastProductId();
         return id;
     }
 
-    public Integer getProductQuantity(IProductPersistence productDB, Integer productQuantity)
-    {
+    public Integer getProductQuantity(IProductPersistence productDB, Integer productQuantity) {
         return productDB.getProductQuantity(productQuantity);
     }
 
-    public Integer getTotalOfProducts(IProductPersistence productDB, HashMap<Integer, Integer> products)
-    {
+    public Integer getTotalOfProducts(IProductPersistence productDB, HashMap<Integer, Integer> products) {
         return productDB.getTotalOfProducts(products);
     }
 
-    public Boolean deleteProduct(IProductPersistence productDB, Integer productId)
-    {
-        return productDB.deleteProduct(productId);
-    }
-
-    public Boolean decreaseProductQuantity(IProductPersistence productDB, HashMap<Integer, Integer> products)
-    {
+    public Boolean decreaseProductQuantity(IProductPersistence productDB, HashMap<Integer, Integer> products) {
         return productDB.decreaseProductQuantity(products);
     }
 

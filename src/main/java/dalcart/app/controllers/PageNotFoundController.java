@@ -11,10 +11,9 @@ import java.io.IOException;
 @Controller
 public class PageNotFoundController {
     @GetMapping("/page_not_found")
-    public ModelAndView pageNotFound (ModelAndView model, @RequestParam(name = "search", required = false) String keyword, HttpSession session) throws IOException {
+    public ModelAndView pageNotFound(ModelAndView model) throws IOException {
         model.setViewName("404");
         System.out.println("Page Not Found");
         return model;
     }
-
 }

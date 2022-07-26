@@ -1,36 +1,54 @@
 package dalcart.app.models;
 
-import dalcart.app.Repository.IProductPersistence;
+import dalcart.app.models.Repository.IProductPersistence;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
-public interface IProductModel
-{
-    public void setProductId(Integer productId);
-    public Integer getProductId();
-    public void setProductName(String productName);
-    public String getProductName();
-    public void setProductDescription(String productDescription);
-    public String getProductDescription();
-    public void setProductPrice(Integer productPrice);
-    public Integer getProductPrice();
-    public void setProductQuantity(Integer productQuantity);
-    public Integer getProductQuantity();
-    public void setEnabled(Boolean productState);
-    public Boolean getEnabled();
-    public void setProductImage(String productImage);
-    public String getProductImage();
+public interface IProductModel {
+    Integer getProductId();
 
+    void setProductId(Integer productId);
 
-    public ArrayList<IProductModel> getProductsToDisplay(String searchWord, IProductPersistence productDB);
-    public ArrayList<IProductModel> getProducts(IProductPersistence productDB);
-    public IProductPersistence.StorageResult saveProduct(IProductModel product, IProductPersistence productDB);
-    public IProductPersistence.StorageResult updateProduct(Integer productId, Integer productQuantity, Boolean productState, IProductPersistence productDB);
-    public Integer getLastProductId(IProductPersistence productDB);
-    public IProductModel getProductById(Integer productId, IProductPersistence productDB);
-    public Integer getProductQuantity(IProductPersistence productDB, Integer productQuantity);
-    public Integer getTotalOfProducts(IProductPersistence productDB, HashMap<Integer, Integer> products);
-    public Boolean decreaseProductQuantity(IProductPersistence productDB, HashMap<Integer, Integer> products);
+    String getProductName();
+
+    void setProductName(String productName);
+
+    String getProductDescription();
+
+    void setProductDescription(String productDescription);
+
+    Integer getProductPrice();
+
+    void setProductPrice(Integer productPrice);
+
+    Integer getProductQuantity();
+
+    void setProductQuantity(Integer productQuantity);
+
+    Boolean getEnabled();
+
+    void setEnabled(Boolean productState);
+
+    String getProductImage();
+
+    void setProductImage(String productImage);
+
+    ArrayList<IProductModel> getProductsToDisplay(String searchWord, IProductPersistence productDB);
+
+    ArrayList<IProductModel> getProducts(IProductPersistence productDB);
+
+    IProductPersistence.StorageResult saveProduct(IProductModel product, IProductPersistence productDB);
+
+    IProductPersistence.StorageResult updateProduct(Integer productId, Integer productQuantity, Boolean productState, IProductPersistence productDB);
+
+    Integer getLastProductId(IProductPersistence productDB);
+
+    IProductModel getProductById(Integer productId, IProductPersistence productDB);
+
+    Integer getProductQuantity(IProductPersistence productDB, Integer productQuantity);
+
+    Integer getTotalOfProducts(IProductPersistence productDB, HashMap<Integer, Integer> products);
+
+    Boolean decreaseProductQuantity(IProductPersistence productDB, HashMap<Integer, Integer> products);
 }

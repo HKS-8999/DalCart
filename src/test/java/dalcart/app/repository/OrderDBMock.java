@@ -1,8 +1,7 @@
 package dalcart.app.repository;
 
-import dalcart.app.Repository.ConnectionManager;
+import dalcart.app.models.Repository.ConnectionManager;
 import dalcart.app.controllers.order_states.*;
-import dalcart.app.items.*;
 import dalcart.app.models.IOrderModel;
 import dalcart.app.models.IProductModel;
 import dalcart.app.models.OrderModel;
@@ -29,7 +28,6 @@ public class OrderDBMock  {
         }else if(state.equals("complete")){
             return (new OrderAtComplete());
         }
-        //if there is no state we should consider that it is in cart state
         return (new OrderAtCart());
     }
 

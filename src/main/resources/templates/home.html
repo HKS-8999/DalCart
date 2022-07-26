@@ -40,15 +40,11 @@
                     <h5 class="card-title">Price : <span th:text="${product.productPrice}"></span></h5>
                     <div class="row">
                         <div class="col-4 padding-0">
-<!--                            <a class="button" th:href="@{/home(id=${product.productId})}">-->
                             <button th:id = "${product.productId}" class="btn btn-primary" type = "submit" onclick="addToCart(this.id)">Add To Cart</button>
-<!--                            </a>-->
                         </div>
                     </div>
                 </div>
             </div>
-
-<!--            </form>-->
         </div>
     </div>
 
