@@ -1,4 +1,5 @@
 package dalcart.app.models;
+
 import dalcart.app.models.Factories.IPaymentModelFactory;
 import dalcart.app.models.Factories.PaymentModelFactory;
 import org.junit.Test;
