@@ -219,4 +219,9 @@ public class ProductDBMock implements IProductPersistence
         }
         return false;
     }
+
+    @Override
+    public Boolean decreaseProductQuantity(HashMap<Integer, Integer> products) {
+        return null;
+    }
 }
