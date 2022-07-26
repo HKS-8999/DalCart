@@ -22,7 +22,6 @@ import java.sql.SQLException;
 import java.util.Map;
 @Controller
 @RequestMapping(value = {"/order"})
-@Component
 public class OrderController
 {
     public void addToOrder(IUser user, IProductModel[] products) throws SQLException
@@ -60,7 +59,6 @@ public class OrderController
     }
 
     @PostMapping("/submit_order")
-    @ResponseBody
     public String submitOrder(@RequestParam Map<String,String> allParams, ModelAndView model, HttpSession session, SessionService sessionService, RedirectAttributes atts) throws SQLException {
         //process the order at cart stage
         //process the order at address stage

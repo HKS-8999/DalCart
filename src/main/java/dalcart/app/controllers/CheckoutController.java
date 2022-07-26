@@ -26,6 +26,7 @@ public class CheckoutController
     @GetMapping("/cart")
     public ModelAndView listgetproducts (ModelAndView model, HttpSession session, SessionService sessionService) throws IOException
     {
+
         if (sessionService.isUserInSession(session) == false || sessionService.isSessionValid(session) == false)
         {
             ModelAndView modelAndView = new ModelAndView("redirect:/logout");
@@ -178,6 +179,5 @@ public class CheckoutController
             throw new RuntimeException(e);
         }
     }
-
 
 }
