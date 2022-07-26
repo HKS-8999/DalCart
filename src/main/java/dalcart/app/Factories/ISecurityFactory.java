@@ -6,8 +6,7 @@ import dalcart.app.models.ISecurePassword;
 import dalcart.app.models.IUser;
 
 public interface ISecurityFactory {
-    public IAuthenticate createSecurity(IUserPersistence userPersistance, IUser user);
+    IAuthenticate createSecurity(IUserPersistence userPersistance, IUser user);
 
-    public ISecurePassword createSecurePassword();
-
+    ISecurePassword createSecurePassword();
 }

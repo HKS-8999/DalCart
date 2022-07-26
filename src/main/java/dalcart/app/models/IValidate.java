@@ -1,10 +1,15 @@
 package dalcart.app.models;
 
 public interface IValidate {
-    public boolean isUserNameValid(IUser user);
-    public boolean isPasswordValid(IUser user);
+    boolean isUserNameValid(IUser user);
 
-    public boolean isMobileNumberValid(IUser user);
-    public boolean isFirstNameAndLastNameValid(IUser user);
+    boolean isPasswordValid(IUser user);
+
+    boolean isMobileNumberValid(IUser user);
+
+    boolean isFirstNameValid(IUser user);
+
+    boolean isLastNameValid(IUser user);
+
 
 }

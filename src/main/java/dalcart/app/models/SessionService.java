@@ -27,7 +27,7 @@ public class SessionService implements ISession {
 
     public boolean isAdminInSession(HttpSession session) {
         Enumeration<String> names = session.getAttributeNames();
-        while(names.hasMoreElements()){
+        while (names.hasMoreElements()) {
             if (names.nextElement().equals(adminRole)) {
                 return true;
             }
@@ -43,7 +43,7 @@ public class SessionService implements ISession {
                     return true;
                 }
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return false;

@@ -7,6 +7,5 @@ public interface IPaymentPersistence
         STORAGE_FAILURE,
         STORAGE_SUCCESS
     }
-
-    public StorageResult savePaymentInformation(Integer orderId, Integer userId, Integer total);
+    StorageResult savePaymentInformation(Integer orderId, Integer userId, Integer total);
 }

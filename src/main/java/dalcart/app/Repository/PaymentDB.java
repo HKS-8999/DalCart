@@ -6,8 +6,8 @@ import java.time.LocalDate;
 
 public class PaymentDB implements IPaymentPersistence
 {
-    PreparedStatement preparedStatement;
-    String tableName = "payment";
+    private PreparedStatement preparedStatement;
+    private String tableName = "payment";
     @Override
     public StorageResult savePaymentInformation(Integer orderId, Integer userId, Integer total)
     {

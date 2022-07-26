@@ -1,19 +1,15 @@
 package dalcart.app.items;
 
-public class WarmCloths extends HeaderDecorator
-{
-    public WarmCloths(HomeHeader header)
-    {
+public class WarmCloths extends HeaderDecorator {
+    public WarmCloths(HomeHeader header) {
         this.header = header;
     }
 
-    public String decorate()
-    {
+    public String decorate() {
         return header.decorate() + "\n" + messageToAdd();
     }
 
-    public String messageToAdd()
-    {
+    public String messageToAdd() {
         return "Grab your Sweaters...";
     }
 }
