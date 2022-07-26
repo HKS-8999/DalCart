@@ -7,6 +7,8 @@ import dalcart.app.Repository.OrderProductsDB;
 import dalcart.app.models.IOrderModel;
 import dalcart.app.models.IProductModel;
 
+import java.util.Map;
+
 public class OrderAtPayment implements OrderState {
 
     public OrderAtPayment(){
@@ -19,13 +21,18 @@ public class OrderAtPayment implements OrderState {
         IProductPersistence productDB = productPersistenceFactory.createIProductPersistence();
         OrderProductsDB orderProductsDB = new OrderProductsDB() ;
         System.out.println("Order Id:::::" + order.getOrderId());
-        IProductModel[] products = orderProductsDB.getProductByOrderId(order.getOrderId());
-        System.out.println("Products:::::" + products.length);
-        for (IProductModel product : products) {
-            System.out.println("Product ID:" + product.getProductId());
-            System.out.println(product.getProductId() + "::::" + (product.getProductQuantity()-1) + "::::" + product.getEnabled());
-            product.updateProduct(product.getProductId(),product.getProductQuantity()-1,product.getEnabled(), productDB);
+        //IProductModel[] products = orderProductsDB.getProductByOrderId(order.getOrderId());
+        Map<IProductModel,Integer> products_and_quantity =  orderProductsDB.getProductsOfOrder(order.getOrderId());
+
+        //System.out.println("Products:::::" + products.length);
+        for (IProductModel product : products_and_quantity.keySet()){
+            if(product.getProductQuantity()-products_and_quantity.get(product) >= 0 ) {
+                product.updateProduct(product.getProductId(), product.getProductQuantity() - products_and_quantity.get(product), product.getEnabled(), productDB);
+            }else{
+                return false;
+            }
         }
+
         order.setState(this.getNextState());
         order.save();
         return true;

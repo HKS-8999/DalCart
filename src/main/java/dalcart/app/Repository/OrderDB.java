@@ -95,7 +95,7 @@ class OrderDB  {
             //ArrayList<IProductModel> product_detail = new ArrayList<>();
             try {
 
-                String query = "select * from orders where user_id = " + userId + " limit 1";
+                String query = "select * from orders where user_id = " + userId + " order by created_at desc limit 1";
                 Statement statement = ConnectionManager.getInstance().getConnection().createStatement();
                 ResultSet resultSet = statement.executeQuery(query);
                 IOrderModel order = new OrderModel();
@@ -121,7 +121,7 @@ class OrderDB  {
     {
         try {
 
-            String query = "select * from orders where user_id = " + userId + " and state = 'cart';";
+            String query = "select * from orders where user_id = " + userId + " and state != 'complete' order by created_at desc limit 1;";
             statement = ConnectionManager.getInstance().getConnection().createStatement();
             ResultSet resultSet = statement.executeQuery(query);
             IOrderModel order = new OrderModel();

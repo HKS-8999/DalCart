@@ -133,6 +133,31 @@ public class OrderProductsDB {
         }
         return products;
     }
+
+    public HashMap<IProductModel, Integer> getProductsOfOrder(Integer orderId)
+    {
+        OrderDB orderDB = new OrderDB();
+        HashMap<IProductModel, Integer> products = new HashMap<>();
+        String query = "select product_id,product_quantity from order_products where order_id = " + orderId + ";";
+        try
+        {
+            preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(query);
+            resultSet = preparedStatement.executeQuery(query);
+            ProductDB productDB = new ProductDB();
+
+            while(resultSet.next())
+            {
+                IProductModel product = productDB.getProductById(resultSet.getInt(1));
+                products.put(product, resultSet.getInt(2));
+            }
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        return products;
+    }
+
     public boolean increaseProductQuantity(Integer productId, Integer productQuantity, Integer orderId)
     {
         Integer updatedQuantity = productQuantity + 1;
