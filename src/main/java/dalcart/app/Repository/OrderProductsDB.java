@@ -117,7 +117,7 @@ public class OrderProductsDB {
         IOrderModel order = orderDB.findOrderInCartByUserId(userId);
         Integer orderId = order.getOrderId();
         HashMap<Integer, Integer> products = new HashMap<>();
-        String query = "select product_id,product_quantity from order_products where order_id = " + orderId + ";";
+        String query = "select product_id,product_quantity from order_products as op inner join orders as ord on ord.id = op.order_id where order_id = " + orderId + " and ord.state != 'complete' order by ord.created_at desc;";
         try
         {
             preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(query);

@@ -36,6 +36,7 @@ public class CheckoutController
 
         HashMap<Integer, Integer> productIds = new HashMap<>();
         Integer userId = (Integer) session.getAttribute("user");
+        System.out.println("Getting Products For User::::" + userId);
         productIds = o.getProductsOfUser(userId);
         ArrayList<IProductModel> allProducts = new ArrayList<>();
         for(Map.Entry<Integer, Integer> val : productIds.entrySet())

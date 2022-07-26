@@ -69,8 +69,8 @@ public class OrderController
         //process the order at address stage
         //process the order at payment stage
         UserDB userdb = new UserDB();
-        IUser user = userdb.loadUserAttributesByUserId(1);
-        IOrderModel currentOrder = OrderModel.getOrderByUserId(user.getUserID());
+        Integer userId = (Integer) session.getAttribute("user");
+        IOrderModel currentOrder = OrderModel.getOrderByUserId(userId);
 
 //        CheckoutController checkoutController = new CheckoutController();
 //        if(checkoutController.validateAndPlaceOrder(allParams, model, session, sessionService, atts))
