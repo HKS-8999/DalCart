@@ -26,6 +26,7 @@ public class OrderController
 {
     public void addToOrder(IUser user, IProductModel[] products) throws SQLException
     {
+
         IOrderModel order;
         IOrderModel existingOrder = OrderModel.getOrderByUserId(user.getUserID());
         System.out.println("User Id:" + user.getUserID());
@@ -64,7 +65,7 @@ public class OrderController
         //process the order at address stage
         //process the order at payment stage
         UserDB userdb = new UserDB();
-        Integer userId = (Integer) session.getAttribute("user");
+        int userId = (int) session.getAttribute("user");
         IOrderModel currentOrder = OrderModel.getOrderByUserId(userId);
 //        CheckoutController checkoutController = new CheckoutController();
 //        if(checkoutController.validateAndPlaceOrder(allParams, model, session, sessionService, atts))
@@ -73,10 +74,13 @@ public class OrderController
 
         boolean addressAndPaymentcheck = checkoutController.validateAddress(allParams, model, session, sessionService, atts)
                 && checkoutController.validatePaymentAndPlaceOrder(allParams, model, session, sessionService, atts);
-        if (addressAndPaymentcheck) {
-            while (currentOrder.getState().isComplete() == false) {
+        if (addressAndPaymentcheck)
+        {
+            while (currentOrder.getState().isComplete() == false)
+            {
                 System.out.println("State:" + currentOrder.getState().getStateName());
-                if (currentOrder.getState().completeState(currentOrder) == false) {
+                if (currentOrder.getState().completeState(currentOrder) == false)
+                {
                     return "failure";
                 }
             }

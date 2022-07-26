@@ -21,6 +21,7 @@ public class CheckoutController
     IProductModel productModel = productModelFactory.createProductModel();
     IProductPersistenceFactory productPersistenceFactory = new ProductPersistenceFactory();
     IProductPersistence productDB = productPersistenceFactory.createIProductPersistence();
+
     OrderProductsDB o = new OrderProductsDB();
     OrderDB db = new OrderDB();
     @GetMapping("/cart")
@@ -36,6 +37,7 @@ public class CheckoutController
         HashMap<Integer, Integer> productIds = new HashMap<>();
         Integer userId = (Integer) session.getAttribute("user");
         System.out.println("Getting Products For User::::" + userId);
+        OrderProductsDB o = new OrderProductsDB();
         productIds = o.getProductsOfUser(userId);
         if(productIds == null)
         {
@@ -70,7 +72,6 @@ public class CheckoutController
 //            ModelAndView modelAndView = new ModelAndView("redirect:/logout");
 //            return modelAndView;
 //        }
-
         Integer userId = (Integer) session.getAttribute("user");
         IOrderModel order = db.findOrderInCartByUserId(userId);
         Integer orderId = order.getOrderId();
@@ -137,6 +138,7 @@ public class CheckoutController
             DeliveryInformationValidator validator = new DeliveryInformationValidator();
             if(validator.validateDeliveryDetails(deliveryInformationModel))
             {
+                System.out.println("!@#$%^&*()(*&^%$#$%^&*");
                 deliveryInformationModel.addDeliveryAddress(deliveryInformationModel, deliveryInformationPersistence, orderId);
                 return true;
             }
