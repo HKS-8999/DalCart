@@ -23,7 +23,7 @@ public class OrderAtCart implements OrderState{
                 return false;
             }
         }
-        order.setState(new OrderAtAddress());
+        order.setState(getNextState());
         order.save();
         return true;
     }
