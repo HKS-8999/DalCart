@@ -47,7 +47,6 @@ public class LoginController
         System.out.println(user.getEmail());
         System.out.println(user.getPassword());
         HttpSession session = request.getSession();
-        ModelAndView modelAndView = new ModelAndView();
 
         userPersistanceFactory = new UserPersistanceFactory();
         securityFactory = new SecurityFactory();
