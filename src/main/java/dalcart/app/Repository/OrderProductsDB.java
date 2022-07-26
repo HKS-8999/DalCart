@@ -19,7 +19,8 @@ import java.util.List;
 
 
 @Repository
-public class OrderProductsDB {
+public class OrderProductsDB
+{
 
     static PreparedStatement preparedStatement;
     static Statement statement;
@@ -85,20 +86,77 @@ public class OrderProductsDB {
         return productIds;
     }
 
-    public HashMap<Integer, Integer> getProductsOfUser(Integer userId)
+    public  IProductModel[] getProductByOrderId(int orderId)
     {
-        OrderDB orderDB = new OrderDB();
-        IOrderModel order = orderDB.findOrderInCartByUserId(userId);
-        Integer orderId = order.getOrderId();
-        HashMap<Integer, Integer> products = new HashMap<>();
-        String query = "select product_id,product_quantity from order_products where order_id = " + orderId + ";";
+        List<Integer> productIds = new ArrayList<>();
+        String query = "select product_id from order_products where order_id = " + orderId + ";";
         try
         {
             preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(query);
             resultSet = preparedStatement.executeQuery(query);
             while(resultSet.next())
             {
-                products.put(resultSet.getInt(1), resultSet.getInt(2));
+                productIds.add(resultSet.getInt(1));
+            }
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        IProductModel[] products = new IProductModel[productIds.size()];
+
+        for(int i=0;i<productIds.size();i++){
+            products[i] = productModel.getProductById(productIds.get(i),productDB);
+        }
+
+        return products;
+    }
+
+    public HashMap<Integer, Integer> getProductsOfUser(Integer userId)
+    {
+        OrderDB orderDB = new OrderDB();
+        IOrderModel order = orderDB.findOrderInCartByUserId(userId);
+        HashMap<Integer, Integer> products = new HashMap<>();
+        if(order == null)
+        {
+            return products;
+        }
+        else {
+            Integer orderId = order.getOrderId();
+//        HashMap<Integer, Integer> products = new HashMap<>();
+            String query = "select product_id,product_quantity from order_products where order_id = " + orderId + ";";
+            try
+            {
+                preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(query);
+                resultSet = preparedStatement.executeQuery(query);
+                while (resultSet.next())
+                {
+                    products.put(resultSet.getInt(1), resultSet.getInt(2));
+                }
+                return products;
+            } catch (Exception e)
+            {
+                e.printStackTrace();
+                return null;
+            }
+        }
+    }
+
+    public HashMap<IProductModel, Integer> getProductsOfOrder(Integer orderId)
+    {
+        OrderDB orderDB = new OrderDB();
+        HashMap<IProductModel, Integer> products = new HashMap<>();
+        String query = "select product_id,product_quantity from order_products where order_id = " + orderId + ";";
+        try
+        {
+            preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(query);
+            resultSet = preparedStatement.executeQuery(query);
+            ProductDB productDB = new ProductDB();
+
+            while(resultSet.next())
+            {
+                IProductModel product = productDB.getProductById(resultSet.getInt(1));
+                products.put(product, resultSet.getInt(2));
             }
         }
         catch(Exception e)
@@ -107,6 +165,7 @@ public class OrderProductsDB {
         }
         return products;
     }
+
     public boolean increaseProductQuantity(Integer productId, Integer productQuantity, Integer orderId)
     {
         Integer updatedQuantity = productQuantity + 1;
@@ -118,6 +177,7 @@ public class OrderProductsDB {
             {
                 statement = ConnectionManager.getInstance().getConnection().createStatement();
                 statement.executeUpdate(query);
+                System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
             }
             catch(Exception e)
             {

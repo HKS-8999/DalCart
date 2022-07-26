@@ -2,9 +2,7 @@ package dalcart.app.Repository;
 
 import dalcart.app.models.DeliveryInformationModel;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.time.LocalDate;
 
 public class DeliveryInformationDB implements IDeliveryInformationPersistence

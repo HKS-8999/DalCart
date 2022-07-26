@@ -1,5 +1,6 @@
-package dalcart.app.Repository;
+package dalcart.app.repository;
 
+import dalcart.app.Repository.ConnectionManager;
 import dalcart.app.controllers.order_states.*;
 import dalcart.app.items.*;
 import dalcart.app.models.IOrderModel;
@@ -11,13 +12,11 @@ import java.sql.*;
 import java.util.ArrayList;
 
 @Repository
-public
-class OrderDB  {
+public class OrderDBMock  {
 
     Connection connection;
     static PreparedStatement preparedStatement;
     static Statement statement;
-    static String tableName = "orders";
 
     public static OrderState getStateByName(String orderState){
         String state = orderState.toLowerCase();
@@ -35,26 +34,17 @@ class OrderDB  {
     }
 
     public static Integer saveOrder(IOrderModel order) throws SQLException {
-        String query = "";
-        if (order.getOrderId() == null) {
-            query = "insert into orders (user_id, created_at, updated_at, order_number, state) values (?,?,?,?,?);";
-        }else{
-            query = "update orders set user_id = ?, created_at = ?, updated_at = ?, order_number = ?, state = ? where id= "+ order.getOrderId() + ";";
-        }
-
-        preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-        preparedStatement.setInt(1, order.getUserId());
-        preparedStatement.setString(2, order.getCreatedAt());
-        preparedStatement.setString(3, order.getUpdatedAt());
-        preparedStatement.setString(4, order.getOrderNumber());
-        preparedStatement.setString(5, order.getState().getStateName());
+        String query = "insert into orders (user_id, created_at, updated_at, order_number, state) values (?,?,?,?,?);";
+        preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
+        preparedStatement.setInt(1,order.getUserId());
+        preparedStatement.setString(2,order.getCreatedAt());
+        preparedStatement.setString(3,order.getUpdatedAt());
+        preparedStatement.setString(4,order.getOrderNumber());
+        preparedStatement.setString(5,order.getState().getStateName());
         preparedStatement.executeUpdate();
         ResultSet rs = preparedStatement.getGeneratedKeys();
-        if(rs.next()) {
-            return rs.getInt(1);
-        }else{
-            return order.getOrderId();
-        }
+        rs.next();
+        return rs.getInt(1);
     }
 
     public static boolean deleteOrder(Integer orderId) {
@@ -92,28 +82,27 @@ class OrderDB  {
     }
 
     public static IOrderModel findByUserId(int userId){
-        if(userId > 0) {
-            //ArrayList<IProductModel> product_detail = new ArrayList<>();
-            try {
+        //ArrayList<IProductModel> product_detail = new ArrayList<>();
+        try{
 
-                String query = "select * from orders where user_id = " + userId + " and state != 'complete' order by created_at desc limit 1";
-                Statement statement = ConnectionManager.getInstance().getConnection().createStatement();
-                ResultSet resultSet = statement.executeQuery(query);
-                IOrderModel order = new OrderModel();
-                boolean resultSetNotEmpty = false;
-                while (resultSet.next()) {
-                    resultSetNotEmpty = true;
-                    order.setOrderId(resultSet.getInt(1));
-                    order.setUserId(resultSet.getInt(2));
-                    order.setState(getStateByName(resultSet.getString(3)));
-                }
-                if (resultSetNotEmpty) {
-                    return order;
-                }
-
-            } catch (SQLException e) {
-                e.printStackTrace();
+            String query = "select * from orders where user_id = " + userId + " limit 1";
+            Statement statement = ConnectionManager.getInstance().getConnection().createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+            IOrderModel order = new OrderModel();
+            boolean resultSetNotEmpty = false;
+            while(resultSet.next())
+            {
+                resultSetNotEmpty = true;
+                order.setOrderId(resultSet.getInt(1));
+                order.setUserId(resultSet.getInt(2));
+                order.setState(getStateByName(resultSet.getString(3)));
             }
+            if(resultSetNotEmpty) {
+                return order;
+            }
+
+        }catch (SQLException e){
+            e.printStackTrace();
         }
         return null;
     }
@@ -121,7 +110,8 @@ class OrderDB  {
     public IOrderModel findOrderInCartByUserId(int userId)
     {
         try {
-            String query = "select * from orders where user_id = " + userId + " and state != 'complete' order by created_at desc limit 1;";
+
+            String query = "select * from orders where user_id = " + userId + " and state = 'cart';";
             statement = ConnectionManager.getInstance().getConnection().createStatement();
             ResultSet resultSet = statement.executeQuery(query);
             IOrderModel order = new OrderModel();
@@ -158,21 +148,5 @@ class OrderDB  {
             return false;
         }
         return true;
-    }
-
-    public boolean changeStateOfOrder(String orderState, Integer orderId)
-    {
-        try
-        {
-            String state = orderState.toLowerCase();
-            String query = "update " + tableName + " set state = '" + state + "' where id = " + orderId + ";";
-            statement = ConnectionManager.getInstance().getConnection().prepareStatement(query);
-            statement.executeUpdate(query);
-            return true;
-        }
-        catch (SQLException e)
-        {
-            return false;
-        }
     }
 }

@@ -1,11 +1,9 @@
 package dalcart.app.controllers;
-
 import dalcart.app.Factories.IProductPersistenceFactory;
 import dalcart.app.Factories.ProductPersistenceFactory;
 import dalcart.app.Repository.IProductPersistence;
 import dalcart.app.Repository.OrderProductsDB;
 import dalcart.app.Repository.ConnectionManager;
-
 import dalcart.app.Repository.UserDB;
 import dalcart.app.controllers.order_states.OrderAtCart;
 import dalcart.app.models.IOrderModel;
@@ -19,11 +17,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
 import java.util.Map;
-
 @Controller
 @RequestMapping(value = {"/order"})
 @Component
@@ -45,6 +41,7 @@ public class OrderController
             order.setState(new OrderAtCart());
             orderId = order.save();
         }else{
+            System.out.println("Processing Existing Order");
             order = existingOrder;
             orderId = existingOrder.getOrderId();
         }
@@ -64,39 +61,31 @@ public class OrderController
 
     @PostMapping("/submit_order")
     @ResponseBody
-    public ModelAndView submitOrder(@RequestParam Map<String,String> allParams, ModelAndView model, HttpSession session, SessionService sessionService, RedirectAttributes atts) throws SQLException{
+    public String submitOrder(@RequestParam Map<String,String> allParams, ModelAndView model, HttpSession session, SessionService sessionService, RedirectAttributes atts) throws SQLException {
         //process the order at cart stage
         //process the order at address stage
         //process the order at payment stage
         UserDB userdb = new UserDB();
-        IUser user = userdb.loadUserAttributesByUserId(1);
-        IOrderModel currentOrder = OrderModel.getOrderByUserId(user.getUserID());
-
+        Integer userId = (Integer) session.getAttribute("user");
+        IOrderModel currentOrder = OrderModel.getOrderByUserId(userId);
 //        CheckoutController checkoutController = new CheckoutController();
 //        if(checkoutController.validateAndPlaceOrder(allParams, model, session, sessionService, atts))
 //        {
-            while(currentOrder.getState().isComplete() == false)
-            {
+        CheckoutController checkoutController = new CheckoutController();
+
+        boolean addressAndPaymentcheck = checkoutController.validateAddress(allParams, model, session, sessionService, atts)
+                && checkoutController.validatePaymentAndPlaceOrder(allParams, model, session, sessionService, atts);
+        if (addressAndPaymentcheck) {
+            while (currentOrder.getState().isComplete() == false) {
                 System.out.println("State:" + currentOrder.getState().getStateName());
-                if(currentOrder.getState().completeState(currentOrder) == false){
-                    return new ModelAndView("redirect:/cart");
+                if (currentOrder.getState().completeState(currentOrder) == false) {
+                    return "failure";
                 }
             }
             System.out.println("All Order States Passed. Order is Placed Now");
 
-            model.setViewName("/thankyou");
-            return new ModelAndView("redirect:/thankyou");
-//        }
-
-
-
-//        while(currentOrder.getState().isComplete() == false){
-//            System.out.println("State:" + currentOrder.getState().getStateName());
-//            if(currentOrder.getState().completeState(currentOrder) == false){
-//                return false;
-//            }
-//        }
-//        System.out.println("All Order States Passed. Order is Placed Now");
-//        return new ModelAndView("redirect:/cart");
+        }
+        return "Success";
     }
+
 }

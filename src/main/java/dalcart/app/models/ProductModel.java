@@ -159,4 +159,14 @@ public class ProductModel implements IProductModel
         return productDB.getTotalOfProducts(products);
     }
 
+    public Boolean deleteProduct(IProductPersistence productDB, Integer productId)
+    {
+        return productDB.deleteProduct(productId);
+    }
+
+    public Boolean decreaseProductQuantity(IProductPersistence productDB, HashMap<Integer, Integer> products)
+    {
+        return productDB.decreaseProductQuantity(products);
+    }
+
 }

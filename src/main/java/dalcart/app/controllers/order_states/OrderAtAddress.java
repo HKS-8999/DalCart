@@ -6,6 +6,8 @@ public class OrderAtAddress implements OrderState{
     @Override
     public boolean completeState(IOrderModel order) {
         //checkhere if the order address is invalid
+
+
         order.setState(this.getNextState());
         order.save();
         return true;
@@ -13,7 +15,7 @@ public class OrderAtAddress implements OrderState{
 
     @Override
     public OrderState getNextState() {
-        return (new OrderAtComplete());
+        return (new OrderAtPayment());
     }
 
     @Override
