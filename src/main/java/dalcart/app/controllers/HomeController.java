@@ -1,12 +1,12 @@
 package dalcart.app.controllers;
 
-import dalcart.app.Factories.*;
-import dalcart.app.Repository.IProductPersistence;
-import dalcart.app.Repository.IUserPersistence;
-import dalcart.app.items.HeaderSetter;
+import dalcart.app.models.Factories.*;
 import dalcart.app.models.IProductModel;
 import dalcart.app.models.IUser;
+import dalcart.app.models.Repository.IProductPersistence;
+import dalcart.app.models.Repository.IUserPersistence;
 import dalcart.app.models.SessionService;
+import dalcart.app.models.items.HeaderSetter;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;

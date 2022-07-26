@@ -1,6 +1,6 @@
 package dalcart.app.models;
 
-import dalcart.app.Repository.OrderDB;
+import dalcart.app.models.Repository.OrderDB;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 

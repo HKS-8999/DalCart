@@ -1,17 +1,13 @@
 package dalcart.app.controllers;
 
-import dalcart.app.Factories.*;
-import dalcart.app.Repository.IUserPersistence;
+import dalcart.app.models.Factories.*;
 import dalcart.app.models.*;
-import dalcart.app.models.Security.Security;
-
-import org.springframework.web.bind.annotation.PostMapping;
-
+import dalcart.app.models.Repository.IUserPersistence;
+import dalcart.app.models.SecurityChain.Security;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-
 import org.springframework.web.bind.annotation.GetMapping;
-
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,8 +32,7 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public ModelAndView login(@ModelAttribute User user, HttpServletRequest request)
-    {
+    public ModelAndView login(@ModelAttribute User user, HttpServletRequest request) {
         HttpSession session = request.getSession();
         userPersistanceFactory = new UserPersistanceFactory();
         securityFactory = new SecurityFactory();
@@ -56,9 +51,7 @@ public class LoginController {
                     session.setAttribute("user", user.getUserID());
                     return new ModelAndView("redirect:/home");
                 }
-            }
-            else
-            {
+            } else {
                 return new ModelAndView("invalidUsernameandPassword");
             }
         }

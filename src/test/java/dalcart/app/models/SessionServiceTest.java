@@ -1,6 +1,6 @@
 package dalcart.app.models;
 
-import dalcart.app.Repository.IUserPersistence;
+import dalcart.app.models.Repository.IUserPersistence;
 
 import dalcart.app.repository.UserPersistenceMock;
 import org.springframework.mock.web.MockHttpSession;

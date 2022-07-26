@@ -1,15 +1,17 @@
 package dalcart.app.models;
 
-import dalcart.app.Factories.IProductModelFactory;
-import dalcart.app.Factories.ProductModelFactory;
-import dalcart.app.Repository.IProductPersistence;
+import dalcart.app.models.Factories.IProductModelFactory;
+import dalcart.app.models.Factories.ProductModelFactory;
+import dalcart.app.models.Repository.IProductPersistence;
 import dalcart.app.repository.ProductDBMock;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
+@SpringBootTest
 public class ProductModelTest {
     @Test
     public void setProductNameSuccessTest() {

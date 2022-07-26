@@ -1,10 +1,10 @@
 package dalcart.app.models;
 
-import dalcart.app.Factories.ISecurityFactory;
-import dalcart.app.Factories.IUserFactory;
-import dalcart.app.Factories.SecurityFactory;
-import dalcart.app.Factories.UserFactory;
-import dalcart.app.models.Security.Security;
+import dalcart.app.models.Factories.ISecurityFactory;
+import dalcart.app.models.Factories.IUserFactory;
+import dalcart.app.models.Factories.SecurityFactory;
+import dalcart.app.models.Factories.UserFactory;
+import dalcart.app.models.SecurityChain.Security;
 import dalcart.app.repository.UserPersistenceMock;
 import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;

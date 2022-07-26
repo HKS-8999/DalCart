@@ -1,6 +1,6 @@
 package dalcart.app.models;
 
-import dalcart.app.Repository.OrderDB;
+import dalcart.app.models.Repository.OrderDB;
 import dalcart.app.controllers.order_states.OrderState;
 
 import java.sql.Timestamp;

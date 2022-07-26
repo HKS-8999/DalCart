@@ -1,6 +1,6 @@
 package dalcart.app.models;
 
-import dalcart.app.Repository.IUserPersistence;
+import dalcart.app.models.Repository.IUserPersistence;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;

@@ -1,10 +1,10 @@
 package dalcart.app.controllers;
 
-import dalcart.app.Factories.*;
-import dalcart.app.Repository.IUserPersistence;
+import dalcart.app.models.Factories.*;
 import dalcart.app.models.ISecurePassword;
 import dalcart.app.models.IUser;
 import dalcart.app.models.IValidate;
+import dalcart.app.models.Repository.IUserPersistence;
 import dalcart.app.models.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -1,8 +1,8 @@
 package dalcart.app.repository;
 
-import dalcart.app.Factories.IUserFactory;
-import dalcart.app.Factories.UserFactory;
-import dalcart.app.Repository.IUserPersistence;
+import dalcart.app.models.Factories.IUserFactory;
+import dalcart.app.models.Factories.UserFactory;
+import dalcart.app.models.Repository.IUserPersistence;
 import dalcart.app.models.IUser;
 
 public class UserPersistenceMock implements IUserPersistence {

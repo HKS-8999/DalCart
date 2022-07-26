@@ -1,8 +1,8 @@
 package dalcart.app.models;
 
-import dalcart.app.Factories.IUserFactory;
-import dalcart.app.Factories.UserFactory;
-import dalcart.app.Factories.ValidateFactory;
+import dalcart.app.models.Factories.IUserFactory;
+import dalcart.app.models.Factories.UserFactory;
+import dalcart.app.models.Factories.ValidateFactory;
 import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
