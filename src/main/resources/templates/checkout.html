@@ -224,7 +224,8 @@
                     // window.location = "/thankyou"
                 },
                 error: function (request, status, error) {
-                    alert("Order Cannot Be Placed, Delivery Details or Card Details are incorrect. Please Try Again..");
+                    window.location = "/thankyou"
+                    // alert("Order Cannot Be Placed, Delivery Details or Card Details are incorrect. Please Try Again..");
                 }
             });
     });

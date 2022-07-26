@@ -17,11 +17,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
 import java.util.Map;
 @Controller
-@RequestMapping(value = {"/order"})
+@RequestMapping(value = "/order")
 public class OrderController
 {
     public void addToOrder(IUser user, IProductModel[] products) throws SQLException
@@ -60,11 +62,14 @@ public class OrderController
     }
 
     @PostMapping("/submit_order")
-    public String submitOrder(@RequestParam Map<String,String> allParams, ModelAndView model, HttpSession session, SessionService sessionService, RedirectAttributes atts) throws SQLException {
+    public String submitOrder(@RequestParam Map<String,String> allParams, HttpServletRequest request, ModelAndView model, SessionService sessionService, RedirectAttributes atts) throws SQLException {
         //process the order at cart stage
         //process the order at address stage
         //process the order at payment stage
         UserDB userdb = new UserDB();
+
+        HttpSession session = request.getSession();
+
         int userId = (int) session.getAttribute("user");
         IOrderModel currentOrder = OrderModel.getOrderByUserId(userId);
 //        CheckoutController checkoutController = new CheckoutController();

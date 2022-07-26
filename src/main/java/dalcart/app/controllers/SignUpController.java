@@ -41,11 +41,11 @@ public class SignUpController {
             IUserPersistence.Result result = user.createNewUser(newUser, iUserPersistence);
             if (result.equals(IUserPersistence.Result.SUCCESS)) {
                 modelAndView.setViewName("redirect:/login");
+            } else {
+                modelAndView.addObject("Message", "Please try again");
+                modelAndView.setViewName("signup");
             }
-            modelAndView.addObject("Message", "Please try again");
-            modelAndView.setViewName("signup");
-        }
-        else {
+        } else {
             return new ModelAndView("redirect:/invalidUsernameandPassword");
         }
         return modelAndView;
