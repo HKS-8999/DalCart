@@ -137,6 +137,7 @@ public class CheckoutController
             DeliveryInformationValidator validator = new DeliveryInformationValidator();
             if(validator.validateDeliveryDetails(deliveryInformationModel))
             {
+                System.out.println("!@#$%^&*()(*&^%$#$%^&*");
                 deliveryInformationModel.addDeliveryAddress(deliveryInformationModel, deliveryInformationPersistence, orderId);
                 return true;
             }

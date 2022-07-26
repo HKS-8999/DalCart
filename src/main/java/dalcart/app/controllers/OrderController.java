@@ -76,10 +76,13 @@ public class OrderController
 
         boolean addressAndPaymentcheck = checkoutController.validateAddress(allParams, model, session, sessionService, atts)
                 && checkoutController.validatePaymentAndPlaceOrder(allParams, model, session, sessionService, atts);
-        if (addressAndPaymentcheck) {
-            while (currentOrder.getState().isComplete() == false) {
+        if (addressAndPaymentcheck)
+        {
+            while (currentOrder.getState().isComplete() == false)
+            {
                 System.out.println("State:" + currentOrder.getState().getStateName());
-                if (currentOrder.getState().completeState(currentOrder) == false) {
+                if (currentOrder.getState().completeState(currentOrder) == false)
+                {
                     return "failure";
                 }
             }
