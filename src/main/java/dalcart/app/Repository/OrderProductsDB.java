@@ -85,6 +85,32 @@ public class OrderProductsDB {
         return productIds;
     }
 
+    public  IProductModel[] getProductByOrderId(int orderId)
+    {
+        List<Integer> productIds = new ArrayList<>();
+        String query = "select product_id from order_products where order_id = " + orderId + ";";
+        try
+        {
+            preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(query);
+            resultSet = preparedStatement.executeQuery(query);
+            while(resultSet.next())
+            {
+                productIds.add(resultSet.getInt(1));
+            }
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        IProductModel[] products = new IProductModel[productIds.size()];
+
+        for(int i=0;i<productIds.size();i++){
+            products[i] = productModel.getProductById(productIds.get(i),productDB);
+        }
+
+        return products;
+    }
+
     public HashMap<Integer, Integer> getProductsOfUser(Integer userId)
     {
         OrderDB orderDB = new OrderDB();

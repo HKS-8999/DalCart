@@ -13,7 +13,7 @@ public class OrderAtAddress implements OrderState{
 
     @Override
     public OrderState getNextState() {
-        return (new OrderAtComplete());
+        return (new OrderAtPayment());
     }
 
     @Override

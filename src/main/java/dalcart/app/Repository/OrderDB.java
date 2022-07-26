@@ -34,17 +34,26 @@ class OrderDB  {
     }
 
     public static Integer saveOrder(IOrderModel order) throws SQLException {
-            String query = "insert into orders (user_id, created_at, updated_at, order_number, state) values (?,?,?,?,?);";
-            preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
-            preparedStatement.setInt(1,order.getUserId());
-            preparedStatement.setString(2,order.getCreatedAt());
-            preparedStatement.setString(3,order.getUpdatedAt());
-            preparedStatement.setString(4,order.getOrderNumber());
-            preparedStatement.setString(5,order.getState().getStateName());
-            preparedStatement.executeUpdate();
-            ResultSet rs = preparedStatement.getGeneratedKeys();
-            rs.next();
+        String query = "";
+        if (order.getOrderId() == null) {
+            query = "insert into orders (user_id, created_at, updated_at, order_number, state) values (?,?,?,?,?);";
+        }else{
+            query = "update orders set user_id = ?, created_at = ?, updated_at = ?, order_number = ?, state = ? where id= "+ order.getOrderId() + ";";
+        }
+
+        preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+        preparedStatement.setInt(1, order.getUserId());
+        preparedStatement.setString(2, order.getCreatedAt());
+        preparedStatement.setString(3, order.getUpdatedAt());
+        preparedStatement.setString(4, order.getOrderNumber());
+        preparedStatement.setString(5, order.getState().getStateName());
+        preparedStatement.executeUpdate();
+        ResultSet rs = preparedStatement.getGeneratedKeys();
+        if(rs.next()) {
             return rs.getInt(1);
+        }else{
+            return order.getOrderId();
+        }
     }
 
     public static boolean deleteOrder(Integer orderId) {
