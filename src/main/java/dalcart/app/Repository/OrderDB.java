@@ -17,6 +17,7 @@ class OrderDB  {
     Connection connection;
     static PreparedStatement preparedStatement;
     static Statement statement;
+    static String tableName = "orders";
 
     public static OrderState getStateByName(String orderState){
         String state = orderState.toLowerCase();
@@ -95,7 +96,7 @@ class OrderDB  {
             //ArrayList<IProductModel> product_detail = new ArrayList<>();
             try {
 
-                String query = "select * from orders where user_id = " + userId + " order by created_at desc limit 1";
+                String query = "select * from orders where user_id = " + userId + " and state != 'complete' order by created_at desc limit 1";
                 Statement statement = ConnectionManager.getInstance().getConnection().createStatement();
                 ResultSet resultSet = statement.executeQuery(query);
                 IOrderModel order = new OrderModel();
@@ -120,7 +121,6 @@ class OrderDB  {
     public IOrderModel findOrderInCartByUserId(int userId)
     {
         try {
-
             String query = "select * from orders where user_id = " + userId + " and state != 'complete' order by created_at desc limit 1;";
             statement = ConnectionManager.getInstance().getConnection().createStatement();
             ResultSet resultSet = statement.executeQuery(query);
@@ -158,5 +158,21 @@ class OrderDB  {
             return false;
         }
         return true;
+    }
+
+    public boolean changeStateOfOrder(String orderState, Integer orderId)
+    {
+        try
+        {
+            String state = orderState.toLowerCase();
+            String query = "update " + tableName + " set state = '" + state + "' where id = " + orderId + ";";
+            statement = ConnectionManager.getInstance().getConnection().prepareStatement(query);
+            statement.executeUpdate(query);
+            return true;
+        }
+        catch (SQLException e)
+        {
+            return false;
+        }
     }
 }

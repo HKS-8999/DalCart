@@ -224,7 +224,7 @@ public class ProductDB implements IProductPersistence
         try
         {
             String query = "select product_quantity from " + tableName + " where id = " + productId + ";";
-            preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(query);
             resultSet = preparedStatement.executeQuery(query);
             while(resultSet.next())
             {
@@ -244,10 +244,11 @@ public class ProductDB implements IProductPersistence
         try
         {
             Integer total = 0;
-            for (Map.Entry<Integer, Integer> val : products.entrySet()) {
+            for (Map.Entry<Integer, Integer> val : products.entrySet())
+            {
                 Integer id = val.getKey();
                 String query = "select product_price from " + tableName + " where id = " + id + ";";
-                preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+                preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(query);
                 resultSet = preparedStatement.executeQuery(query);
                 while(resultSet.next())
                 {
@@ -260,6 +261,52 @@ public class ProductDB implements IProductPersistence
         {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    public Boolean deleteProduct(Integer productId)
+    {
+        try
+        {
+            String query = "delete from " + tableName + " where id = " + productId + ";";
+            statement = ConnectionManager.getInstance().getConnection().prepareStatement(query);
+            statement.executeUpdate(query);
+            return true;
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public Boolean decreaseProductQuantity(HashMap<Integer, Integer> products)
+    {
+        try
+        {
+            for (Map.Entry<Integer, Integer> val : products.entrySet())
+            {
+                Integer id = val.getKey();
+                Integer quantity = 0;
+                String query = "select product_quantity from " + tableName + " where id = " + id + ";";
+                preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(query);
+                resultSet = preparedStatement.executeQuery(query);
+                while(resultSet.next())
+                {
+                    quantity = resultSet.getInt(1);
+                    quantity -= val.getValue();
+                }
+                String query2 = "update " + tableName + " set product_quantity = " + quantity + " where id = " + id + ";";
+                statement = ConnectionManager.getInstance().getConnection().prepareStatement(query2);
+                statement.executeUpdate(query2);
+            }
+            return true;
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+            return false;
         }
     }
 }
