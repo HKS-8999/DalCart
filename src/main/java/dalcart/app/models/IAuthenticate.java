@@ -1,7 +1,7 @@
 package dalcart.app.models;
 
-import dalcart.app.models.Security.Security;
+import dalcart.app.models.SecurityChain.Security;
 
 public interface IAuthenticate {
-    public Security.RESULT authenticate(IUser user);
+    Security.RESULT authenticate(IUser user);
 }

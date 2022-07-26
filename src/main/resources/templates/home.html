@@ -18,8 +18,8 @@
     <div class="topnav" style="padding-bottom: 50px; padding-left: 100px">
         <input type="text" placeholder="Search" id="search" name="searchword">
         <button class="btn btn-primary" type = "submit" id = "btn1" onclick="searchProduct()">Search</Button>
-        <a href = "/cart"><button class="btn btn-primary" type = "submit" id = "btn2">My Cart</button></a>
-        <a href = "/logout"><button class="btn btn-primary" type = "submit" id = "btn3">Log Out</button></a>
+        <a href = "/cart"><button class="btn btn-primary"  id = "btn2">My Cart</button></a>
+        <a href = "/logout"><button class="btn btn-primary"  id = "btn3">Log Out</button></a>
     </div>
 
     <div style="padding-left: 100px">
@@ -40,15 +40,11 @@
                     <h5 class="card-title">Price : <span th:text="${product.productPrice}"></span></h5>
                     <div class="row">
                         <div class="col-4 padding-0">
-<!--                            <a class="button" th:href="@{/home(id=${product.productId})}">-->
                             <button th:id = "${product.productId}" class="btn btn-primary" type = "submit" onclick="addToCart(this.id)">Add To Cart</button>
-<!--                            </a>-->
                         </div>
                     </div>
                 </div>
             </div>
-
-<!--            </form>-->
         </div>
     </div>
 
