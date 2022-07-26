@@ -23,6 +23,7 @@ public class CheckoutController
     IProductModel productModel = productModelFactory.createProductModel();
     IProductPersistenceFactory productPersistenceFactory = new ProductPersistenceFactory();
     IProductPersistence productDB = productPersistenceFactory.createIProductPersistence();
+
     OrderProductsDB o = new OrderProductsDB();
     OrderDB db = new OrderDB();
     @GetMapping("/cart")
@@ -37,6 +38,7 @@ public class CheckoutController
         HashMap<Integer, Integer> productIds = new HashMap<>();
         Integer userId = (Integer) session.getAttribute("user");
         System.out.println("Getting Products For User::::" + userId);
+        OrderProductsDB o = new OrderProductsDB();
         productIds = o.getProductsOfUser(userId);
         ArrayList<IProductModel> allProducts = new ArrayList<>();
         for(Map.Entry<Integer, Integer> val : productIds.entrySet())
@@ -66,7 +68,6 @@ public class CheckoutController
 //            ModelAndView modelAndView = new ModelAndView("redirect:/logout");
 //            return modelAndView;
 //        }
-
         Integer userId = (Integer) session.getAttribute("user");
         IOrderModel order = db.findOrderInCartByUserId(userId);
         Integer orderId = order.getOrderId();

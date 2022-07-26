@@ -31,6 +31,7 @@ public class OrderController
 {
     public void addToOrder(IUser user, IProductModel[] products) throws SQLException
     {
+
         IOrderModel order;
         IOrderModel existingOrder = OrderModel.getOrderByUserId(user.getUserID());
         System.out.println("User Id:" + user.getUserID());

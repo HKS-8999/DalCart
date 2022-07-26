@@ -29,7 +29,7 @@ public class HomeController
     public ModelAndView homepage (ModelAndView model, @RequestParam(name = "search", required = false) String keyword, HttpSession session, SessionService sessionService) throws IOException
     {
 
-        if (sessionService.isUserInSession(session) == false && sessionService.isSessionValid(session) == false) {
+        if (sessionService.isUserInSession(session) == false || sessionService.isSessionValid(session) == false) {
             ModelAndView modelAndView = new ModelAndView("redirect:/logout");
             return modelAndView;
         }
@@ -58,11 +58,11 @@ public class HomeController
     @PostMapping("/addToCart")
     public ModelAndView addProductIntoCart(@RequestParam Map<String,String> allParams, ModelAndView model, HttpSession session, SessionService sessionService)
     {
-//        if (sessionService.isUserInSession(session) == false || sessionService.isSessionValid(session) == false)
-//        {
-//            ModelAndView modelAndView = new ModelAndView("redirect:/logout");
-//            return modelAndView;
-//        }
+        if (sessionService.isUserInSession(session) == false || sessionService.isSessionValid(session) == false)
+        {
+            ModelAndView modelAndView = new ModelAndView("redirect:/logout");
+            return modelAndView;
+        }
         try
         {
             Integer userId = (Integer) session.getAttribute("user");
