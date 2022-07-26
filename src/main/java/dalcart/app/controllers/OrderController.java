@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
@@ -63,7 +64,7 @@ public class OrderController
 
     @PostMapping("/submit_order")
     @ResponseBody
-    public boolean submitOrder(@RequestParam Map<String,String> allParams, ModelAndView model, HttpSession session, SessionService sessionService) throws SQLException{
+    public ModelAndView submitOrder(@RequestParam Map<String,String> allParams, ModelAndView model, HttpSession session, SessionService sessionService, RedirectAttributes atts) throws SQLException{
         //process the order at cart stage
         //process the order at address stage
         //process the order at payment stage
@@ -71,16 +72,31 @@ public class OrderController
         IUser user = userdb.loadUserAttributesByUserId(1);
         IOrderModel currentOrder = OrderModel.getOrderByUserId(user.getUserID());
 
-        CheckoutController checkoutController = new CheckoutController();
-        checkoutController.validateAndPlaceOrder(allParams, model, session, sessionService);
-
-        while(currentOrder.getState().isComplete() == false){
-            System.out.println("State:" + currentOrder.getState().getStateName());
-            if(currentOrder.getState().completeState(currentOrder) == false){
-                return false;
+//        CheckoutController checkoutController = new CheckoutController();
+//        if(checkoutController.validateAndPlaceOrder(allParams, model, session, sessionService, atts))
+//        {
+            while(currentOrder.getState().isComplete() == false)
+            {
+                System.out.println("State:" + currentOrder.getState().getStateName());
+                if(currentOrder.getState().completeState(currentOrder) == false){
+                    return new ModelAndView("redirect:/cart");
+                }
             }
-        }
-        System.out.println("All Order States Passed. Order is Placed Now");
-        return true;
+            System.out.println("All Order States Passed. Order is Placed Now");
+
+            model.setViewName("/thankyou");
+            return new ModelAndView("redirect:/thankyou");
+//        }
+
+
+
+//        while(currentOrder.getState().isComplete() == false){
+//            System.out.println("State:" + currentOrder.getState().getStateName());
+//            if(currentOrder.getState().completeState(currentOrder) == false){
+//                return false;
+//            }
+//        }
+//        System.out.println("All Order States Passed. Order is Placed Now");
+//        return new ModelAndView("redirect:/cart");
     }
 }

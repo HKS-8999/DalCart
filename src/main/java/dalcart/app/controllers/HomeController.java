@@ -30,7 +30,7 @@ public class HomeController
     {
 
         if (sessionService.isUserInSession(session) == false && sessionService.isSessionValid(session) == false) {
-            ModelAndView modelAndView = new ModelAndView("redirect:/login");
+            ModelAndView modelAndView = new ModelAndView("redirect:/logout");
             return modelAndView;
         }
 
@@ -58,11 +58,11 @@ public class HomeController
     @PostMapping("/addToCart")
     public ModelAndView addProductIntoCart(@RequestParam Map<String,String> allParams, ModelAndView model, HttpSession session, SessionService sessionService)
     {
-        if (sessionService.isUserInSession(session) == false || sessionService.isSessionValid(session) == false)
-        {
-            ModelAndView modelAndView = new ModelAndView("redirect:/logout");
-            return modelAndView;
-        }
+//        if (sessionService.isUserInSession(session) == false || sessionService.isSessionValid(session) == false)
+//        {
+//            ModelAndView modelAndView = new ModelAndView("redirect:/logout");
+//            return modelAndView;
+//        }
         try
         {
             Integer userId = (Integer) session.getAttribute("user");

@@ -54,8 +54,8 @@ public class DeliveryInformationModel
         this.mobileNumber = mobileNumber;
     }
 
-    public IDeliveryInformationPersistence.StorageResult addDeliveryAddress(DeliveryInformationModel deliveryInformationModel, IDeliveryInformationPersistence deliveryInformationPersistence)
+    public IDeliveryInformationPersistence.StorageResult addDeliveryAddress(DeliveryInformationModel deliveryInformationModel, IDeliveryInformationPersistence deliveryInformationPersistence, Integer orderId)
     {
-        return deliveryInformationPersistence.saveDeliveryInformation(deliveryInformationModel);
+        return deliveryInformationPersistence.saveDeliveryInformation(deliveryInformationModel, orderId);
     }
 }
