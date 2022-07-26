@@ -27,4 +27,13 @@ public class DeliveryInformationValidator
         String regex = "^[#.0-9a-zA-Z\\s,-]+$";
         return Pattern.compile(regex).matcher(information.getAddress()).matches();
     }
+
+    public boolean validateDeliveryDetails(DeliveryInformationModel information)
+    {
+        if(isFullNameValid(information) && isAddressValid(information) && isEmailAddressValid(information) && isMobileNumberValid(information))
+        {
+            return true;
+        }
+        return false;
+    }
 }

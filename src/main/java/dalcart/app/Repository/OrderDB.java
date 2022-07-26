@@ -17,6 +17,7 @@ class OrderDB  {
     Connection connection;
     static PreparedStatement preparedStatement;
     static Statement statement;
+    static String tableName = "orders";
 
     public static OrderState getStateByName(String orderState){
         String state = orderState.toLowerCase();
@@ -111,7 +112,7 @@ class OrderDB  {
     {
         try {
 
-            String query = "select * from orders where user_id = " + userId + " and state = 'cart';";
+            String query = "select * from orders where user_id = " + userId + " and state = 'cart' or state = 'address' or state = 'payment';";
             statement = ConnectionManager.getInstance().getConnection().createStatement();
             ResultSet resultSet = statement.executeQuery(query);
             IOrderModel order = new OrderModel();
@@ -148,5 +149,21 @@ class OrderDB  {
             return false;
         }
         return true;
+    }
+
+    public boolean changeStateOfOrder(String orderState, Integer orderId)
+    {
+        try
+        {
+            String state = orderState.toLowerCase();
+            String query = "update " + tableName + " set state = '" + state + "' where id = " + orderId + ";";
+            statement = ConnectionManager.getInstance().getConnection().prepareStatement(query);
+            statement.executeUpdate(query);
+            return true;
+        }
+        catch (SQLException e)
+        {
+            return false;
+        }
     }
 }

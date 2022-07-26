@@ -32,4 +32,5 @@ public interface IProductModel
     public IProductModel getProductById(Integer productId, IProductPersistence productDB);
     public Integer getProductQuantity(IProductPersistence productDB, Integer productQuantity);
     public Integer getTotalOfProducts(IProductPersistence productDB, HashMap<Integer, Integer> products);
+    public Boolean decreaseProductQuantity(IProductPersistence productDB, HashMap<Integer, Integer> products);
 }

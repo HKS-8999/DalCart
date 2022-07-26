@@ -19,7 +19,8 @@ import java.util.List;
 
 
 @Repository
-public class OrderProductsDB {
+public class OrderProductsDB
+{
 
     static PreparedStatement preparedStatement;
     static Statement statement;
@@ -89,23 +90,30 @@ public class OrderProductsDB {
     {
         OrderDB orderDB = new OrderDB();
         IOrderModel order = orderDB.findOrderInCartByUserId(userId);
-        Integer orderId = order.getOrderId();
         HashMap<Integer, Integer> products = new HashMap<>();
-        String query = "select product_id,product_quantity from order_products where order_id = " + orderId + ";";
-        try
+        if(order == null)
         {
-            preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(query);
-            resultSet = preparedStatement.executeQuery(query);
-            while(resultSet.next())
+            return products;
+        }
+        else {
+            Integer orderId = order.getOrderId();
+//        HashMap<Integer, Integer> products = new HashMap<>();
+            String query = "select product_id,product_quantity from order_products where order_id = " + orderId + ";";
+            try
             {
-                products.put(resultSet.getInt(1), resultSet.getInt(2));
+                preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(query);
+                resultSet = preparedStatement.executeQuery(query);
+                while (resultSet.next())
+                {
+                    products.put(resultSet.getInt(1), resultSet.getInt(2));
+                }
+                return products;
+            } catch (Exception e)
+            {
+                e.printStackTrace();
+                return null;
             }
         }
-        catch(Exception e)
-        {
-            e.printStackTrace();
-        }
-        return products;
     }
     public boolean increaseProductQuantity(Integer productId, Integer productQuantity, Integer orderId)
     {
@@ -118,6 +126,7 @@ public class OrderProductsDB {
             {
                 statement = ConnectionManager.getInstance().getConnection().createStatement();
                 statement.executeUpdate(query);
+                System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
             }
             catch(Exception e)
             {

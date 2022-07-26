@@ -20,4 +20,6 @@ public interface IProductPersistence
     public StorageResult updateProduct(Integer productId, Integer productQuantity, Boolean productState);
     public Integer getProductQuantity(Integer productId);
     public Integer getTotalOfProducts(HashMap<Integer, Integer> products);
+    public Boolean deleteProduct(Integer productId);
+    public Boolean decreaseProductQuantity(HashMap<Integer, Integer> products);
 }

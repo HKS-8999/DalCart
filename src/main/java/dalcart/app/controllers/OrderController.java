@@ -2,12 +2,12 @@ package dalcart.app.controllers;
 
 import dalcart.app.Factories.IProductPersistenceFactory;
 import dalcart.app.Factories.ProductPersistenceFactory;
-import dalcart.app.Repository.IProductPersistence;
-import dalcart.app.Repository.OrderProductsDB;
-import dalcart.app.Repository.ConnectionManager;
+import dalcart.app.Repository.*;
 
-import dalcart.app.Repository.UserDB;
 import dalcart.app.controllers.order_states.OrderAtCart;
+import dalcart.app.controllers.order_states.OrderAtComplete;
+import dalcart.app.controllers.order_states.OrderAtPayment;
+import dalcart.app.controllers.order_states.OrderState;
 import dalcart.app.models.IOrderModel;
 import dalcart.app.models.OrderModel;
 import dalcart.app.models.*;
@@ -64,39 +64,41 @@ public class OrderController
 
     @PostMapping("/submit_order")
     @ResponseBody
-    public ModelAndView submitOrder(@RequestParam Map<String,String> allParams, ModelAndView model, HttpSession session, SessionService sessionService, RedirectAttributes atts) throws SQLException{
+    public String submitOrder(@RequestParam Map<String,String> allParams, ModelAndView model, HttpSession session, SessionService sessionService, RedirectAttributes atts) throws SQLException{
         //process the order at cart stage
         //process the order at address stage
         //process the order at payment stage
         UserDB userdb = new UserDB();
+        OrderState orderAtPayment = new OrderAtPayment();
+        OrderState orderComplete = new OrderAtComplete();
         IUser user = userdb.loadUserAttributesByUserId(1);
         IOrderModel currentOrder = OrderModel.getOrderByUserId(user.getUserID());
 
-//        CheckoutController checkoutController = new CheckoutController();
-//        if(checkoutController.validateAndPlaceOrder(allParams, model, session, sessionService, atts))
-//        {
-            while(currentOrder.getState().isComplete() == false)
+        Integer userId = (Integer) session.getAttribute("user");
+        OrderDB db = new OrderDB();
+        IOrderModel order = db.findOrderInCartByUserId(userId);
+        Integer orderId =order.getOrderId();
+
+        CheckoutController checkoutController = new CheckoutController();
+        db.changeStateOfOrder("address", orderId);
+        if(checkoutController.validateAddress(allParams, model, session, sessionService, atts))
+        {
+            currentOrder.setState(orderAtPayment);
+            db.changeStateOfOrder("payment", orderId);
+            if(checkoutController.validatePaymentAndPlaceOrder(allParams, model, session, sessionService, atts))
             {
-                System.out.println("State:" + currentOrder.getState().getStateName());
-                if(currentOrder.getState().completeState(currentOrder) == false){
-                    return new ModelAndView("redirect:/cart");
-                }
+                currentOrder.setState(orderComplete);
+                db.changeStateOfOrder("complete", orderId);
+                return "Success";
             }
-            System.out.println("All Order States Passed. Order is Placed Now");
-
-            model.setViewName("/thankyou");
-            return new ModelAndView("redirect:/thankyou");
-//        }
-
-
-
-//        while(currentOrder.getState().isComplete() == false){
-//            System.out.println("State:" + currentOrder.getState().getStateName());
-//            if(currentOrder.getState().completeState(currentOrder) == false){
-//                return false;
-//            }
-//        }
-//        System.out.println("All Order States Passed. Order is Placed Now");
-//        return new ModelAndView("redirect:/cart");
+            else
+            {
+                return "PaymentFailure";
+            }
+        }
+        else
+        {
+            return "AddressFailure";
+        }
     }
 }

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'index')}">
-<link rel="stylesheet" type="text/css" href="/stylesheets/checkout.css" />
+<link rel="stylesheet" type="text/css" href="/stylesheets/checkout.css"/>
 <body>
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script th:src="@{/webjars/jquery-ui/jquery-ui.min.js}"></script>
@@ -11,10 +11,12 @@
 </div>
 
 <div class="topnav" style="padding-bottom: 50px; padding-left: 100px">
-    <a href = "/home"><button class="btn btn-primary" type = "submit" id = "btn2">Go to home</button></a>
+    <a href="/home">
+        <button class="btn btn-primary" id="btn2">Go to home</button>
+    </a>
 </div>
-<div class = container admin-container>
-    <form action="" >
+<div class=container admin-container>
+    <form action="">
         <div class="row">
             <div class="container ">
                 <div class="row">
@@ -53,11 +55,22 @@
                 </div>
                 <div class="row product-list-row text-center product-row" th:each="product: ${products}">
                     <div class="col-lg-2 flex" th:text="${product.productName}"></div>
-                    <div class="col-lg-2 flex" th:text="${product.productPrice}" ></div>
-                    <div class="col-lg-2 flex" th:text="${quantity.get(product.productId)}" ></div>
-                    <div class="col-lg-2 flex"><button th:value="${quantity.get(product.productId)}" th:id = "${product.productId}" type = "submit" onclick="increase(this.id,this.value)">+</button></div>
-                    <div class="col-lg-2 flex"><button th:value="${quantity.get(product.productId)}" th:id = "${product.productId}" type = "submit" onclick="decrease(this.id,this.value)">-</button></div>
-                    <div class="col-lg-2 flex"><button th:id = "${product.productId}" type = "submit" onclick="removeFromCart(this.id)">Remove</button></div>
+                    <div class="col-lg-2 flex" th:text="${product.productPrice}"></div>
+                    <div class="col-lg-2 flex" th:text="${quantity.get(product.productId)}"></div>
+                    <div class="col-lg-2 flex">
+                        <button th:value="${quantity.get(product.productId)}" th:id="${product.productId}" type="submit"
+                                onclick="increase(this.id,this.value)">+
+                        </button>
+                    </div>
+                    <div class="col-lg-2 flex">
+                        <button th:value="${quantity.get(product.productId)}" th:id="${product.productId}" type="submit"
+                                onclick="decrease(this.id,this.value)">-
+                        </button>
+                    </div>
+                    <div class="col-lg-2 flex">
+                        <button th:id="${product.productId}" type="submit" onclick="removeFromCart(this.id)">Remove
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -78,7 +91,8 @@
             <div class="col-sm-6">
                 <div class="form-group">
                     <label for="checkout">Full Name</label>
-                    <input type="text" class="form-control" id="fullname"  placeholder="Full Name" name="fullname" required>
+                    <input type="text" class="form-control" id="fullname" placeholder="Full Name" name="fullname"
+                           required>
                 </div>
             </div>
             <div class="col-sm-6">
@@ -92,14 +106,16 @@
             <div class="col-sm-6">
                 <div class="form-group">
                     <label for="checkout">Address</label>
-                    <input type="text" class="form-control" id="address" name="address" placeholder="Enter Your Address">
+                    <input type="text" class="form-control" id="address" name="address"
+                           placeholder="Enter Your Address">
                     </input>
                 </div>
             </div>
             <div class="col-sm-6">
                 <div class="form-group">
                     <label for="checkout">Mobile Number</label>
-                    <input type="number" class="form-control" id="phone" placeholder="Mobile Number" name="phone" required>
+                    <input type="number" class="form-control" id="phone" placeholder="Mobile Number" name="phone"
+                           required>
                 </div>
             </div>
         </div>
@@ -127,7 +143,8 @@
             <div class="col-sm-6">
                 <div class="form-group">
                     <label for="checkout">Name on Card</label>
-                    <input type="text" class="form-control" id="nameoncard" name="nameonccard" placeholder="Name on Card">
+                    <input type="text" class="form-control" id="nameoncard" name="nameonccard"
+                           placeholder="Name on Card">
                     </input>
                 </div>
             </div>
@@ -147,57 +164,84 @@
 
 <script type="text/javascript">
 
-    function increase(event,data)
-    {
-        $.ajax({
-            type: "POST",
-            url: "/increaseQuantityOfProduct",
-            data: {
-                id: event,
-                quantity: data
-            }
-        });
+    function increase(event, data) {
+        // $.ajax({
+        //     type: "POST",
+        //     url: "/increaseQuantityOfProduct",
+        //     data: {
+        //         id: event,
+        //         quantity: data
+        //     }
+        // });
+        // const requestBody = {id: event, quantity: data}
+        //body: JSON.stringify(requestBody)
+        fetch(`/increaseQuantityOfProduct?id=${event}&quantity=${data}`,
+            {
+                method: 'POST',
+            }).then(response => {console.log(response.json())});
+
     }
 
-    function decrease(event,data)
-    {
-        $.ajax({
-            type: "POST",
-            url: "/decreaseQuantityOfProduct",
-            data: {
-                id: event,
-                quantity: data
-            }
-        });
+    function decrease(event, data) {
+        // $.ajax({
+        //     type: "POST",
+        //     url: "/decreaseQuantityOfProduct",
+        //     data: {
+        //         id: event,
+        //         quantity: data
+        //     }
+        // });
+        fetch(`/decreaseQuantityOfProduct?id=${event}&quantity=${data}`,
+            {
+                method: 'POST',
+            }).then(response => {console.log(response.json())});
     }
 
-    function removeFromCart(event)
-    {
-        $.ajax({
-            type: "POST",
-            url: "/removeFromCart",
-            data: {
-                id: event
-            }
-        });
+    function removeFromCart(event) {
+        // $.ajax({
+        //     type: "POST",
+        //     url: "/removeFromCart",
+        //     data: {
+        //         id: event
+        //     }
+        // });
+        fetch(`/removeFromCart?id=${event}`,
+            {
+                method: 'POST',
+            }).then(response => {console.log(response.json())});
     }
 
-    $(".submit-order" ).on( "submit", function(e) {
+    $(".submit-order").on("submit", function (e) {
         e.preventDefault();
         //alert("product created");
         var dataString = $(this).serialize();
         //location.reload();
         $.ajax({
             type: "POST",
-            url: "/validateAndPlaceOrder",
-            // url: "/order/submit_order",
+            // url: "/validateAndPlaceOrder",
+            url: "/order/submit_order",
             data: dataString,
-            success: function () {
-                $(this).css("display","none");
+            success: function (data) {
+
+                if(data == 'Success'){
+                    $(this).css("display", "none");
+                    window.location = "/thankyou"
+                }else if(data == 'PaymentFailure'){
+                    alert("Order Cannot Be Placed, Card Details are incorrect. Please Try Again..");
+                    return false;
+                }
+                else if(data == 'AddressFailure'){
+                    alert("Order Cannot Be Placed, Delivery Details are incorrect. Please Try Again..");
+                    return false;
+                }
+                else{
+                    alert("Order Cannot Be Placed, Please Try Again Later..");
+                }
+                // $(this).css("display", "none");
                 // window.location = "/thankyou"
             },
             error: function (request, status, error) {
-                alert("Order Cannot Be Placed, Please Try Again After Sometime");
+                alert("Order Cannot Be Placed, Delivery Details or Card Details are incorrect. Please Try Again..");
             }
         });
     });
