@@ -21,6 +21,7 @@ public class ConnectionManager {
             String database_url      = System.getenv("SPRING_DATASOURCE_URL");
             String database_username = System.getenv("SPRING_DATASOURCE_USERNAME");
             String database_password = System.getenv("SPRING_DATASOURCE_PASSWORD");
+            
 
             System.out.println("Database URL:**********"  + database_url);
 
