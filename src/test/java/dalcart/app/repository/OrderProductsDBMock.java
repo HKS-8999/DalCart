@@ -47,5 +47,39 @@ public class OrderProductsDBMock {
         return false;
     }
 
+    public boolean decreaseProductQuantity(Integer productQuantity, Integer productId, Integer orderId)
+    {
+        Integer quantity = productQuantity;
+        if(productQuantity == 5 && productId == 2 && orderId == 190)
+        {
+            quantity = productQuantity - 1;
+        }
+        if(productQuantity == 6 && productId == 2 && orderId == 190)
+        {
+
+        }
+        if(quantity == productQuantity - 1)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean removeProductFromCart(Integer productId, Integer orderId)
+    {
+        HashMap<Integer, Integer> products = new HashMap<>();
+        products.put(1,5);
+        if(orderId == 120 && productId == 1)
+        {
+            products.remove(1);
+            return true;
+        }
+        if(orderId == 120 && productId == 2)
+        {
+            return false;
+        }
+        return false;
+    }
+
 
 }

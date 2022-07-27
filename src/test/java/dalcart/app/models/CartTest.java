@@ -66,22 +66,34 @@ public class CartTest {
     }
 
     @Test
-    public void decreaseQuantityOfProductInCartSuccessTest() {
-
+    public void decreaseQuantityOfProductInCartSuccessTest()
+    {
+        OrderProductsDBMock orderProductsDBMock = new OrderProductsDBMock();
+        boolean b = orderProductsDBMock.decreaseProductQuantity(5, 2, 190);
+        Assertions.assertEquals(true, b);
     }
 
     @Test
-    public void decreaseQuantityOfProductInCartFailureTest() {
-
+    public void decreaseQuantityOfProductInCartFailureTest()
+    {
+        OrderProductsDBMock orderProductsDBMock = new OrderProductsDBMock();
+        boolean b = orderProductsDBMock.decreaseProductQuantity(6, 2, 190);
+        Assertions.assertEquals(false, b);
     }
 
     @Test
-    public void removeItemFromCartSuccessTest() {
-
+    public void removeItemFromCartSuccessTest()
+    {
+        OrderProductsDBMock orderProductsDBMock = new OrderProductsDBMock();
+        boolean b = orderProductsDBMock.removeProductFromCart(1, 120);
+        Assertions.assertEquals(true, b);
     }
 
     @Test
-    public void removeItemFromCartFailureTest() {
-
+    public void removeItemFromCartFailureTest()
+    {
+        OrderProductsDBMock orderProductsDBMock = new OrderProductsDBMock();
+        boolean b = orderProductsDBMock.removeProductFromCart(2, 120);
+        Assertions.assertEquals(false, b);
     }
 }
